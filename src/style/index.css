@@ -166,21 +166,3 @@ html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input,
         -webkit-line-clamp: 2;
         text-overflow: ellipsis;
     }
-    .el-slider__button.el-tooltip__trigger.el-tooltip__trigger{
-        width: 10px;
-        height: 10px;
-        border:1px solid rgb(142, 128, 128)
-    }
-    .el-slider__bar{
-        background-color: rgb(0, 0, 0) !important;
-    }
-    .volumContainer .el-slider__bar{
-        background-color: rgb(142, 128, 128) !important;
-    }
-
-    body{
-        min-width: 390px;
-        background-image: url(../assets/img/16.jpg);
-        background-size: cover;
-        background-position: center;
-    }

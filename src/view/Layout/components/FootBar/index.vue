@@ -1,20 +1,20 @@
 <template>
-    <div class="footBar_container unselectable">
+    <div class="footBar_container">
         <div class="top">
             <div class="left">
-                <div class="title">待写入</div>
+                <div class="title">刻猫猫的笔记本</div>
             </div>
             <div class="right">
-                <div class="item">待写入</div>
-                <div class="item">待写入</div>
-                <div class="item">待写入</div>
+                <div class="item"><a target="_blank" href="http://kecat.top/">KECAT.TOP</a></div>
+                <div class="item"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=3170557037&site=qq&menu=yes">QQ:3170557037</a></div>
+                <div class="item"><a href="https://outlook.live.com/">hutao-keqing@outlook.com</a></div>
             </div>
         </div>
         <div class="bottom">
             <div class="mes1">Copyright © 2023 刻猫猫的笔记本</div>
             <div class="mes2">
                 <img src="../../../../assets/img/icp.png" alt="">
-                <a href="https://beian.miit.gov.cn/" _blank>鲁ICP备XXXXXXXX号</a>
+                <a href="https://beian.miit.gov.cn/" _blank>鲁ICP备2023003074号</a>
                 </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
 .footBar_container{
     width: 100%;
     height: 252px;
-    background-color: rgba(0, 0, 0,0.5);
+    background-color: rgba(0, 0, 0, 0.801);
     display: flex;
     flex-direction: column;
     .top{
@@ -40,7 +40,7 @@
             text-align: center;
             line-height: 150px;
             .title{
-                font-size: 30px;
+                font-size: 25px;
                 color: rgba(255, 255, 255,0.7);
             }
         }
@@ -52,8 +52,11 @@
             justify-content: space-around;
             align-items: center;
             .item{
-                font-size: 30px;
-                color: rgba(255, 255, 255,0.7);
+                font-size: 16px;
+                color: rgba(255, 255, 255,0.9);
+                a{
+                    color: rgba(255, 255, 255,0.9);
+                }
             }
         }
     }

@@ -158,6 +158,7 @@ onMounted(()=>{
     top: 0;
     left: 0;
     width: 100%;
+    min-width: 500px;
     height: 55px;
     // background-color: pink;
     background: rgba(255,255,255,0.3);

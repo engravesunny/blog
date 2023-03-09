@@ -5,10 +5,22 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Inspect from 'vite-plugin-inspect'
+// import postCssPxToRem from 'postcss-pxtorem'  //移动端适配
 
 const pathSrc = path.resolve(__dirname, 'src')
 
 export default defineConfig({
+  // 移动端适配
+  // css: {
+  //   postcss: {
+  //     plugins: [
+  //       postCssPxToRem({
+  //         rootValue: 37.5, // 1rem的大小
+  //         propList: ['*'], // 需要转换的属性，这里选择全部都进行转换
+  //       })
+  //     ]
+  //   }
+  // },
   server:{
     port: 4000,
     proxy: {

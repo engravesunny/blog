@@ -4,6 +4,7 @@ import App from './App.vue'
 import './style/index.css'
 import './assets/icon/iconfont/iconfont.css'
 import router from './router'
+import 'amfe-flexible'
 
 const app = createApp(App)
 app.use(router)
