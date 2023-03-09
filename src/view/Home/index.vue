@@ -18,6 +18,10 @@
                     <personnalAbout></personnalAbout>
                     <!-- 个人描述等等 -->
 
+                    <!-- 认识我 -->
+                    <friendMe></friendMe>
+                    <!-- 认识我 -->
+
                     <!-- 文章分类，文章标签 -->
                     <div class="article">
                         <div class="title">
@@ -44,6 +48,7 @@
 
 <script setup>
 import personnalAbout from './components/personnalAbout.vue';
+import friendMe from './components/friendMe.vue';
 </script>
 
 <style lang="less" scoped>
@@ -102,10 +107,12 @@ import personnalAbout from './components/personnalAbout.vue';
             width: 75vw;
             .main{
                 display: flex;
+                flex-direction: column;
                 min-width: 700px;
                 justify-content: center;
-                align-items: flex-start;
+                align-items: center;
                 background: rgba(255,255, 255, 0.2);
+                border-radius: 10px;
             }
         }
     }

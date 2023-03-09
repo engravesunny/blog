@@ -20,9 +20,9 @@
             class="btn" 
             v-for="item in controls" 
             :key="item.path">
+                <span class="iconfont">{{ getFileIcon(item.name) }}</span>
                 {{ item.name }}
                 <span v-if="item.children" class="iconfont">&#xe60c;</span>
-                <span v-if="item.path === '/home'" class="iconfont">&#xe622;</span>
                 <downSelect v-if="alive.name===item.name" :chirlden="item.children"></downSelect>
                 <!-- <downSelect :chirlden="item.children"></downSelect> -->
             </div>
@@ -30,8 +30,14 @@
 
             </div>
             <!-- 面包菜单 -->
-            <div v-if="showHam" class="btn ham_box iconfont">&#xe606;</div>
+            <div v-if="showHam" @click="openMenu" class="btn ham_box iconfont">&#xe606;</div>
             <!-- 面包菜单 -->
+            <!-- 菜单侧边栏 -->
+            <div class="mark" @click="openMenu" :style="{background:`rgba(0,0,0,${mark})`,width:`${markw}vw`}"></div>
+            <div class="menu_side" :style="{transform:`translate(-${isOpenMenu}px)`}">
+                <menu-sidebar :controls="controls" v-if="showHam"></menu-sidebar>
+            </div>
+            <!-- 菜单侧边栏 -->
         </div>
         <!-- 操作按钮 -->
 
@@ -39,13 +45,36 @@
 </template>
 
 <script setup>
+import getFileIcon from '../../../../utils/icon';
 import { reactive } from 'vue';
 import downSelect from './components/downSelect.vue';
-let showHam = ref(false) 
+import menuSidebar from './components/menuSidebar.vue';
+
 
 let alive = reactive({
     name:''
 })
+
+let showHam = ref(false) 
+// 菜单隐藏栏控制
+let isShowMark = ref(false)
+// 遮罩层
+let mark = ref(0)
+let markw = ref(0)
+let isOpenMenu = ref(0)
+let openMenu = () => {
+    if(isOpenMenu.value){
+        isOpenMenu.value = 0
+        isShowMark.value = false
+        mark.value = 0
+        markw.value = 0
+    } else {
+        isOpenMenu.value = 300
+        isShowMark.value = true
+        mark.value = 0.7
+        markw.value = 100
+    }
+}
 
 let controls = reactive(
     [
@@ -118,7 +147,11 @@ const showFn = () => {
         if(document.body.clientWidth < 1000) {
             showHam.value = true
         } else {
-             showHam.value = false
+            showHam.value = false
+            isOpenMenu.value = 0
+            isShowMark.value = false
+            mark.value = 0
+            markw.value = 0
         }
     }
 }
@@ -130,7 +163,7 @@ const showDownSelect = (item) => {
         }
         clearTimeout(timer)
         timer.value = null
-    },500)
+    },100)
 }
 
 const closeDownSelect = (item) => {
@@ -141,7 +174,6 @@ const closeDownSelect = (item) => {
     alive.name = ''
 }
 
-
 onMounted(()=>{
     if(document.body.clientWidth<1000){
         showHam.value = true
@@ -149,10 +181,22 @@ onMounted(()=>{
     showFn()
 })
 
-
 </script>
 
 <style lang="less" scoped>
+.mark{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    transition: all 0.5s;
+}
+.menu_side{
+    position: fixed;
+    top: 0;
+    right: -300px;
+    transition: all 0.5s;
+}
 .navbar_container{
     position: fixed;
     top: 0;
