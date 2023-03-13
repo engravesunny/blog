@@ -8,11 +8,15 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AboutMe: typeof import('./components/aboutMe.vue')['default']
+    ArCard: typeof import('./components/arCard.vue')['default']
+    ArticleList: typeof import('./components/articleList.vue')['default']
     ElBody: typeof import('element-plus/es')['ElBody']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
+    IconsFriend: typeof import('./components/iconsFriend.vue')['default']
+    RightNav: typeof import('./components/rightNav.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

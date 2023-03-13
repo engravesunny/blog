@@ -2,12 +2,12 @@
     <div class="nav_list">
         <ul class="main_ul">
             <li class="main_li" v-for="item in controls" :key="item.name">
-                <div class="main_li_title iconfont" @click="openMainLi(item.name)">
+                <div class="main_li_title iconfont" @click="openMainLi(item)">
                     {{getFileIcon(item.name) + ' ' + item.name }}
                     <span style="float:right;font-size:20px;transition:all 0.3s;" v-if="item.children" :style="{transform:`rotate(${isOpen.indexOf(item.name)>-1?0:90}deg)`}" class="iconfont">&#xe60c;</span>
                 </div>
                 <ul class="vice_ul" v-if="item.children&&isOpen.indexOf(item.name)>-1">
-                    <li class="vice_li iconfont" v-for="child in item.children" :key="child.name">{{getFileIcon(child.name) + ' ' + child.name }}</li>
+                    <li class="vice_li iconfont" v-for="child in item.children" :key="child.name" @click="nextTo(child)">{{getFileIcon(child.name) + ' ' + child.name }}</li>
                 </ul>
             </li>
         </ul>
@@ -19,12 +19,20 @@ import getFileIcon from '../../../../../utils/icon'
 
 let isOpen = reactive([])
 
-let openMainLi = (name) => {
-    if(isOpen.indexOf(name)>-1){
-        let index = isOpen.indexOf(name)
+let nextTo = (item) => {
+    if(item.path){
+        PubSub.publish('nextTo',item)
+        PubSub.publish('closeMenuSideBar')
+    }
+}
+
+let openMainLi = (item) => {
+    nextTo(item)
+    if(isOpen.indexOf(item.name)>-1){
+        let index = isOpen.indexOf(item.name)
         isOpen.splice(index,1)
     } else {
-        isOpen.push(name)
+        isOpen.push(item.name)
     }
 }
 
@@ -45,6 +53,7 @@ const porps = defineProps({
     flex: 1;
     width: 300px;
     padding: 20px;
+    color: #000;
     .main_ul{
         display: flex;
         width: 100%;

@@ -12,12 +12,17 @@
     "animate.css": "^4.1.1",
     "axios": "^1.3.2",
     "element-plus": "^2.2.29",
+    "github-markdown-css": "^5.2.0",
     "pinia": "^2.0.32",
+    "prismjs": "^1.29.0",
+    "pubsub-js": "^1.9.4",
+    "showdown": "^2.1.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/compiler-sfc": "^3.2.47",
     "amfe-flexible": "^2.2.1",
     "less": "^4.1.3",
     "less-loader": "^11.1.0",
@@ -25,6 +30,7 @@
     "unplugin-auto-import": "^0.13.0",
     "unplugin-vue-components": "^0.23.0",
     "vite": "^4.1.0",
-    "vite-plugin-inspect": "^0.7.15"
+    "vite-plugin-inspect": "^0.7.15",
+    "vite-plugin-prismjs": "^0.0.8"
   }
 }

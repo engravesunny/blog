@@ -1,7 +1,7 @@
 <template>
     <div class="left">
         <div class="avatar">
-            <img src="../assets/img/avatar.jpg" alt="">
+            <img src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/avatar.jpg" alt="">
         </div>
         <div class="nav">
             <div class="article">

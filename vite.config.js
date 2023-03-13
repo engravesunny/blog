@@ -6,7 +6,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Inspect from 'vite-plugin-inspect'
 // import postCssPxToRem from 'postcss-pxtorem'  //移动端适配
-
+import { prismjsPlugin } from 'vite-plugin-prismjs'
 const pathSrc = path.resolve(__dirname, 'src')
 
 export default defineConfig({
@@ -25,21 +25,14 @@ export default defineConfig({
     port: 4000,
     proxy: {
       '/api': {
-        target: 'http://47.93.87.206:3000/',
+        target: 'http://kecat.top:5000/',
         // target就是你要访问的目标地址，可以是基础地址，这样方便在这个网站的其他api口调用数据
         ws: true,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        // rewrite: (path) => path.replace(/^\/api/, ''),
         // 要记得加rewrite这句
       },
-    },
-    // proxy: {
-    //   '/api': {
-    //     target: 'https://baidu.com',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, '')
-    //   }
-    // }
+    }
   },
   resolve: {
     alias: {
@@ -47,6 +40,15 @@ export default defineConfig({
     },
   },
   plugins: [
+    prismjsPlugin({
+			languages: ['javascript','css','less','html','js'],
+      defaultLanguage: 'javascript',
+			// 配置行号插件
+			plugins: ['line-numbers','show-language','inline-color','previewers','toolbar','copy-to-clipboard','match-braces'],
+			// 主题名
+			theme: 'tomorrow',
+			css: true
+		}),
     Vue(),
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...

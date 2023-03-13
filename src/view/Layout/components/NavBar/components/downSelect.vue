@@ -1,7 +1,7 @@
 <template>
     <div  v-if="chirlden.length" class="downSelect_container">
         <ul>
-            <li v-for="item in chirlden" :key="item.name">
+            <li v-for="item in chirlden" :key="item.name" @click="nextTo(item)">
                 <span class="iconfont">{{ getFileIcon(item.name) }}</span> {{ item.name }}
             </li>
         </ul>
@@ -10,8 +10,12 @@
 
 <script setup>
 import getFileIcon from '../../../../../utils/icon'
-
 import 'animate.css'
+import PubSub from 'pubsub-js';
+
+let nextTo = (item) => {
+    PubSub.publish('nextTo',item)
+}
 
 const props = defineProps({
     chirlden:{
@@ -37,6 +41,7 @@ onMounted(()=>{
     box-shadow: 1px 1px 10px 2px rgba(255, 255, 255, 0.1);
     li{
         transition: all 0.5s;
+        color: #000;
     }
     li:hover{
     background: rgba(255, 255, 255, 0.5);

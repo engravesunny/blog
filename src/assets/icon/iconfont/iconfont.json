@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "785026",
+      "name": "关于我们",
+      "font_class": "guanyuwomen",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "2085347",
+      "name": "珠宝-友链",
+      "font_class": "zhubao-youlian",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "11372687",
+      "name": "评论",
+      "font_class": "pinglun",
+      "unicode": "e8b4",
+      "unicode_decimal": 59572
+    },
+    {
+      "icon_id": "1279449",
+      "name": "时间",
+      "font_class": "shijian",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
       "icon_id": "657989",
       "name": "导航",
       "font_class": "daohang",

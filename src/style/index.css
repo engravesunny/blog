@@ -21,10 +21,13 @@ html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input,
     font-size:14px;
     
     color:#333;
+
+    background-image: url(https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/6.jpg);
+    background-size: cover;
+    background-position: center 10;
     
     }
     
-    h1, h2, h3, h4, h5, h6{font-weight:normal;}
     
     ul,ol {
     
@@ -165,4 +168,7 @@ html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input,
         white-space: nowrap;
         -webkit-line-clamp: 2;
         text-overflow: ellipsis;
+    }
+    .rightNav .el-scrollbar__thumb{
+        opacity: 0 !important;
     }

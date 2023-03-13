@@ -2,23 +2,14 @@
     <div class="friendMe">
         <div class="left">
             <div class="img1">
-                <img loading="eager" src="http://kecat.top/img/emo2.gif" alt="">
+                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/emo2.gif" alt="">
             </div>
             <div class="img2">
-                <img src="../../../assets/img/emo1.gif" alt="">
+                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/emo1.gif" alt="">
             </div>
         </div>
         <div class="right">
-            <!-- github，qq，微信，邮箱等等 -->
-            <div class="btn">
-                <div class="email iconfont"><a href="https://outlook.live.com/" target="_blank">&#xe908;</a></div>
-                <div class="qq iconfont"><a href="http://wpa.qq.com/msgrd?v=3&uin=3170557037&site=qq&menu=yes" target="_blank">&#xe882;</a></div>
-                <div class="wechat iconfont"><a href="" target="_blank">&#xe883;</a></div>
-                <div class="github iconfont"><a href="https://github.com/engravesunny?tab=repositories" target="_blank">&#xe885;</a></div>
-                <div class="netease-cloud-music iconfont"><a href="https://music.163.com/#/user/home?id=427854158" target="_blank">&#xe753;</a></div>
-                <div class="bilibili iconfont"><a href="https://space.bilibili.com/244375982/dynamic" target="_blank">&#xe62c;</a></div>
-            </div>
-            <!-- github，qq，微信，邮箱等等 -->
+            <iconsFriend></iconsFriend>
             <!-- 个人描述 -->
             <div class="description">
                 <p>我轻度社恐（正在努力克服）,但或许我们有些共同的兴趣,或许我们可以成为志同道合的朋友</p>
@@ -27,6 +18,10 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import iconsFriend from '../../../components/iconsFriend.vue';
+</script>
 
 <style lang="less" scoped>
 
@@ -48,43 +43,6 @@
         align-items: center;
         padding-left: 30px;
         border-left: 2px solid rgba(0, 0, 0, 0.5);
-        .btn{
-            width: 240px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-            .email,.netease-cloud-music,.qq,.wechat,.github,.bilibili{
-                border-radius: 15px;
-                box-sizing: border-box;
-                margin: 10px;
-                width: 50px;
-                height: 50px;
-                text-align: center;
-                line-height: 50px;
-                font-size: 40px;
-                color: #000;
-                background-color: skyblue;
-                cursor: pointer;
-            }
-            .bilibili{
-                line-height: 45px;
-            }
-            .bilibili a{
-                font-size: 33px;
-                color: #f14767;
-            }
-            .qq a{
-                color: #4cafe9;
-            }
-            .wechat a{
-                color:#4cbf00;
-            }
-            .netease-cloud-music a{
-                color: #e72d2c;
-            }
-        }
         .description{
             display: flex;
             width: 220px;

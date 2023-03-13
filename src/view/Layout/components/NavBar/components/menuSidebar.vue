@@ -20,13 +20,13 @@ let controlss = reactive([])
 
 onMounted(()=>{
     controlss = props.controls
-    console.log(controlss);
-})
+}) 
 
 </script>
 
 <style lang="less" scoped>
 .menu_sidebar{
+    color: #000;
     width: 300px;
     height: 100vh;
     background-color: #f6f8fa;

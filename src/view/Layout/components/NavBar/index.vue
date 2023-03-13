@@ -1,5 +1,9 @@
 <template>
-    <div class="navbar_container unselectable">
+    <div class="navbar_container unselectable" :style="{
+        transform:`translate(0,-${isFloded}%)`,
+        background:`rgba(255,255,255,0.${isOpacity})`,
+        color:`${'#000'}`
+        }">
         
         <!-- logo -->
         <div class="logo">
@@ -19,12 +23,11 @@
             ref="btn" 
             class="btn" 
             v-for="item in controls" 
-            :key="item.path">
+            :key="item.path" @click="nextToIt(item)">
                 <span class="iconfont">{{ getFileIcon(item.name) }}</span>
                 {{ item.name }}
                 <span v-if="item.children" class="iconfont">&#xe60c;</span>
                 <downSelect v-if="alive.name===item.name" :chirlden="item.children"></downSelect>
-                <!-- <downSelect :chirlden="item.children"></downSelect> -->
             </div>
             <div class="input_box">
 
@@ -49,7 +52,30 @@ import getFileIcon from '../../../../utils/icon';
 import { reactive } from 'vue';
 import downSelect from './components/downSelect.vue';
 import menuSidebar from './components/menuSidebar.vue';
+import PubSub from 'pubsub-js'
 
+const router = useRouter()
+
+const emit = defineEmits(['explore'])
+
+let nextToIt = (item) => {
+    if(item.path){
+        router.push(item.path)
+    } else {
+        return
+    }
+}
+
+const porps = defineProps({
+    isOpacity:{
+        type:Number,
+        default:0
+    },
+    isFloded:{
+        type:Number,
+        default:0
+    }
+})
 
 let alive = reactive({
     name:''
@@ -75,6 +101,7 @@ let openMenu = () => {
         markw.value = 100
     }
 }
+
 
 let controls = reactive(
     [
@@ -104,10 +131,10 @@ let controls = reactive(
         children:[
             {
                 name:'常用网站',
-                path:'commonWeb'
+                path:'/common_web'
             },{
                 name:'个人导航',
-                path:'/privateWeb'
+                path:'/person_web'
             }
         ]
     },
@@ -116,7 +143,7 @@ let controls = reactive(
         children:[
             {
                 name:'相册',
-                path:'/album'
+                path:'/photo'
             },{
                 name:'视频',
                 path:'/video'
@@ -136,7 +163,18 @@ let controls = reactive(
     },
     {
         name:'关于',
-        path:'/about'
+        children:[
+            {
+                name:'评论',
+                path:'/comment'
+            },{
+                name:'友链',
+                path:'/friend'
+            },{
+                name:'关于我',
+                path:'/me'
+            }
+        ]
     }
 ]
 )
@@ -179,6 +217,13 @@ onMounted(()=>{
         showHam.value = true
     }
     showFn()
+    PubSub.subscribe('nextTo',(a,item)=>{
+        console.log(item);
+        nextToIt(item)
+    })
+    PubSub.subscribe('closeMenuSideBar',()=>{
+        openMenu()
+    })
 })
 
 </script>
@@ -205,8 +250,9 @@ onMounted(()=>{
     min-width: 500px;
     height: 55px;
     // background-color: pink;
+    z-index: 999;
     background: rgba(255,255,255,0.3);
-    border-bottom:1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.5s;
     .logo{
         float: left;
         width: 250px;
@@ -238,6 +284,7 @@ onMounted(()=>{
             width: 90px;
             height: 55px;
             font-size: 16px;
+            font-weight: 700;
             text-align: center;
             line-height: 55px;
             cursor: pointer;

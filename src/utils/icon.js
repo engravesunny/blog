@@ -31,6 +31,12 @@ export default function getFileIcon(name) {
         return String.fromCharCode(parseInt('e630', 16));
       case '关于':
         return String.fromCharCode(parseInt('e633', 16));
+      case '评论':
+        return String.fromCharCode(parseInt('e8b4;', 16));
+      case '友链':
+        return String.fromCharCode(parseInt('e636;', 16));
+      case '关于我':
+        return String.fromCharCode(parseInt('e655;', 16));  
       default:
         return String.fromCharCode(parseInt('e628', 16));
     }

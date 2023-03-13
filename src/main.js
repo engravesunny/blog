@@ -6,6 +6,7 @@ import './assets/icon/iconfont/iconfont.css'
 import router from './router'
 import 'amfe-flexible'
 
+
 const app = createApp(App)
 app.use(router)
 app.use(createPinia())
