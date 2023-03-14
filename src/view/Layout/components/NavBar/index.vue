@@ -183,8 +183,10 @@ let timer = ref(null);
 const showFn = () => {
     window.onresize = () => {
         if(document.body.clientWidth < 1000) {
+            PubSub.publish('closeSide')
             showHam.value = true
         } else {
+            PubSub.publish('openSide')
             showHam.value = false
             isOpenMenu.value = 0
             isShowMark.value = false

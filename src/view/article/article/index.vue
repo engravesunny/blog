@@ -1,6 +1,6 @@
 <template>
     <div class="article_container line-numbers match-braces">
-        <article ref="article" class="article">
+        <article ref="article" :style="{width:`${defaultWidth}%`}" class="article">
             <div class="markdown-body" v-html="html"></div>
             <rightNav v-if="showRightNav"></rightNav>
         </article>
@@ -18,14 +18,16 @@ import { getPost } from '@/api/post'
 
 let showRightNav = ref(true)
 
+let defaultWidth = ref(60)
+
 let html = ref('')
 
 onMounted(()=>{
     const {data} = getPost().then(res=>{
+        console.log(res);
         const converter =new showdown.Converter();
         const htmlOutput =converter.makeHtml(res.data);
         html.value = htmlOutput
-        
     }).then(()=>{
         const pres = document.querySelectorAll('pre')
         pres.forEach(pre=>{
@@ -37,6 +39,18 @@ onMounted(()=>{
     }).catch(error=>{
         console.log(error);
     })
+    if(window.innerWidth<1000){
+        defaultWidth.value = 60
+        showRightNav.value = true
+    }
+    PubSub.subscribe('closeSide',()=>{
+        defaultWidth.value = 80
+        showRightNav.value = false
+    })
+    PubSub.subscribe('openSide',()=>{
+        defaultWidth.value = 60
+        showRightNav.value = true
+    })
 })
 
 </script>
@@ -47,6 +61,7 @@ onMounted(()=>{
         margin-top: 75px;
         position: relative;
         width: 100%;
+        min-height: 900px;
         display: flex;
         justify-content: center;
         .article{

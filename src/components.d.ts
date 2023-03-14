@@ -19,5 +19,6 @@ declare module '@vue/runtime-core' {
     RightNav: typeof import('./components/rightNav.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SmallCard: typeof import('./components/smallCard.vue')['default']
   }
 }

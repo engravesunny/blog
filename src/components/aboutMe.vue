@@ -34,7 +34,6 @@
     background-color: rgba(0, 0, 0, 0);
     // background-color: #fff;
     padding-right: 10px;
-    border-right: 2px solid rgba(0, 0, 0, 0.5);
     .avatar{
     width: 100%;
     height: 120px;

@@ -54,7 +54,7 @@ let topFlodFn = (e) => {
 }
 
 onMounted(()=>{
-    console.log(scroller.value.$el);
+    
 })
 
 </script>

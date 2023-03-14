@@ -1,38 +1,51 @@
 <template>
     <div class="categoryPage_container unselectable">
-        <div class="categoryPage">
+        <div class="categoryPage"  :style="{width:`${defaultWidth}%`}">
             <div class="top">
                 <!-- 分类标题 -->
                 <div class="title"><h1>Post Categories</h1></div>
-
-                <div class="category_card_container">
-                    <!-- 分类卡片 -->
-                    <div class="category_card">分类</div>
-
-                </div>
-
+                <smallCard></smallCard>
             </div>
-
             <div class="article_list_display">
-                <!-- 返回按钮 -->
-                <div class="over">
-                    <div class="back">返回</div>
-                </div>
                 <!-- 具体分类列表展示 -->
                 <div class="article_list">
+                    <!-- 返回按钮 -->
+                    <div class="over">
+                        <div class="back iconfont">&#xe60b; 返回</div>
+                    </div>
                     <articleList></articleList>
                 </div>
-
             </div>
-
+            <rightNav v-if="showRightNav"></rightNav>
         </div>
-
+        <placeOrder v-if="showRightNav"></placeOrder>
     </div>
 </template>
 
 <script setup>
+import rightNav from '../../../components/rightNav.vue';
 import articleList from '../../../components/articleList.vue';
+import placeOrder from '../article/components/placeOrder.vue'
+import smallCard from '../../../components/smallCard.vue'
 
+let showRightNav = ref(true)
+
+let defaultWidth = ref(60)
+
+onMounted(()=>{
+    if(window.innerWidth<1000){
+        defaultWidth.value = 80
+        showRightNav.value = false
+    }
+    PubSub.subscribe('closeSide',()=>{
+        defaultWidth.value = 80
+        showRightNav.value = false
+    })
+    PubSub.subscribe('openSide',()=>{
+        defaultWidth.value = 60
+        showRightNav.value = true
+    })
+})
 </script>
 
 <style lang="less" scoped>
@@ -60,27 +73,38 @@ import articleList from '../../../components/articleList.vue';
                 border-radius: 25px;
                 padding: 20px;
                 align-items: center;
+                box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
                 .title{
                     font-size: 2em;
                     margin: 0 0 30px 0;
                 }
-                .category_card_container{
+            }
+            .article_list_display{
+                width: 100%;
+                .over{
+                    margin-left: 40px;
+                    margin-top: 40px;
                     width: 100%;
-                    display: flex;
-                    flex: 1;
-                    justify-content: flex-start;
-                    align-items: center;
-                    .category_card{
-                        margin: 10px;
-                        border-radius: 10px;
-                        padding: 10px 20px;
-                        height: 50px;
-                        text-align: center;
-                        line-height: 30px;
-                        font-size: 16px;
-                        font-weight: 700;
-                        background-color: #fff;
+                    height: 60px;
+                    .back{
+                        width: 80px;
+                        display: block;
+                        font-size: 20px;
+                        line-height: 60px;
+                        color: rgb(0, 0, 0);
+                        cursor: pointer;
                     }
+                    .back:hover{
+                        color: rgba(0, 0, 0, 0.5);
+                    }
+                }
+                .article_list{
+                    margin-top: 20px;
+                    width: 100%;
+                    background-color: rgba(255, 255, 255, 0.5);
+                    box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
+                    border-radius: 25px;
+                    border: 1px solid #fff;
                 }
             }
         }

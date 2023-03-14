@@ -23,6 +23,7 @@
 
 <style lang="less" scoped>
 .footBar_container{
+    margin-top: 15px;
     width: 100%;
     height: 252px;
     background-color: rgba(0, 0, 0, 0.801);

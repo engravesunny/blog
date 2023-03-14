@@ -1,12 +1,7 @@
 <template>
     <div class="friendMe">
-        <div class="left">
-            <div class="img1">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/emo2.gif" alt="">
-            </div>
-            <div class="img2">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/emo1.gif" alt="">
-            </div>
+        <div class="img1">
+            <img loading="lazy" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/emo2.gif" alt="">
         </div>
         <div class="right">
             <iconsFriend></iconsFriend>
@@ -29,23 +24,21 @@ import iconsFriend from '../../../components/iconsFriend.vue';
     margin: 20px 0;
     width: 100%;
     padding: 20px;
-    background: rgba(255,255, 255, 0.5);
+    background: rgba(255,255, 255, 0.9);
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     border-radius: 25px;
     box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
     .right{
         float: right;
-        width: 25%;
-        min-width: 255px;
+        width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        padding-left: 30px;
-        border-left: 2px solid rgba(0, 0, 0, 0.5);
+        align-items: center;      
         .description{
             display: flex;
-            width: 220px;
+            width: 100%;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
@@ -55,31 +48,12 @@ import iconsFriend from '../../../components/iconsFriend.vue';
             font-weight: 700;
         }
     }
-    .left{
-        width: 70%;
-        height: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .img1{
+        width: 100%;
         float: left;
-        background-color: rgba(0, 0, 0, 0);
-        // background-color: #fff;
-        padding-right: 10px;
-        .img1{
-            width: 60%;
-            float: left;
-            img{
-                border-radius: 15px;
-                width: 100%;
-            }
-        }
-        .img2{
-            width: 33.5%;
-            float: right;
-            img{
-                border-radius: 15px;
-                width: 100%;
-            }
+        img{
+            border-radius: 15px;
+            width: 100%;
         }
     }
 }

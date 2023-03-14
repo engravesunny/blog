@@ -16,31 +16,40 @@
 </script>
 
 <style lang="less" scoped>
+    .animate_flash_fast{
+        animation: flash;
+        animation-duration: 1.2s;
+        animation-iteration-count: infinite;
+    }
     .btn{
-            width: 240px;
+            width: 100%;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             margin-bottom: 10px;
             .email,.netease-cloud-music,.qq,.wechat,.github,.bilibili{
                 border-radius: 15px;
                 box-sizing: border-box;
-                margin: 10px;
-                width: 50px;
-                height: 50px;
+                margin: 5px;
+                width: 90px;
+                height: 80px;
                 text-align: center;
-                line-height: 50px;
-                font-size: 40px;
+                line-height: 80px;
+                font-size: 50px;
                 color: #000;
                 background-color: skyblue;
+                box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
                 cursor: pointer;
             }
+            .email:hover,.netease-cloud-music:hover,.qq:hover,.wechat:hover,.github:hover,.bilibili:hover{
+                box-shadow:  0 0 12px 3px rgba(0, 0, 0, 0.2);
+            }
             .bilibili{
-                line-height: 45px;
+                line-height: 75px;
             }
             .bilibili a{
-                font-size: 33px;
+                font-size: 40px;
                 color: #f14767;
             }
             .qq a{
