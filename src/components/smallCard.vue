@@ -27,15 +27,11 @@ let color = reactive([
     'rgb(248, 249, 249)',
     'rgb(130, 224, 170)'
 ])
+
 </script>
 
 <style lang="less" scoped>
 .category_card_container{
-    width: 100%;
-    display: flex;
-    flex: 1;
-    justify-content: flex-start;
-    align-items: center;
     .category_card{
         margin: 10px;
         border-radius: 10px;

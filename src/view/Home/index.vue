@@ -1,7 +1,7 @@
 <template>
     <div class="home_container unselectable">
         <!-- 顶部标题壁纸展示 -->
-        <div class="top" style="background-image:url(https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/kiana.png)">
+        <div class="top" style="background-image:url(https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/kiana.webp)">
             <video
             @contextmenu.prevent=""
             class="animate_fadeIn"
@@ -11,7 +11,7 @@
             muted 
             playsinline 
             webkit-playsinline 
-            src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.2/video/kiana2.mp4"
+            src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/video/kiana2.mp4"
             style="position:absolute;width:100%;height:100%;z-index:0;object-fit:cover;"
             @loadeddata="showVideo"
             ></video>
@@ -27,8 +27,10 @@
 
         <el-card class="main_container">
             <div class="main_position">
-                <el-card class="left"></el-card>
-                <el-card class="right" body-style="padding:0;">
+                <div class="left" :style="{width:`${leftSize}%`}">
+                    <div v-for="item in leftArList" :key="item" class="card" :style="{width:`${arCardSize}%`}"><arCard :postName="item"></arCard></div>  
+                </div>
+                <el-card v-if="showRightSideBar" class="right" body-style="padding:0;">
 
                     <!-- 个人描述等等 -->
                     <personnalAbout v-animate="'animate_fadeIn'"></personnalAbout>
@@ -43,7 +45,7 @@
                     <!-- 文章分类，文章标签 -->
 
                     <!-- 最新文章展示 -->
-                    <latestAr v-animate="'animate_fadeIn'"></latestAr>
+                    <latestAr :arList="rightArList" v-animate="'animate_fadeIn'"></latestAr>
                     <!-- 最新文章展示 -->
                 </el-card>
             </div>
@@ -52,14 +54,29 @@
 </template>
 
 <script setup>
-import { uploads,del } from '@/api/upload.js'
+import PubSub from 'pubsub-js'
+import arCard from '../../components/arCard.vue';
 import personnalAbout from './components/personnalAbout.vue';
 import friendMe from './components/friendMe.vue';
 import articleDisplay from './components/article.vue';
 import latestAr from './components/latestAr.vue';
 import getWord from '@/api/randomWord.js'
-
+import { getDirNames } from '../../api/postApi';
+// 每日一言后闪烁条
 let isShowFlash = ref(true)
+
+// 左侧文章卡片列表
+let leftArList = reactive([])
+
+// 右侧文章卡片列表
+let rightArList = reactive([])
+
+// 是否显示右侧栏
+let showRightSideBar = ref(true)
+// 首页左侧文章卡片区域所占比例
+let leftSize = ref(75)
+// 首页文章卡片所占比例
+let arCardSize = ref(33)
 
 // 展示首页视频
 let isShowVideo = ref(false)
@@ -74,6 +91,8 @@ const props = defineProps({
     }
 })
 
+
+// 首页上方向下箭头功能
 const explore = () => {
     const scrollTop = parseFloat(props.scroller.$el.children[2].children[0].style.transform.split('(')[1]);
     const to = window.innerHeight
@@ -88,28 +107,47 @@ const explore = () => {
     }, 3)
 }
 
-
-let upload = async(e) => {
-    const file = e.target.files[0]
-
-    const res = await uploads({
-        dir_path:'./',
-        file
-    })
-}
-
-let delete1 = async() => {
-    const res = await del({
-        file_path:'./4a5b2f364f094c528987da529cda6611.jpg'
-    })
-}
-
+// 每日一言文字
 let word = ref('')
 let text = ref('')
-
+// 获取每日一言
 const getwords = async() => {
     const {data} = await getWord()
     word.value = data.hitokoto + ' ' + '——' +  data.from
+}
+
+let getPosts = async() => {
+    // 获取文章
+    const { data:arList } = await getDirNames({
+        dir_path:"./posts/postVirtual"
+    })
+    for(let i = 0;i < 15;i++){
+        leftArList.push(arList.data.dir_names[i])
+    }
+    for(let i = 0;i < 5;i++){
+        rightArList.push(arList.data.dir_names[i])
+    }
+}
+
+// 页面大小改变函数
+const changeSizes = (size) => {
+    if(size<=1500){
+        arCardSize.value = 48
+        if(size<=1300) {
+            showRightSideBar.value = false
+            leftSize.value = 99
+            if(size<=840) {
+                arCardSize.value = 99
+            } else {
+                arCardSize.value = 48
+            }
+        } else {
+            showRightSideBar.value = true
+            leftSize.value = 75
+        }
+    } else {
+        arCardSize.value = 33
+    }
 }
 
 onMounted(async()=>{
@@ -123,7 +161,13 @@ onMounted(async()=>{
             clearInterval(timer)
         }
     }, 200);
-
+    let mountedSize = document.body.clientWidth
+    changeSizes(mountedSize)
+    // 网页大小改变时监听
+    PubSub.subscribe('homeSizeChange',(a,size)=>{
+        changeSizes(size)
+    })
+    getPosts()
 })
 
 </script>
@@ -142,7 +186,7 @@ onMounted(async()=>{
 }
 .animate_fadeIn{
     animation: fadeIn;
-    animation-duration: 0.5s;
+    animation-duration: 1s;
 }
 .animate_flash_fast{
     animation: flash;
@@ -159,7 +203,7 @@ onMounted(async()=>{
     .top{
         position: relative;
         width: 100vw;
-        min-width: 930px;
+        min-width: 375px;
         height: 100vh;
         background-size: cover;
         background-position: center center;
@@ -217,11 +261,19 @@ onMounted(async()=>{
         .main_position{
             width: 80vw;
             display: flex;
+            align-items: flex-start;
             .left{
-                flex: 1;
+                width: 75%;
+                display: flex;
+                align-items: flex-start;
+                flex-wrap: wrap;
                 background: rgba(0, 0, 0, 0);
                 border: none;
                 box-shadow: none;
+                .card{
+                    box-sizing: border-box;
+                    padding:  0 10px 20px 10px;
+                }
             }
             .right{
                 width: 25%;

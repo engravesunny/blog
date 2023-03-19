@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="categoryPage_container unselectable">
-            <div class="categoryPage"  :style="{width:`${defaultWidth}%`}">
+        <div class="container unselectable">
+            <div class="Page"  :style="{width:`${defaultWidth}%`}">
                 <div class="top">
                     <!-- 分类标题 -->
                     <div class="title"><h1>Post Archive</h1></div>
@@ -31,24 +31,45 @@ import rightNav from '../../../components/rightNav.vue';
 import placeOrder from '../article/components/placeOrder.vue';
 
 let showRightNav = ref(true)
-let defaultWidth = ref(60)
+let defaultWidth = ref(55)
 
+let archiveArList = reactive([])
+
+let getDateInfo = () => {
+    
+}
+
+onMounted(()=>{
+    if(document.body.clientWidth<1000){
+        defaultWidth.value = 80
+        showRightNav.value = false
+    }
+    PubSub.subscribe('closeSide',()=>{
+        defaultWidth.value = 80
+        showRightNav.value = false
+    })
+    PubSub.subscribe('openSide',()=>{
+        defaultWidth.value = 55
+        showRightNav.value = true
+    })
+})
 
 </script>
     
 <style lang="less" scoped>
-    .categoryPage_container{
+    .container{
         margin-top: 75px;
         position: relative;
         width: 100%;
         display: flex;
         justify-content: center;
-        .categoryPage{
+        .Page{
             padding: 20px;
             position: relative;
             border-radius: 10px;
             border: 1px solid #fff;
             width: 60%;
+            min-width:375px;
             background: rgba(255, 255, 255, 0.5);
             box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
             display: flex;

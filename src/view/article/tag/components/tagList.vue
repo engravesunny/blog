@@ -2,7 +2,7 @@
     <div class="tagList_container">
         <div class="tags_box">
             <div class="tags_item" v-for="(item,index) in tagList" :key="index">
-                <div class="tags_text" :style="{fontSize:`${(1+item.num/5)*multiple}px`,color:`${textColor[Math.floor(Math.random()*7)]}`}">
+                <div class="tags_text" :style="{fontSize:`${(1+item.num/15)*multiple}px`,color:`${textColor[Math.floor(Math.random()*7)]}`}">
                     {{item.name}}
                     <div v-if="isShowNum" class="num">
                         {{item.num}}
@@ -15,9 +15,19 @@
 
 <script setup>
 
+import { getDirNames } from '../../../../api/postApi.js'
 const route = useRoute()
 
-let multiple = ref(15)
+const props = defineProps({
+    tagFinalList:{
+        type:Array,
+        default:[]
+    }
+})
+
+
+
+let multiple = ref(20)
 
 let textColor = reactive([
     'rgb(133, 200, 234)',
@@ -29,33 +39,7 @@ let textColor = reactive([
     'rgb(212, 242, 104)',
     'rgb(219, 160, 50)'
 ])
-
-let tagList = reactive([
-    {name:'标签1',num:1},
-    {name:'标签2',num:1},
-    {name:'标签3',num:1},
-    {name:'标签4',num:1},
-    {name:'标签5',num:1},
-    {name:'标签6',num:1},
-    {name:'标签7',num:7},
-    {name:'标签8',num:8},
-    {name:'标签9',num:9},
-    {name:'标签10',num:10},
-    {name:'标签11',num:4},
-    {name:'标签12',num:4},
-    {name:'标签13',num:4},
-    {name:'标签14',num:4},
-    {name:'标签15',num:16},
-    {name:'标签16',num:4},
-    {name:'标签17',num:4},
-    {name:'标签18',num:4},
-    {name:'标签19',num:18},
-    {name:'标签20',num:9},
-    {name:'标签21',num:9},
-    {name:'标签22',num:13},
-    {name:'标签23',num:9},
-    {name:'标签24',num:9},
-])
+let tagList = reactive([])
 
 let isShowNum = ref(true)
 
@@ -63,10 +47,21 @@ onMounted(()=>{
     tagList = tagList.sort(()=>{ return Math.random()-0.5})
 })
 
+watch(()=>props,(val)=>{
+    if(val.tagFinalList.length){
+        tagList.splice(0,tagList.length)
+        val.tagFinalList.forEach(item => {
+            tagList.push(item)
+        });
+    }
+    tagList = tagList.sort(()=>{ return Math.random()-0.5})
+},{deep:true,immediate:true})
+
+
 watch(()=>route,(val)=>{
     if(val.path==='/home'){
         isShowNum.value = false
-        multiple.value = 8
+        multiple.value = 15
     }
 },{
     deep:true,
@@ -97,7 +92,7 @@ watch(()=>route,(val)=>{
             text-decoration: underline;
         }
         .num{
-            font-size: 18px;
+            font-size: 12px;
             position: absolute;
             top: -5px;
             right: -10px;

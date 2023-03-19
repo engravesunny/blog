@@ -6,7 +6,7 @@ const request = axios.create({
 })
 
 request.interceptors.request.use(config=>{
-    if(config.url === '/uploadFile'){
+    if(config.url === '/uploadFile'||config.url === '/getDirNames'){
         config.headers['Content-Type'] = 'multipart/form-data'
     }
     return config

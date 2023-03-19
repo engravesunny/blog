@@ -8,7 +8,7 @@
         <!-- logo -->
         <div class="logo">
             <div class="logo_img">
-                <img src="../../../../assets/img/logo.png" alt="">
+                <img src="../../../../assets/img/logo.webp" alt="">
             </div>
             <div class="logo_name">刻猫猫的笔记本</div>
         </div>
@@ -180,20 +180,44 @@ let controls = reactive(
 )
 let timer = ref(null);
 
-const showFn = () => {
-    window.onresize = () => {
-        if(document.body.clientWidth < 1000) {
+let windowSizeChange = (size) => {
+    if(size < 1500) {
+        if(size < 1250) {
+            if(size < 1000) {
+                PubSub.publish('articleListSizeChange',size)
+                showHam.value = true
+            } else {
+                PubSub.publish('articleListSizeChange',size)
+                showHam.value = false
+                isOpenMenu.value = 0
+                isShowMark.value = false
+                mark.value = 0
+                markw.value = 0
+            }
             PubSub.publish('closeSide')
-            showHam.value = true
         } else {
             PubSub.publish('openSide')
-            showHam.value = false
-            isOpenMenu.value = 0
-            isShowMark.value = false
-            mark.value = 0
-            markw.value = 0
         }
+        PubSub.publish('homeSizeChange',size)
+    } else {
+
+        PubSub.publish('homeSizeChange',size)
     }
+}
+
+const showFn = () => {
+    timer.value = null;
+    window.onresize = () => {
+    if (timer.value) {
+        clearTimeout(timer);
+    }
+    timer.value = setTimeout(() => {
+        console.log(1);
+        const size = document.body.clientWidth;
+        windowSizeChange(size);
+        timer.value = null;
+    }, 200); // 限制事件触发的最小间隔为200ms
+    };
 }
 
 const showDownSelect = (item) => {
@@ -249,7 +273,7 @@ onMounted(()=>{
     top: 0;
     left: 0;
     width: 100%;
-    min-width: 500px;
+    min-width: 375px;
     height: 55px;
     // background-color: pink;
     z-index: 999;

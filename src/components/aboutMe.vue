@@ -1,20 +1,20 @@
 <template>
     <div class="left">
         <div class="avatar">
-            <img src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/avatar.jpg" alt="">
+            <img src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/avatar.jpg" alt="">
         </div>
         <div class="nav">
             <div class="article">
                 <div>文章</div>
-                <div>12</div>
+                <div>{{arNum}}</div>
             </div>
             <div class="tag">
                 <div>标签</div>
-                <div>12</div>
+                <div>{{tagNum}}</div>
             </div>
             <div class="category">
                 <div>分类</div>
-                <div>12</div>
+                <div>{{caNum}}</div>
             </div>
         </div>
         <div class="btn">
@@ -26,6 +26,27 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import { getDirNames } from '../api/postApi.js'
+let arNum = ref(0)
+let caNum = ref(0)
+let tagNum = ref(0)
+onMounted(async()=>{
+   const { data:ar } = await getDirNames({
+        dir_path:'./posts/postVirtual'
+   }) 
+   arNum.value = ar.data.dir_names.length
+   const { data:ca } = await getDirNames({
+        dir_path:'./posts/category'
+   }) 
+   caNum.value = ca.data.dir_names.length
+   const { data:tag } = await getDirNames({
+        dir_path:'./posts/tag'
+   }) 
+   tagNum.value = tag.data.dir_names.length
+})
+</script>
 
 <style lang="less" scoped>
 .left{
@@ -79,9 +100,11 @@
             border: none;
             width: 80%;
             height: 100%;
-            a{
-                color: #fff;
-            }
+            color: #fff;
+            background-color: #0665ff;
+        }
+        .button:hover{
+            box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
         }
     }
 }

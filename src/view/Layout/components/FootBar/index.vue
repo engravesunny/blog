@@ -13,7 +13,7 @@
         <div class="bottom">
             <div class="mes1">Copyright © 2023 刻猫猫的笔记本</div>
             <div class="mes2">
-                <img src="../../../../assets/img/icp.png" alt="">
+                <img src="../../../../assets/img/icp.webp" alt="">
                 <a href="https://beian.miit.gov.cn/" _blank>鲁ICP备2023003074号</a>
                 </div>
         </div>
@@ -53,7 +53,7 @@
             justify-content: space-around;
             align-items: center;
             .item{
-                font-size: 16px;
+                font-size: 0.1rem;
                 color: rgba(255, 255, 255,0.9);
                 a{
                     color: rgba(255, 255, 255,0.9);

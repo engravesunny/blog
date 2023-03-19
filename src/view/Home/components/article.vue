@@ -1,8 +1,8 @@
 <template>
     <div class="article">
         <div class="title">
-            <div class="tag iconfont" :class="{active:showWhat === 'tag'}" @click="showTag">&#xe62f; 文章标签</div>
-            <div class="category iconfont" :class="{active:showWhat === 'category'}" @click="showCategory">&#xe811; 文章分类</div>
+            <div class="tag shenglue iconfont" :class="{active:showWhat === 'tag'}" @click="showTag">&#xe62f; 文章标签</div>
+            <div class="category shenglue iconfont" :class="{active:showWhat === 'category'}" @click="showCategory">&#xe811; 文章分类</div>
             <div class="strip" :style="{transform:`translate(${stripTranslateX}%)`}"></div>
         </div>
         <div class="display">
@@ -10,7 +10,7 @@
                 <tagList></tagList>
             </div>
             <div v-if="showWhat==='category'" class="category_art">
-                <smallCard></smallCard>
+                <smallCard v-for="item in categoryList" :key="item" :name="item"></smallCard>
             </div>
         </div>
     </div>
@@ -19,20 +19,35 @@
 <script setup>
 import tagList from '../../article/tag/components/tagList.vue';
 import smallCard from '../../../components/smallCard.vue';
-
-let stripTranslateX = ref(310)
+import { getDirNames } from '../../../api/postApi';
+let stripTranslateX = ref(300)
 
 let showWhat = ref('category')
 
 let showTag = () => {
-    stripTranslateX.value = 65
+    stripTranslateX.value = 75
     showWhat.value = 'tag'
 }
 let showCategory = () => {
-    stripTranslateX.value = 310
+    stripTranslateX.value = 300
     showWhat.value = 'category'
 }
 
+let categoryList = reactive([]) 
+
+let getInfo = async() => {
+    categoryList.splice(0,categoryList.length)
+    const { data:category } = await getDirNames({
+        dir_path:'./posts/category'
+    })
+    category.data.dir_names.forEach(item => {
+        categoryList.push(item)
+    });
+}
+
+onMounted(()=>{
+    getInfo()
+})
 
 </script>
 
@@ -93,6 +108,11 @@ let showCategory = () => {
         border-radius: 25px;
         padding: 20px;
         box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
+        .category_art{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
     }
 }
     

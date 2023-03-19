@@ -1,0 +1,57 @@
+syntax = "v1"
+
+service core {
+	@handler UploadFile
+	post /api/uploadFile (UploadFileRequest)
+	@handler DeleteFile
+	post /api/deleteFile (DeleteFileRequest)
+	@handler CreateDir
+	post /api/createDir (CreateDirRequest)
+	@handler GetDirNames
+	get /api/getDirNames (GetDirNamesRequest) returns (GetDirNamesResponse)
+	@handler GetAllFileInfo
+	get /api/getAllFileInfo (GetAllFileInfoRequest) returns (GetAllFileInfoResponse)
+}
+
+type (
+	UploadFileRequest {
+		DirPath string `form:"dir_path"`
+	}
+)
+
+type (
+	DeleteFileRequest {
+		FilePath string `json:"file_path"`
+	}
+)
+
+type (
+	CreateDirRequest {
+		DirPath string `json:"dir_path"`
+	}
+)
+
+type (
+	GetDirNamesRequest {
+		DirPath string `form:"dir_path"`
+	}
+	GetDirNamesResponse {
+		DirNames []string `json:"dir_names"`
+	}
+)
+
+type (
+	GetAllFileInfoRequest {
+		DirPath string `form:"dir_path"`
+	}
+	GetAllFileInfoResponse {
+		Files []*FileInfo `json:"files"`
+	}
+)
+
+type FileInfo {
+	Name    string `json:"name"`
+	Size    int64  `json:"size"`
+	ModTime string `json:"mod_time"`
+}
+

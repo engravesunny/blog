@@ -4,23 +4,25 @@
             <div class="top">
                 <!-- 分类标题 -->
                 <div class="title"><h1>Post Tags</h1></div>
-                <smallCard></smallCard>
+                <div class="tagCard" v-if="!loading">
+                    <smallCard @click="toTag(item.name)" v-for="item in tagFinalList" :key="item.name" :name="item.name" :num="item.num"></smallCard>
+                </div>
             </div>
 
             <!-- 标签概览列表 -->
-            <div class="tagList">
-                <tagList></tagList>
+            <div v-if="!isShowArList" class="tagList">
+                <tagList :tagFinalList="tagFinalList"></tagList>
             </div>
 
             <!-- 文章卡片列表 -->
-            <div v-if="false" class="article_list_display">
+            <div v-else class="article_list_display">
                 <!-- 具体分类列表展示 -->
                 <div class="article_list">
                     <!-- 返回按钮 -->
                     <div class="over">
-                        <div class="back iconfont">&#xe60b; 返回</div>
+                        <div class="back iconfont" @click="back(false)">&#xe60b; 返回</div>
                     </div>
-                    <articleList></articleList>
+                    <articleList :articleList="tagArList"></articleList>
                 </div>
             </div>
             <rightNav v-if="showRightNav"></rightNav>
@@ -30,12 +32,85 @@
 </template>
 
 <script setup>
+import articleList from '../../../components/articleList.vue';
 import smallCard from '../../../components/smallCard.vue'
 import tagList from './components/tagList.vue'
 import placeOrder from '../article/components/placeOrder.vue';
+import { getDirNames } from '../../../api/postApi.js'
 let showRightNav = ref(true)
+let loading = ref(false)
+let defaultWidth = ref(55)
+let isShowArList = ref(false)
+// 标签列表
+let tagsList = reactive([])
+// 最终标签列表
+let tagFinalList = reactive([])
+// 具体标签文章列表
+let tagArList = reactive([])
+// 展示具体标签文章列表
+let toTag = async(item) => {
+    tagArList.splice(0,tagArList.length)
+    const { data:articleData } = await getDirNames({
+        dir_path:'./posts/tag/' + item
+    })
+    articleData.data.dir_names.forEach(item=>{
+        tagArList.push(item)
+    })
+    back(true)
+}
 
-let defaultWidth = ref(60)
+let back = (item) => {
+    isShowArList.value = item
+}
+
+// 获取标签列表
+let getTags = async() => {
+    tagsList.splice(0,tagsList.length)
+    const { data:tags } = await getDirNames({
+        dir_path:'./posts/tag'
+    })
+    tags.data.dir_names.forEach(element => {
+        tagsList.push(element)
+    });
+}
+// 获取标签数量
+let getTagNum = async(tag) => {
+    tagFinalList.splice(0,tagFinalList.length)
+    const { data:tagNum } = await getDirNames({
+        dir_path:`./posts/tag/${tag}/`
+    })
+    tagFinalList.push({
+        name:tag,
+        num:tagNum.data.dir_names.length
+    })
+}
+
+onMounted(async()=>{
+    await getTags()
+    await tagsList.forEach((item,index) => {
+        getTagNum(item) 
+        if(index === 0){
+            loading.value = true
+        } else if(index === tagsList.length-1) {
+            loading.value = false
+        }
+    });
+    if(window.innerWidth<1000){
+        defaultWidth.value = 80
+        showRightNav.value = false
+    }
+    PubSub.subscribe('closeSide',()=>{
+        defaultWidth.value = 80
+        showRightNav.value = false
+    })
+    PubSub.subscribe('openSide',()=>{
+        defaultWidth.value = 55
+        showRightNav.value = true
+    })
+    PubSub.subscribe('toTag',(a,name)=>{
+        toTag(name)
+    })
+})
 
 </script>
 
@@ -51,7 +126,8 @@ let defaultWidth = ref(60)
             position: relative;
             border-radius: 10px;
             border: 1px solid #fff;
-            width: 60%;
+            width: 55%;
+            min-width: 480px;
             background: rgba(255, 255, 255, 0.5);
             box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -69,6 +145,12 @@ let defaultWidth = ref(60)
                     font-size: 2em;
                     margin: 0 0 30px 0;
                 }
+                .tagCard{
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-start;
+                    flex-wrap: wrap;
+                }
             }
             .tagList{
                 width: 100%;
@@ -77,6 +159,7 @@ let defaultWidth = ref(60)
                 padding: 20px;
                 border-radius: 25px;
                 background: rgba(255, 255, 255, 0.8);
+                transition: all 0.5s;
             }
             .article_list_display{
                 width: 100%;

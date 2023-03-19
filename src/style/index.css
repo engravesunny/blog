@@ -22,7 +22,7 @@ html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input,
     
     color:#333;
 
-    background-image: url(https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/6.jpg);
+    background-image: url(https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/6.webp);
     background-size: cover;
     background-position: center 10;
     
@@ -164,9 +164,11 @@ html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input,
         text-overflow: ellipsis;
     }
     .shenglue2{
+        display: -webkit-box;
         overflow: hidden;
-        white-space: nowrap;
+        word-wrap: break-word;
         -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         text-overflow: ellipsis;
     }
     .rightNav .el-scrollbar__thumb{

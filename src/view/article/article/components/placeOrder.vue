@@ -13,7 +13,7 @@
 <style lang="less" scoped>
     .rightNav{
         border-radius: 25px;
-        width: 20vw;
+        width: 25vw;
         height: 90vh;
         margin-left: 2vw;
         // background-color: red;

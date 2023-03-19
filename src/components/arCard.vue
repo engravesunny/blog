@@ -1,24 +1,101 @@
 <template>
-    <div v-animate="'animate_zoomIn'" class="card_container">
+    <div @click="toArticle" v-animate="'animate_zoomIn'" class="card_container">
         <div class="top">
-            <img loading="lazy" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/18.jpg" alt="">
+            <img loading="lazy" :src="`https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/${Math.floor(Math.random()*23)}.webp`" alt="">
         </div>
         <div class="bottom">
             <div class="bTop">
                 <div class="left">
-                    <div class="title">文章标题</div>
-                    <div class="publishTime iconfont">&#xe663;几月几日</div>
+                    <div class="title shenglue">{{ postName }}</div>
+                    <div class="publishTime iconfont">&#xe663;{{dateInfo}}</div>
                 </div>
                 <div class="right">
-                    <div class="category iconfont">&#xe811;分类</div>
+                    <div @click.stop="toCategory" class="category iconfont shenglue">&#xe811;{{ category }}</div>
                 </div>
             </div>
             <div class="bBottom">
-                <div class="tag iconfont">&#xe62f; 标签</div>
+                <div @click.stop="toTag(item)" class="tag iconfont" v-for="item in tags" :key="item">&#xe62f; {{ item }}</div>
             </div>
         </div>
     </div>
 </template>
+
+<script setup>
+import { getDirNames, getAllFileInfo } from '@/api/postApi.js'
+const router = useRouter()
+const props = defineProps({
+    postName:{
+        type:String,
+        default:'文章标题'
+    }
+})
+// 分类名
+let category = ref('')
+// 标签信息
+let tags = reactive([])
+// 日期信息
+let dateInfo = ref('')
+
+// 获取分类信息
+let getCategory = async() => {
+    const { data:categoryName } = await getDirNames({
+        dir_path:'./posts/postVirtual/' + props.postName + '/category'
+    })
+    category.value = categoryName.data.dir_names[0]
+}
+// 获取标签信息
+let getTag = async() => {
+    tags.splice(0,tags.length)
+    const { data:tagList } = await getDirNames({
+        dir_path:'./posts/postVirtual/' + props.postName + '/tag'
+    })
+    tagList.data.dir_names.forEach(element => {
+        tags.push(element)
+    });
+}
+// 获取日期信息
+let getDateInfo = async () => {
+    const {data:date_info} = await getAllFileInfo({
+        dir_path:'./posts/postVirtual/' + props.postName + '/'
+    })
+    dateInfo.value = date_info.data.files[0].mod_time
+    console.log(dateInfo.value);
+}
+let timer = null
+// 跳转
+let toCategory = () => {
+    router.push('/category')
+    timer = setTimeout(() => {
+        PubSub.publish('toCategory',category.value)
+        clearTimeout(timer)
+    }, 200);
+}
+let toTag = (item) => {
+    router.push('/tag')
+    timer = setTimeout(() => {
+        PubSub.publish('toTag',item)
+        clearTimeout(timer)
+    }, 500);
+}
+let toArticle = () => {
+    router.push({
+        path:'/article',
+        query:{
+            postName:props.postName,
+            date:dateInfo.value,
+            tag:tags,
+            category:category.value
+        }
+    })
+}
+
+onMounted(()=>{
+    getCategory()
+    getTag()
+    getDateInfo()
+})
+
+</script>
 
 <style lang="less" scoped>
     .animate_zoomIn{
@@ -26,13 +103,14 @@
         animation-duration: 1s; 
     }
     .card_container{
-        margin: 20px;
         width: 100%;
+        min-width: 290px;
         padding: 20px;
         border-radius: 25px;
         background: rgba(255, 255, 255, 0.8);
         box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
         transition: all 0.5s;
+        cursor: pointer;
         .top{
             position: relative;
             border-radius: 20px;
@@ -56,7 +134,7 @@
         .bottom{
             margin: 10px 0;
             width: 100%;
-            height: 100px;
+            height: 110px;
             // background-color: pink;
             .bTop{
                 width: 100%;
@@ -95,28 +173,32 @@
                     text-align: center;
                     .category{
                         line-height: 50px;
-                        font-size: 16px;
+                        font-size: 15px;
+                        font-weight: 700;
                         width: 100%;
                         height: 100%;
                         padding: 5px;
                         cursor: pointer;
                     }
                     .category:hover{
-                        color: rgba(0, 0, 0, 0.7);
+                        color: #989898;
                     }
                 }
             }
             .bBottom{
-                height: 35%;
                 width: 100%;
-                padding: 5px;
+                padding: 3px;
+                display: flex;
+                justify-content: flex-start;
+                flex-wrap: wrap;
                 .tag{
+                    margin: 2px 5px;
+                    padding: 0px 5px;
                     font-size: 14px;
                     line-height: 30px;
                     text-align: center;
                     color: #fff;
                     font-weight: 700;
-                    width: 60px;
                     height: 30px;
                     border-radius: 5px;
                     background-color: #000;

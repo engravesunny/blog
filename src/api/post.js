@@ -1,5 +1,11 @@
-import request from '../utils/request'
+import axios from "axios";
 
-export const getPost = () => request({
-    url:'http://kecat.top/post/后台项目员工管理.md'
+const getPostRequest = axios.create({
+    baseURL:'/api'
 })
+
+const getPost = data=>getPostRequest({
+    method:'GET',
+    url:'/post/' + data
+})
+export default getPost

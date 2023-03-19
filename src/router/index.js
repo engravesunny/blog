@@ -78,6 +78,11 @@ const routes = [
                 component: () => import('@/view/article/article/index.vue')
             }
         ]
+    },
+    {
+        path:'/BackgroundManagement',
+        name:"BackgroundManagement",
+        component:()=>import('../BackgroundManagement/index.vue')
     }
 ];
 
