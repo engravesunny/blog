@@ -1,12 +1,12 @@
 <template>
     <!-- github，qq，微信，邮箱等等 -->
     <div class="btn">
-        <div class="email iconfont"><a href="https://outlook.live.com/" target="_blank">&#xe908;</a></div>
-        <div class="qq iconfont"><a href="http://wpa.qq.com/msgrd?v=3&uin=3170557037&site=qq&menu=yes" target="_blank">&#xe882;</a></div>
-        <div class="wechat iconfont"><a href="" target="_blank">&#xe883;</a></div>
-        <div class="github iconfont"><a href="https://github.com/engravesunny?tab=repositories" target="_blank">&#xe885;</a></div>
-        <div class="netease-cloud-music iconfont"><a href="https://music.163.com/#/user/home?id=427854158" target="_blank">&#xe753;</a></div>
-        <div class="bilibili iconfont"><a href="https://space.bilibili.com/244375982/dynamic" target="_blank">&#xe62c;</a></div>
+        <div class="email iconfont"><a href="https://outlook.live.com/" target="_blank" class="iconfont email_text">&#xe908;</a></div>
+        <div class="qq iconfont"><a href="http://wpa.qq.com/msgrd?v=3&uin=3170557037&site=qq&menu=yes" target="_blank" class="iconfont qq_text">&#xe882;</a></div>
+        <div class="wechat iconfont"><a href="" target="_blank" class="iconfont wechat_text">&#xe883;</a></div>
+        <div class="github iconfont"><a href="https://github.com/engravesunny?tab=repositories" target="_blank" class="iconfont github_text">&#xe885;</a></div>
+        <div class="netease-cloud-music iconfont"><a href="https://music.163.com/#/user/home?id=427854158" target="_blank" class="iconfont netease-cloud-music_text">&#xe753;</a></div>
+        <div class="bilibili iconfont"><a href="https://space.bilibili.com/244375982/dynamic" target="_blank" class="iconfont bilibili_text">&#xe62c;</a></div>
     </div>
     <!-- github，qq，微信，邮箱等等 -->
 </template>
@@ -29,6 +29,9 @@
             flex-wrap: wrap;
             margin-bottom: 10px;
             .email,.netease-cloud-music,.qq,.wechat,.github,.bilibili{
+                .email_text,.netease-cloud-music_text,.qq_text,.wechat_text,.github_text,.bilibili_text{
+                    font-size: 50px;
+                }
                 border-radius: 15px;
                 box-sizing: border-box;
                 margin: 5px;

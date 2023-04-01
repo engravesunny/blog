@@ -75,6 +75,7 @@ watch(()=>props,(val)=>{
         justify-content: space-between;
         overflow: hidden;
         transition: transform 0.3s;
+        cursor: pointer;
         .left{
             position: relative;
             width: 30%;
@@ -88,11 +89,11 @@ watch(()=>props,(val)=>{
                 left: 50%;
                 transform: translate(-50%,-50%);
                 border-radius: 5px;
-                width: 100%;
-                transition: width 0.5s;
+                height: 100%;
+                transition: height 0.5s;
             }
             img:hover{
-                width: 120%;
+                height: 120%;
             }
         }
         .right{

@@ -5,18 +5,20 @@
                 <div class="top">
                     <!-- 分类标题 -->
                     <div class="title"><h1>Post Archive</h1></div>
-                    <smallCard></smallCard>
+                    <div class="dateBox">
+                        <smallCard @click="getDatePost(item)" v-for="item in dateList" :key="item" :name="item"></smallCard>
+                    </div>
                 </div>
 
                 <!-- 文章卡片列表 -->
-                <div v-if="false" class="article_list_display">
+                <div v-if="true" class="article_list_display">
                     <!-- 具体分类列表展示 -->
                     <div class="article_list">
                         <!-- 返回按钮 -->
                         <div class="over">
                             <div class="back iconfont">&#xe60b; 返回</div>
                         </div>
-                        <articleList></articleList>
+                        <articleList :articleList="postList" ></articleList>
                     </div>
                 </div>
                 <rightNav v-if="showRightNav"></rightNav>
@@ -27,16 +29,47 @@
 </template>
 
 <script setup>
+import articleList from '@/components/articleList.vue'
 import rightNav from '../../../components/rightNav.vue';
 import placeOrder from '../article/components/placeOrder.vue';
-
+import { getDirNames } from '../../../api/postApi';
 let showRightNav = ref(true)
 let defaultWidth = ref(55)
 
+let dateList = reactive([])
+
 let archiveArList = reactive([])
 
-let getDateInfo = () => {
-    
+let postList = reactive([]);
+
+let getPosts = async() => {
+    postList.splice(0,postList.length)
+    const { data:postListInfo } = await getDirNames({
+        dir_path: './posts/postVirtual'
+    }) 
+    postListInfo.data.dir_names.forEach(item => {
+        postList.push(item);
+    });
+}
+
+let getDateLsit = async() => {
+    dateList.splice(0,dateList.length)
+    const { data:dateListInfo } = await getDirNames({
+        dir_path: './posts/date'
+    }) 
+    dateListInfo.data.dir_names.forEach(item => {
+        dateList.push(item);
+    })
+}
+
+let getDatePost = async(date) => {
+    postList.splice(0,postList.length)
+    const { data:postListInfo } = await getDirNames({
+        dir_path:'./posts/date/' + date
+    })
+    postListInfo.data.dir_names.forEach(item => {
+        postList.push(item);
+    })
 }
 
 onMounted(()=>{
@@ -52,6 +85,8 @@ onMounted(()=>{
         defaultWidth.value = 55
         showRightNav.value = true
     })
+    getPosts()
+    getDateLsit()
 })
 
 </script>
@@ -70,6 +105,7 @@ onMounted(()=>{
             border: 1px solid #fff;
             width: 60%;
             min-width:375px;
+            min-height: 900px;
             background: rgba(255, 255, 255, 0.5);
             box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -84,8 +120,14 @@ onMounted(()=>{
                 align-items: center;
                 box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
                 .title{
-                    font-size: 2em;
+                    font-size: 30px;
                     margin: 0 0 30px 0;
+                }
+                .dateBox{
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-start;
+                    flex-wrap: wrap;
                 }
             }
             .article_list_display{

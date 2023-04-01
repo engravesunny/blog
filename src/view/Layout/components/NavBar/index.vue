@@ -197,11 +197,21 @@ let windowSizeChange = (size) => {
             PubSub.publish('closeSide')
         } else {
             PubSub.publish('openSide')
+            showHam.value = false
+            isOpenMenu.value = 0
+            isShowMark.value = false
+            mark.value = 0
+            markw.value = 0
         }
         PubSub.publish('homeSizeChange',size)
     } else {
-
+        PubSub.publish('openSide')
         PubSub.publish('homeSizeChange',size)
+        showHam.value = false
+        isOpenMenu.value = 0
+        isShowMark.value = false
+        mark.value = 0
+        markw.value = 0
     }
 }
 

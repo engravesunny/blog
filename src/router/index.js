@@ -1,6 +1,7 @@
 import { ElMessage } from "element-plus";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
+import PubSub from "pubsub-js";
 
 const routes = [
     {
@@ -87,25 +88,16 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes
 });
 
 // const routeNeedToken = ["/myLike","/suggestSong","/songList"]
 
-// router.beforeEach((to,from,next)=>{
-//     if(routeNeedToken.indexOf(to.fullPath)>-1){
-//         // 未登录
-//         if(!localStorage.getItem('userInfo')){
-//             ElMessage('请您先登录')
-//             next('/findSong')
-//         } else {
-//             next()
-//         }
-//     }else {
-//         next()
-//     }
-// })
+router.beforeEach((to,from,next)=>{
+    PubSub.publish('scrollToFast',0)
+    next()
+})
 
 
 export default router;

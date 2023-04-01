@@ -7,7 +7,7 @@
                 <div class="bottom">
                     <div class="date iconfont">&#xe663; {{ date }}</div>
                     <div class="tagList iconfont">
-                        <div class="tag" v-for="item in tagList" :key="item">&#xe62f; {{ item }}</div>
+                        <div class="tag shenglue iconfont" v-for="item in tagList" :key="item">&#xe62f; {{ item }}</div>
                     </div>
                 </div>
             </div>
@@ -76,6 +76,7 @@ watch(()=>route,(val)=>{
             })
         }).then(()=>{
             Prism.highlightAll();
+            PubSub.publish('getHead')
         }).catch(error=>{
             console.log(error);
         })

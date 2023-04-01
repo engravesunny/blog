@@ -6,31 +6,13 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Inspect from 'vite-plugin-inspect'
 import postcssPresetEnv from 'postcss-preset-env';
-import postCssPxToRem from 'postcss-pxtorem'  //移动端适配
+import postCssPxToRem from 'postcss-pxtorem';
 import { prismjsPlugin } from 'vite-plugin-prismjs'
 import CompressionPlugin from 'vite-plugin-compression'
 const pathSrc = path.resolve(__dirname, 'src')
 
 export default defineConfig({
-  // 移动端适配
-  css: {
-    postcss: {
-      plugins: [
-        // postcssPresetEnv({
-        //   stage: 3, 
-        //   features: {
-        //     'custom-properties': {
-        //       preserve: false, 
-        //     },
-        //   },
-        // }),
-        // postCssPxToRem({
-        //   rootValue: 37.5, // 1rem的大小
-        //   propList: ['*'], // 需要转换的属性，这里选择全部都进行转换
-        // })
-      ]
-    }
-  },
+  base:'./',
   server:{
     port: 4000,
     proxy: {
@@ -55,6 +37,29 @@ export default defineConfig({
     },
   },
   plugins: [
+    postcssPresetEnv({
+      stage: 3, 
+      features: {
+        'custom-properties': {
+          preserve: false, 
+        },
+      },
+    }),
+    postCssPxToRem({
+      propList: ['*'],
+      replace: true,
+      selectorBlackList: ['html'],
+      mediaQuery: true,
+      minPixelValue: 0,
+      rootValue: {
+        mobile: 37.5,
+        desktop: 160,
+      },
+      rootValue: {
+        mobile: 'var(--root-value-mobile)',
+        desktop: 'var(--root-value-desktop)',
+      },
+    }),
     CompressionPlugin({
       algorithm: 'brotliCompress',
       ext: '.br',

@@ -137,7 +137,7 @@ onMounted(async()=>{
                 align-items: center;
                 box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
                 .title{
-                    font-size: 2em;
+                    font-size: 30px;
                     margin: 0 0 30px 0;
                 }
                 .categoryCard{

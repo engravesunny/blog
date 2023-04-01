@@ -78,6 +78,7 @@ onMounted(async()=>{
             text-align: center;
             margin:0 15px;
             font-size: 16px;
+            font-weight: 700;
         }
         .tag{
             text-align: center;
@@ -85,6 +86,7 @@ onMounted(async()=>{
             border-right: 1px solid #000;
             padding:0 15px;
             font-size: 16px;
+            font-weight: 700;
         }
     }
     .btn{

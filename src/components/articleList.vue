@@ -23,6 +23,8 @@ let liWidth = ref(45)
 onMounted(()=>{
     if(document.body.clientWidth<=1000){
         liWidth.value=95
+    } else {
+        liWidth.value = 45
     }
     PubSub.subscribe('articleListSizeChange',(a,size)=>{
         if(size<=1000){

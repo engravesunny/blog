@@ -2,7 +2,7 @@
     <div class="tagList_container">
         <div class="tags_box">
             <div class="tags_item" v-for="(item,index) in tagList" :key="index">
-                <div class="tags_text" :style="{fontSize:`${(1+item.num/15)*multiple}px`,color:`${textColor[Math.floor(Math.random()*7)]}`}">
+                <div class="tags_text" @click="toTag(item.name)" :style="{fontSize:`${(1+item.num/15)*multiple}px`,color:`${textColor[Math.floor(Math.random()*7)]}`}">
                     {{item.name}}
                     <div v-if="isShowNum" class="num">
                         {{item.num}}
@@ -25,7 +25,9 @@ const props = defineProps({
     }
 })
 
-
+let toTag = (name) => {
+    PubSub.publish('toTag', name)
+}
 
 let multiple = ref(20)
 

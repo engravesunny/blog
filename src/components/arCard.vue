@@ -125,6 +125,7 @@ onMounted(()=>{
                 left: 50%;
                 transform: translate(-50%,-50%);
                 width: 100%;
+                object-fit: cover;
                 transition: width 0.5s;
             }
             img:hover{

@@ -57,6 +57,7 @@
 </template>
 
 <script setup>
+import formatDate from '@/utils/dateFormat.js'
 import removeFileExtension from '../utils/fileTrueName.js'
 import { getFileIcon } from '../utils/file_icons.js'
 import { getDirNames, getAllFileInfo, uploads, del, createDir } from "@/api/postApi.js"
@@ -139,6 +140,7 @@ let tagName = ref('')
 
 // 确定上传，取消上传
 let btnOkToUpload = async(file) => {
+    const nowTime = file.lastModified
     if(categoryName=== '' || tagName=== ''){
         ElMessage({
             type:'error',
@@ -203,6 +205,22 @@ let btnOkToUpload = async(file) => {
                 message:'上传失败'
             })
         }
+        // 上传文件到目标目录
+        const { data:post_tar } = await uploads({
+            dir_path:`../../serve/blogServe/public/blog/post/`,
+            file
+        })
+        if(post_tar.code === 0){
+            ElMessage({
+                type:'success',
+                message:'上传目标文件夹成功'
+            })
+        } else {
+            ElMessage({
+                type:'error',
+                message:'上传目标文件夹失败'
+            })
+        }
 
         // 2.创建分类
         const { data:categoryDir } = await createDir({
@@ -239,6 +257,22 @@ let btnOkToUpload = async(file) => {
             ElMessage({
                 type:'error',
                 message:'分类标签失败'
+            })
+        }
+        // 4.创建时间
+        let dateStr = formatDate(nowTime)
+        const { data:dateDir } = await createDir({
+            dir_path:`./posts/date/${dateStr}/${removeFileExtension(file_name)}`
+        })
+        if(dateDir.code === 0){
+            ElMessage({
+                type:'success',
+                message:'时间创建成功'
+            })
+        } else {
+            ElMessage({
+                type:'error',
+                message:'时间创建失败'
             })
         }
     }
@@ -343,11 +377,11 @@ let contextMenuBg = (e) => {
 
 
 // kiana
-let loginHost = ref('kiana')
+let loginHost = ref('')
 // 11151207
-let loginPassword = ref('11151207')
+let loginPassword = ref('')
 // 显示后台管理页面
-let isShowManagePage = ref(true)
+let isShowManagePage = ref(false)
 // 登录
 let login = () => {
     if(loginHost.value==='kiana'&&loginPassword.value==='11151207'){

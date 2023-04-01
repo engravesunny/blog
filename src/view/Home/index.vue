@@ -107,6 +107,35 @@ const explore = () => {
     }, 3)
 }
 
+// 滚动指定距离有过程
+const scrollTo = (toThere) => {
+    const scrollTop = parseFloat(props.scroller.$el.children[2].children[0].style.transform.split('(')[1]);
+    let move = (scrollTop/100)*window.innerHeight
+    console.log(move);
+    const increment = Math.abs(toThere - move) / 25
+    const timer = setInterval(()=>{
+        if(move < toThere){
+            props.scroller.setScrollTop(move)
+            move += increment
+            console.log(move,toThere);
+            if (move >= toThere) {
+                clearInterval(timer)
+            }
+        } else {
+            props.scroller.setScrollTop(move)
+            move -= increment
+            console.log(move,toThere);
+            if (move <= toThere) {
+                clearInterval(timer)
+            }
+        }
+    }, 20)
+}
+
+// 滚动到指定位置无过程
+const scrollToFast = (toThere) => {
+    props.scroller.setScrollTop(toThere)
+}
 // 每日一言文字
 let word = ref('')
 let text = ref('')
@@ -118,14 +147,19 @@ const getwords = async() => {
 
 let getPosts = async() => {
     // 获取文章
+    leftArList.splice(0,leftArList.length)
+    rightArList.splice(0,rightArList.length)
     const { data:arList } = await getDirNames({
         dir_path:"./posts/postVirtual"
     })
-    for(let i = 0;i < 15;i++){
-        leftArList.push(arList.data.dir_names[i])
+    console.log(arList);
+    for(let i = 0;i < 18;i++){
+        if(arList.data.dir_names[i]){
+            leftArList.push(arList.data.dir_names[arList.data.dir_names.length - i -1])
+        }
     }
     for(let i = 0;i < 5;i++){
-        rightArList.push(arList.data.dir_names[i])
+        rightArList.push(arList.data.dir_names[arList.data.dir_names.length - i - 1])
     }
 }
 
@@ -146,6 +180,8 @@ const changeSizes = (size) => {
             leftSize.value = 75
         }
     } else {
+        leftSize.value = 75
+        showRightSideBar.value = true
         arCardSize.value = 33
     }
 }
@@ -166,6 +202,12 @@ onMounted(async()=>{
     // 网页大小改变时监听
     PubSub.subscribe('homeSizeChange',(a,size)=>{
         changeSizes(size)
+    })
+    PubSub.subscribe('scrollTo',(a,top)=>{
+        scrollTo(top);
+    })
+    PubSub.subscribe('scrollToFast',(a,to)=>{
+        scrollToFast(to);
     })
     getPosts()
 })

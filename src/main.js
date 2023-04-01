@@ -5,6 +5,9 @@ import './style/index.css'
 import './assets/icon/iconfont/iconfont.css'
 import router from './router'
 import 'amfe-flexible'
+// 引入字体
+import './assets/font/font.css'
+
 
 
 const app = createApp(App)

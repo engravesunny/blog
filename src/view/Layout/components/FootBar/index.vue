@@ -2,12 +2,12 @@
     <div class="footBar_container">
         <div class="top">
             <div class="left">
-                <div class="title">刻猫猫的笔记本</div>
+                <div class="title shenglue">刻猫猫的笔记本</div>
             </div>
             <div class="right">
-                <div class="item"><a target="_blank" href="http://kecat.top/">KECAT.TOP</a></div>
-                <div class="item"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=3170557037&site=qq&menu=yes">QQ:3170557037</a></div>
-                <div class="item"><a href="https://outlook.live.com/">hutao-keqing@outlook.com</a></div>
+                <div class="item shenglue"><a target="_blank" href="http://kecat.top/">KECAT.TOP</a></div>
+                <div class="item shenglue"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=3170557037&site=qq&menu=yes">QQ:3170557037</a></div>
+                <div class="item shenglue"><a href="https://outlook.live.com/">hutao-keqing@outlook.com</a></div>
             </div>
         </div>
         <div class="bottom">
@@ -53,7 +53,7 @@
             justify-content: space-around;
             align-items: center;
             .item{
-                font-size: 0.1rem;
+                font-size: 20px;
                 color: rgba(255, 255, 255,0.9);
                 a{
                     color: rgba(255, 255, 255,0.9);
@@ -68,12 +68,16 @@
         justify-content: flex-end;
         align-items: center;
         color: rgba(255, 255, 255,0.7);
+        .mes1{
+            font-size: 0.3em;
+        }
         .mes2{
-            margin: 5px 0;
+            margin: 0.3em 0;
             cursor: pointer;
             color: rgba(255, 255, 255,0.7);
             a{
                 color: rgba(255, 255, 255,0.7);
+                font-size: 0.3em;
             }
         }
         a:hover{
