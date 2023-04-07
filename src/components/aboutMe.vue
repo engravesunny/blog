@@ -33,18 +33,27 @@ let arNum = ref(0)
 let caNum = ref(0)
 let tagNum = ref(0)
 onMounted(async()=>{
-   const { data:ar } = await getDirNames({
-        dir_path:'./posts/postVirtual'
-   }) 
-   arNum.value = ar.data.dir_names.length
-   const { data:ca } = await getDirNames({
-        dir_path:'./posts/category'
-   }) 
-   caNum.value = ca.data.dir_names.length
-   const { data:tag } = await getDirNames({
-        dir_path:'./posts/tag'
-   }) 
-   tagNum.value = tag.data.dir_names.length
+   if(!localStorage.getItem('ABOUT_ME')){
+        const { data:ar } = await getDirNames({
+            dir_path:'./posts/postVirtual'
+        }) 
+        arNum.value = ar.data.dir_names.length
+        const { data:ca } = await getDirNames({
+                dir_path:'./posts/category'
+        }) 
+        caNum.value = ca.data.dir_names.length
+        const { data:tag } = await getDirNames({
+                dir_path:'./posts/tag'
+        }) 
+        tagNum.value = tag.data.dir_names.length
+        localStorage.setItem('ABOUT_ME',JSON.stringify({arNum:arNum.value,caNum:caNum.value,tagNum:tagNum.value}))
+   } else {
+        const about_me = JSON.parse(localStorage.getItem('ABOUT_ME'))
+        arNum.value = about_me.arNum
+        caNum.value = about_me.caNum
+        tagNum.value = about_me.tagNum
+   }
+   
 })
 </script>
 

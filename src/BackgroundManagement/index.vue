@@ -278,6 +278,7 @@ let btnOkToUpload = async(file) => {
     }
     btnCancleToUpload()
     getDirPath_Doc(dir_path.value)
+    localStorage.removeItem('ABOUT_ME')
     return false
 }
 let btnCancleToUpload = () => {

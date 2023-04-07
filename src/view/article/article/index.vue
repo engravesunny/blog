@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            <div class="markdown-body" v-html="html"></div>
+            <div v-loading="loading" class="markdown-body" v-html="html"></div>
             <rightNav v-if="showRightNav"></rightNav>
         </article>
         <placeOrder v-if="showRightNav"></placeOrder>
@@ -25,6 +25,8 @@ import 'github-markdown-css'
 import Prism from 'prismjs';
 import showdown from 'showdown';
 import getPost from '@/api/post'
+
+let loading = ref(false)
 
 let showRightNav = ref(true)
 
@@ -56,14 +58,19 @@ onMounted(()=>{
 
 watch(()=>route,(val)=>{
     if(val.path==='/article'){
+        loading.value = true
         console.log(val);
         tagList.splice(0,tagList.length)
         postName = val.query.postName
         date = val.query.date
-        val.query.tag.forEach(item=>{
-            tagList.push(item)
-        })
-        const {data} = getPost(encodeURIComponent(val.query.postName+'.md')).then(res=>{
+        if(val?.query?.tag?.forEach){
+            val?.query?.tag?.forEach(item=>{
+                tagList.push(item)
+            })
+        } else {
+            tagList.push(val?.query?.tag)
+        }
+        getPost(encodeURIComponent(val.query.postName+'.md')).then(res=>{
             console.log(res);
             const converter =new showdown.Converter();
             const htmlOutput =converter.makeHtml(res.data);
@@ -74,11 +81,16 @@ watch(()=>route,(val)=>{
                 pre.setAttribute('data-prismjs-copy','复制')
                 pre.setAttribute('data-prismjs-copy-success','复制成功!')
             })
+            loading.value = false
         }).then(()=>{
             Prism.highlightAll();
             PubSub.publish('getHead')
+            loading.value = false
         }).catch(error=>{
+            console.log(111111111);
+            loading.value = false
             console.log(error);
+            
         })
     }
 },{

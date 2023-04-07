@@ -24,4 +24,7 @@ declare module '@vue/runtime-core' {
     SmallArCard: typeof import('./components/smallArCard.vue')['default']
     SmallCard: typeof import('./components/smallCard.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }

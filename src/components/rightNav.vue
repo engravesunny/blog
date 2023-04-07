@@ -32,7 +32,7 @@ let getPosts = async() => {
         dir_path:"./posts/postVirtual"
     })
     for(let i = 0;i < 5;i++){
-        rightArList.push(arList.data.dir_names[i])
+        rightArList.push(arList.data.dir_names[arList.data.dir_names.length - i - 1])
     }
 }
 

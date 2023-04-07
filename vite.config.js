@@ -68,7 +68,7 @@ export default defineConfig({
       include: /\.(js|css|html|json|svg|vue)$/
     }),
     prismjsPlugin({
-			languages: ['javascript','css','less','html','js'],
+			languages: ['javascript','css','less','html','js','typescript','ts'],
       defaultLanguage: 'javascript',
 			// 配置行号插件
 			plugins: ['line-numbers','show-language','inline-color','previewers','toolbar','copy-to-clipboard','match-braces'],
