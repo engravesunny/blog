@@ -59,7 +59,6 @@ let getDateInfo = async () => {
         dir_path:'./posts/postVirtual/' + props.postName + '/'
     })
     dateInfo.value = date_info.data.files[0].mod_time
-    console.log(dateInfo.value);
 }
 let timer = null
 // 跳转

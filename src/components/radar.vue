@@ -73,7 +73,6 @@ watch(()=>props,(val)=>{
     categoryLengthInfo.sort((a,b)=>{
         return val.categoryList.indexOf(a.name) - val.categoryList.indexOf(b.name)
     })
-    console.log(categoryLengthInfo);
     categoryLengthInfo.forEach(item=>{
         categoryLength.push(item.value)
     })

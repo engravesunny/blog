@@ -222,7 +222,6 @@ const showFn = () => {
         clearTimeout(timer);
     }
     timer.value = setTimeout(() => {
-        console.log(1);
         const size = document.body.clientWidth;
         windowSizeChange(size);
         timer.value = null;
@@ -254,7 +253,6 @@ onMounted(()=>{
     }
     showFn()
     PubSub.subscribe('nextTo',(a,item)=>{
-        console.log(item);
         nextToIt(item)
     })
     PubSub.subscribe('closeMenuSideBar',()=>{

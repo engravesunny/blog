@@ -54,6 +54,8 @@
 </template>
 
 <script setup>
+import figlet from 'figlet'
+import standard from 'figlet/importable-fonts/Standard.js'
 import PubSub from 'pubsub-js'
 import arCard from '../../components/arCard.vue';
 import personnalAbout from './components/personnalAbout.vue';
@@ -111,20 +113,17 @@ const explore = () => {
 const scrollTo = (toThere) => {
     const scrollTop = parseFloat(props.scroller.$el.children[2].children[0].style.transform.split('(')[1]);
     let move = (scrollTop/100)*window.innerHeight
-    console.log(move);
     const increment = Math.abs(toThere - move) / 25
     const timer = setInterval(()=>{
         if(move < toThere){
             props.scroller.setScrollTop(move)
             move += increment
-            console.log(move,toThere);
             if (move >= toThere) {
                 clearInterval(timer)
             }
         } else {
             props.scroller.setScrollTop(move)
             move -= increment
-            console.log(move,toThere);
             if (move <= toThere) {
                 clearInterval(timer)
             }
@@ -152,7 +151,6 @@ let getPosts = async() => {
     const { data:arList } = await getDirNames({
         dir_path:"./posts/postVirtual"
     })
-    console.log(arList);
     for(let i = 0;i < 18;i++){
         if(arList.data.dir_names[i]){
             leftArList.push(arList.data.dir_names[arList.data.dir_names.length - i -1])
@@ -186,7 +184,24 @@ const changeSizes = (size) => {
     }
 }
 
+
+// 配色
+
+
+
+
 onMounted(async()=>{
+    figlet.parseFont("Standard", standard);
+
+    figlet.text(
+        "KeMaoMao",
+        {
+            font: "Standard",
+        },
+        function (err, data) {
+            console.log('\x1b[35;40m%s\x1b[0m',data);
+        }
+    );
     await getwords()
     let i = 0
     const timer = setInterval(() => {

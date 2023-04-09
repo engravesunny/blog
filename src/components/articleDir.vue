@@ -35,7 +35,6 @@ const props = defineProps({
 })
 
 let toThisPosition = (child)=> {
-    console.log(child);
     PubSub.publish('scrollTo', child.top);
     active.value = child.title
 }
@@ -48,7 +47,6 @@ let changeActive = (top) => {
         }
         if(top>props.articleDir[0].children[i].top&&top<props.articleDir[0].children[i+1].top){
             active.value = props.articleDir[0].children[i].title
-            console.log('改变active',active.value);
             break;
         }
     }
@@ -61,7 +59,7 @@ onMounted(()=>{
 
 
 watch(()=>props,(val)=>{
-    console.log(val);
+    
 },{
     deep:true,
     immediate:true

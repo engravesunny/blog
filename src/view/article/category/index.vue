@@ -66,7 +66,6 @@ let getCategory = async () => {
     data?.data?.dir_names?.forEach(element => {
         categoryList.push(element)
     });
-    console.log(categoryList);
 }
 
 let categoryLength = reactive([])

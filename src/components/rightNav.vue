@@ -79,7 +79,6 @@ let updateArticleDir = () => {
 
         lastLevelHeadings.push(heading);
     }
-    console.log(headings);
 }
 
 onMounted(()=>{
