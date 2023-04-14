@@ -21,7 +21,9 @@
 </template>
 
 <script setup>
+import toPath from '../utils/toPath';
 import { getDirNames, getAllFileInfo } from '@/api/postApi.js'
+import PubSub from 'pubsub-js';
 const router = useRouter()
 const props = defineProps({
     postName:{
@@ -63,18 +65,10 @@ let getDateInfo = async () => {
 let timer = null
 // 跳转
 let toCategory = () => {
-    router.push('/category')
-    timer = setTimeout(() => {
-        PubSub.publish('toCategory',category.value)
-        clearTimeout(timer)
-    }, 200);
+    toPath('/category',category.value)
 }
 let toTag = (item) => {
-    router.push('/tag')
-    timer = setTimeout(() => {
-        PubSub.publish('toTag',item)
-        clearTimeout(timer)
-    }, 500);
+    toPath('/tag',item)
 }
 let toArticle = () => {
     router.push({

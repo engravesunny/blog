@@ -6,18 +6,17 @@
                     <!-- 分类标题 -->
                     <div class="title"><h1>Post Archive</h1></div>
                     <div class="dateBox">
-                        <smallCard @click="getDatePost(item)" v-for="item in dateList" :key="item" :name="item"></smallCard>
+                        <smallCard :active="title === item" @click="getDatePost(item)" v-for="item in dateList" :key="item" :name="item"></smallCard>
                     </div>
                 </div>
-
                 <!-- 文章卡片列表 -->
                 <div v-if="true" class="article_list_display">
                     <!-- 具体分类列表展示 -->
                     <div class="article_list">
                         <!-- 返回按钮 -->
-                        <div class="over">
+                        <!-- <div class="over" v-if="route.path!=='/archive'">
                             <div class="back iconfont">&#xe60b; 返回</div>
-                        </div>
+                        </div> -->
                         <articleList :articleList="postList" ></articleList>
                     </div>
                 </div>
@@ -35,7 +34,7 @@ import placeOrder from '../article/components/placeOrder.vue';
 import { getDirNames } from '../../../api/postApi';
 let showRightNav = ref(true)
 let defaultWidth = ref(55)
-
+let title = ref('')
 let dateList = reactive([])
 
 let archiveArList = reactive([])
@@ -63,6 +62,7 @@ let getDateLsit = async() => {
 }
 
 let getDatePost = async(date) => {
+    title.value = date
     postList.splice(0,postList.length)
     const { data:postListInfo } = await getDirNames({
         dir_path:'./posts/date/' + date
@@ -137,6 +137,12 @@ onMounted(()=>{
                     margin-top: 40px;
                     width: 100%;
                     height: 60px;
+                    .title{
+                        font-size: 18px;
+                        width: calc(100% - 200px);
+                        display: flex;
+                        align-items: center;
+                    }
                     .back{
                         width: 80px;
                         display: block;

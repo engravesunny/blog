@@ -1,7 +1,7 @@
 <template>
     <div class="category_card_container">
         <!-- 分类卡片 -->
-        <div class="category_card" :style="{backgroundColor:`${color[Math.floor(Math.random()*7)]}`}">{{name}} <span v-if="num">{{ ' ' + num }}</span></div>
+        <div class="category_card" :class="{active:active}" :style="{backgroundColor:`${color[Math.floor(Math.random()*7)]}`}">{{name}} <span v-if="num">{{ ' ' + num }}</span></div>
     </div>
 </template>
 
@@ -15,6 +15,10 @@ const props = defineProps({
     num:{
         type:Number,
         default:0
+    },
+    active:{
+        type:Boolean,
+        default:false
     }
 })
 
@@ -46,6 +50,11 @@ let color = reactive([
         cursor: pointer;
     }
     .category_card:hover{
+        color: #fff;
+        font-weight: 800;
+        background-color: rgb(44, 173, 69) !important;
+    }
+    .active{
         color: #fff;
         font-weight: 800;
         background-color: rgb(44, 173, 69) !important;

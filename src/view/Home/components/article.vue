@@ -17,29 +17,21 @@
 </template>
 
 <script setup>
+import toPath from '../../../utils/toPath';
 import smallCard from '../../../components/smallCard.vue';
 import { getDirNames } from '../../../api/postApi';
 let stripTranslateX = ref(300)
 
 let showWhat = ref('category')
 
-const router = useRouter()
 
 let timer = null
 
 let toTag = (name) => {
-    router.push('/tag')
-    timer = setTimeout(() => {
-        PubSub.publish('toTag',name)
-        clearTimeout(timer)
-    }, 500);
+    toPath('/tag',name)
 }
 let toCategory = (name) => {
-    router.push('/category')
-    timer = setTimeout(() => {
-        PubSub.publish('toCategory',name)
-        clearTimeout(timer)
-    }, 200);
+    toPath('/category',name)
 }
 
 let showTag = () => {

@@ -20,7 +20,6 @@
 <script setup>
 import NavBar from './components/NavBar/index.vue'
 import FootBar from './components/FootBar/index.vue'
-import PubSub from 'pubsub-js'
 // 滚动条
 let scroller = ref(null)
 

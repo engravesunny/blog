@@ -60,7 +60,15 @@ const emit = defineEmits(['explore'])
 
 let nextToIt = (item) => {
     if(item.path){
-        router.push(item.path)
+        if(item.path === '/music'){
+            const a = document.createElement('a')
+            a.href = 'http://kecat.top/music'
+            document.body.appendChild(a)
+            a.click()
+        } else {
+            router.push(item.path)
+        }
+        
     } else {
         return
     }

@@ -5,7 +5,7 @@
                 <!-- 分类标题 -->
                 <div class="title"><h1>Post Categories</h1></div>
                 <div class="categoryCard">
-                    <smallCard @click="toCategory(item)" v-for="item in categoryList" :key="item" :name="item" />
+                    <smallCard @click="toCategory(item)" v-for="item in categoryList" :active="item === title" :key="item" :name="item" />
                 </div>
             </div>
             <div v-if="isShowArList" class="article_list_display">
@@ -14,6 +14,7 @@
                     <!-- 返回按钮 -->
                     <div class="over">
                         <div class="back iconfont" @click="showArList(false)">&#xe60b; 返回</div>
+                        <span class="title"> &nbsp;当前所选分类：<smallCard :name="title"></smallCard></span>
                     </div>
                     <articleList :articleList="categoryArList"></articleList>
                 </div>
@@ -34,12 +35,18 @@ import articleList from '../../../components/articleList.vue';
 import placeOrder from '../article/components/placeOrder.vue'
 import smallCard from '../../../components/smallCard.vue'
 import { getDirNames } from '../../../api/postApi.js'
+
+const route = useRoute()
+let title = ref('')
 // 类别列表
 let categoryList = reactive([])
 
 // 是否显示文章列表
 let isShowArList = ref(false)
 let showArList = (item) => {
+    if(!item){
+        title.value = ''
+    }
     isShowArList.value = item
 }
 // 具体分类文章列表
@@ -47,6 +54,7 @@ let categoryArList = reactive([])
 
 // 点击具体分类
 let toCategory = async(item) => {
+    title.value = item
     categoryArList.splice(0,categoryArList.length)
     const { data } = await getDirNames({
         dir_path:"./posts/category/" + item
@@ -100,12 +108,19 @@ onMounted(async()=>{
         defaultWidth.value = 55
         showRightNav.value = true
     })
-    PubSub.subscribe('toCategory',(a,name)=>{
-        toCategory(name)
-    })
     await getCategory()
     await getLength()
 })
+
+watch(()=>route,(val)=>{
+    if(val.query?.name){
+        toCategory(val.query?.name)
+    }
+},{
+    deep:true,
+    immediate:true
+})
+
 </script>
 
 <style lang="less" scoped>
@@ -162,7 +177,13 @@ onMounted(async()=>{
                     margin-left: 40px;
                     margin-top: 40px;
                     width: 100%;
-                    height: 60px;
+                    height: 120px;
+                    .title{
+                        font-size: 18px;
+                        width: calc(100% - 200px);
+                        display: flex;
+                        align-items: center;
+                    }
                     .back{
                         width: 80px;
                         display: block;
