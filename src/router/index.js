@@ -54,11 +54,6 @@ const routes = [
                 component: () => import('@/view/media/video/index.vue')
             },
             {
-                path: '/music',
-                name: 'music',
-                component: () => import('@/view/media/music/index.vue')
-            },
-            {
                 path: '/me',
                 name: 'me',
                 component: () => import('@/view/about/me/index.vue')
@@ -81,8 +76,8 @@ const routes = [
         ]
     },
     {
-        path:'/BackgroundManagement',
-        name:"BackgroundManagement",
+        path:'/admin',
+        name:"admin",
         component:()=>import('../BackgroundManagement/index.vue')
     }
 ];

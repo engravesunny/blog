@@ -1,7 +1,7 @@
 <template>
     <div @click="toArticle" v-animate="'animate_zoomIn'" class="card_container">
         <div class="top">
-            <img loading="lazy" :src="`https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/${Math.floor(Math.random()*23)}.webp`" alt="">
+            <img loading="lazy" :src="`${baseURL}/image/${Math.floor(Math.random()*23)}.webp`" alt="">
         </div>
         <div class="bottom">
             <div class="bTop">
@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+import { baseURL } from '../constant'
 import toPath from '../utils/toPath';
 import { getDirNames, getAllFileInfo } from '@/api/postApi.js'
 import PubSub from 'pubsub-js';

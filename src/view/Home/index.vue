@@ -1,7 +1,7 @@
 <template>
     <div class="home_container unselectable">
         <!-- 顶部标题壁纸展示 -->
-        <div class="top" style="background-image:url(https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/kiana.webp)">
+        <div class="top" :style="{backgroundImage:`url(${baseURL}/image/kiana.webp)`}">
             <video
             @contextmenu.prevent=""
             class="animate_fadeIn"
@@ -11,7 +11,7 @@
             muted 
             playsinline 
             webkit-playsinline 
-            src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/video/kiana2.mp4"
+            :src="`${baseURL}/video/kiana2.mp4`"
             style="position:absolute;width:100%;height:100%;z-index:0;object-fit:cover;"
             @loadeddata="showVideo"
             ></video>
@@ -54,6 +54,7 @@
 </template>
 
 <script setup>
+import { baseURL } from '../../constant/index'
 import figlet from 'figlet'
 import standard from 'figlet/importable-fonts/Standard.js'
 import PubSub from 'pubsub-js'

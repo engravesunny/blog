@@ -1,7 +1,7 @@
 <template>
     <div class="smallArCard_container" @click="toArticle">
         <div class="left">
-            <img loading="lazy" :src="`https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/${Math.floor(Math.random()*23)}.webp`" alt="">
+            <img loading="lazy" :src="`${baseURL}/image/${Math.floor(Math.random()*23)}.webp`" alt="">
         </div>
         <div class="right">
             <div class="top">
@@ -15,6 +15,7 @@
 </template>
 
 <script setup>
+import { baseURL } from '../constant';
 import { getAllFileInfo, getDirNames } from '../api/postApi';
 const router = useRouter()
 let dateInfo = ref('')
