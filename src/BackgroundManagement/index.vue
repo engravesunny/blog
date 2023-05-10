@@ -53,7 +53,7 @@
                         <el-input v-model="albumName" placeholder="相册名"></el-input>
                     </div>
                     <div class="btn">
-                        <el-button type="primary" class="uploadBtn"><el-upload
+                        <el-button type="primary" class="uploadBtn"><el-upload :show-file-list="false" :multiple="true"
                                 :before-upload="btnOkToUpload">确定</el-upload></el-button>
                         <el-button @click="btnCancleToUpload">取消</el-button>
                     </div>

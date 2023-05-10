@@ -12,9 +12,10 @@ import CompressionPlugin from 'vite-plugin-compression'
 const pathSrc = path.resolve(__dirname, 'src')
 
 export default defineConfig({
-  base:'./',
-  server:{
+  base: './',
+  server: {
     port: 4000,
+    open: true,
     proxy: {
       '/api': {
         target: 'http://kecat.top/',
@@ -38,10 +39,10 @@ export default defineConfig({
   },
   plugins: [
     postcssPresetEnv({
-      stage: 3, 
+      stage: 3,
       features: {
         'custom-properties': {
-          preserve: false, 
+          preserve: false,
         },
       },
     }),
@@ -68,19 +69,19 @@ export default defineConfig({
       include: /\.(js|css|html|json|svg|vue)$/
     }),
     prismjsPlugin({
-			languages: ['javascript','css','less','html','js','typescript','ts'],
+      languages: ['javascript', 'css', 'less', 'html', 'js', 'typescript', 'ts'],
       defaultLanguage: 'javascript',
-			// 配置行号插件
-			plugins: ['line-numbers','show-language','inline-color','previewers','toolbar','copy-to-clipboard','match-braces'],
-			// 主题名
-			theme: 'tomorrow',
-			css: true
-		}),
+      // 配置行号插件
+      plugins: ['line-numbers', 'show-language', 'inline-color', 'previewers', 'toolbar', 'copy-to-clipboard', 'match-braces'],
+      // 主题名
+      theme: 'tomorrow',
+      css: true
+    }),
     Vue(),
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
-      imports: ['vue','vue-router'],
+      imports: ['vue', 'vue-router'],
 
       // Auto import functions from Element Plus, e.g. ElMessage, ElMessageBox... (with style)
       // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)

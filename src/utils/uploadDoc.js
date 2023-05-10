@@ -167,7 +167,8 @@ const uploadDoc = async (file, dir_path, categoryName, tagName, albumName) => {
             '壁纸': 'wallpaper',
             "日常": 'daily',
             "美图": "beautiful",
-            "涩涩": "sese"
+            "涩涩": "sese",
+            "五月": "may"
         }
         const { data: img_tar } = await uploads({
             dir_path: `../../serve/blogServe/public/blog/images/${nameToDir[albumName]}/`,

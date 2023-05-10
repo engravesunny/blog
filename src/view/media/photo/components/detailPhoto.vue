@@ -1,18 +1,12 @@
 <template>
-    <photo @click="open" v-for="item in photos" :key="item" :src="`${imgBaseURL}${ablum}/${item}`" />
+    <photo @click="open(index)" v-for="(item, index) in photos" :key="item" :src="`${imgBaseURL}${ablum}/${item}`" />
 </template>
 
 <script setup>
 import photo from './photo.vue';
-
 import { imgBaseURL } from '../../../../constant';
 
 const emit = defineEmits(['openImg'])
-
-const open = () => {
-    console.log(1);
-    emit('openImg')
-}
 
 const props = defineProps({
     photos: {
@@ -24,6 +18,9 @@ const props = defineProps({
         default: ''
     }
 })
+const open = (index) => {
+    emit('openImg', index)
+}
 
 </script>
 

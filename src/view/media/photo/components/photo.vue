@@ -65,6 +65,7 @@ onMounted(() => {
     transform-origin: 50% 50%;
     transform: rotate(90deg) translateZ(.1px) scale(1.1) translateX(0) translateY(2vh);
     z-index: -1;
+
     cursor: pointer;
 
     .title {
@@ -85,6 +86,7 @@ onMounted(() => {
         min-width: 200px;
         min-height: 100px;
         transition: .5s;
+        background-color: #fff;
     }
 
     img:hover {

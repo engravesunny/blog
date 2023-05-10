@@ -2,22 +2,54 @@
     <div class="mark">
         <div class="dailog unselectable">
             <div class="top">
-                <div class="title">标题</div>
+                <div class="title">{{ ablum }}</div>
                 <div class="close iconfont" @click="close">&#xe60a;</div>
             </div>
-            <div class="left iconfont">&#xe658;</div>
-            <div class="right iconfont">&#xe659;</div>
-            <img src="http://kecat.top/images/sese/175.webp" alt="">
+            <div v-if="currentIndex > 0" class="left iconfont" @click="changeImg('pre')">&#xe658;</div>
+            <div v-if="currentIndex < length - 1" class="right iconfont" @click="changeImg('next')">&#xe659;</div>
+            <img :src="src" alt="相册图片">
+            <div class="page-num">{{ (currentIndex + 1) + ' / ' + length }}</div>
         </div>
     </div>
 </template>
 
 <script setup>
+import pubsub from 'pubsub-js'
 
-const emit = defineEmits(['closeImg'])
+const props = defineProps({
+    src: {
+        type: String,
+        default: 'http://kecat.top/images/sese/175.webp'
+    },
+    ablum: {
+        type: String,
+        default: '标题'
+    },
+    length: {
+        type: Number,
+        default: 0
+    },
+    currentIndex: {
+        type: Number,
+        default: 0
+    }
+})
+
+const emit = defineEmits(['closeImg', 'changeIndex'])
 const close = () => {
     emit('closeImg')
 }
+
+const changeImg = (to) => {
+    if (to === 'pre') {
+        emit('changeIndex', props.currentIndex - 1)
+        pubsub.publish('openImg', { index: props.currentIndex - 1 })
+    } else {
+        emit('changeIndex', props.currentIndex + 1)
+        pubsub.publish('openImg', { index: props.currentIndex + 1 })
+    }
+}
+
 </script>
 
 <style lang="less" scoped>
@@ -36,6 +68,7 @@ const close = () => {
     position: fixed;
     top: 70px;
     left: 50%;
+    box-sizing: border-box;
     transform: translate(-50%);
     width: 85vw;
     height: 90vh;
@@ -45,11 +78,12 @@ const close = () => {
     box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
-    padding: 60px 0 10px 0;
+    padding: 60px 0 40px 0;
     overflow: hidden;
 
     img {
-        width: auto;
+        width: 100%;
+        object-fit: contain;
     }
 
     .top {
@@ -81,6 +115,16 @@ const close = () => {
         }
     }
 
+    .page-num {
+        position: fixed;
+        bottom: 3px;
+        padding: 5px 40px;
+        background-color: #333;
+        border-radius: 20px;
+        color: #fff;
+        font-size: 13px;
+    }
+
     .left {
         position: fixed;
         left: 20px;
@@ -88,8 +132,9 @@ const close = () => {
         font-size: 40px;
         padding: 20px;
         border-radius: 50%;
-        background-color: #fff;
         text-align: center;
+        color: #fff;
+        mix-blend-mode: difference;
     }
 
     .right {
@@ -99,9 +144,11 @@ const close = () => {
         font-size: 40px;
         padding: 20px;
         border-radius: 50%;
-        background-color: #fff;
         text-align: center;
         cursor: pointer;
+        transition: box-shadow 0.2s;
+        color: #fff;
+        mix-blend-mode: difference;
     }
 
     .left {
@@ -111,14 +158,19 @@ const close = () => {
         font-size: 40px;
         padding: 20px;
         border-radius: 50%;
-        background-color: #fff;
         text-align: center;
         cursor: pointer;
+        transition: box-shadow 0.2s;
     }
 
     .left:hover,
     .right:hover {
-        background-color: #e2e0e0;
+        box-shadow: 1px 1px 10px 2px rgba(236, 20, 20, 0.7);
+    }
+
+    .left:active,
+    .right:active {
+        box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0);
     }
 }
 </style>

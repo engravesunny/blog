@@ -4,7 +4,8 @@
             <small-card name="返回" v-if="photos.length" @click="back"></small-card>
             <small-card name="相册" v-else></small-card>
         </div>
-        <dialog-page v-if="showDialog" @closeImg="closeImg" />
+        <dialog-page :currentIndex="currentIndex" @changeIndex="openImg" v-if="showDialog" :length="photos.length"
+            :src="src" :ablum="albumName" @closeImg="closeImg" />
         <div v-if="album.length" class="shell">
             <detail-photo @openImg="openImg" v-if="photos.length" :ablum="nameToDir[albumName]"
                 :photos="photos"></detail-photo>
@@ -23,18 +24,24 @@ import { imgBaseURL } from '../../../constant/index'
 import smallCard from '@/components/smallCard.vue'
 import DetailPhoto from './components/detailPhoto.vue'
 import DialogPage from './components/dialog.vue';
+import pubsub from 'pubsub-js'
 
+const currentIndex = ref(0)
+const src = ref(null)
+const ablum = ref('')
 const coverImg = {
     '壁纸': '40.webp',
     "日常": '5.webp',
     "美图": "268.webp",
-    "涩涩": "175.webp"
+    "涩涩": "175.webp",
+    "五月": "3.webp"
 }
 const nameToDir = {
     '壁纸': 'wallpaper',
     "日常": 'daily',
     "美图": "beautiful",
-    "涩涩": "sese"
+    "涩涩": "sese",
+    "五月": "may"
 }
 
 const showDialog = ref(false)
@@ -57,7 +64,6 @@ const getAlbumSrc = async () => {
         })
     })
 }
-
 const handleClickAlbum = (title) => {
     router.push({
         path: "/photo",
@@ -74,11 +80,11 @@ const back = () => {
 
 const closeImg = (e) => {
     showDialog.value = false
-    console.log('closeImg', showDialog.value);
 }
-const openImg = (e) => {
+const openImg = (ind) => {
     showDialog.value = true
-    console.log('openImg', showDialog.value);
+    currentIndex.value = ind
+    src.value = imgBaseURL + nameToDir[albumName.value] + '/' + photos[ind]
 }
 
 onBeforeMount(() => {
@@ -93,7 +99,6 @@ watch(() => route, (val) => {
         getDirNames({
             dir_path: "./images/" + albumN + '/'
         }).then(res => {
-            console.log(res);
             res.data.data.dir_names.map(item => {
                 photos.unshift(item)
             })
