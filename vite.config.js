@@ -55,11 +55,7 @@ export default defineConfig({
       rootValue: {
         mobile: 37.5,
         desktop: 160,
-      },
-      rootValue: {
-        mobile: 'var(--root-value-mobile)',
-        desktop: 'var(--root-value-desktop)',
-      },
+      }
     }),
     CompressionPlugin({
       algorithm: 'brotliCompress',

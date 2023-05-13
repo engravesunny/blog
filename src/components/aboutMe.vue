@@ -1,7 +1,8 @@
 <template>
     <div class="left">
         <div class="avatar">
-            <img src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/avatar.jpg" alt="">
+            <img @click="toMe" class="animateImg" src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/avatar.jpg"
+                alt="">
         </div>
         <div class="nav">
             <div class="article">
@@ -28,10 +29,16 @@
 </template>
 
 <script setup>
+import 'animate.css'
 import { getDirNames } from '../api/postApi.js'
+
+const router = useRouter()
 let arNum = ref(0)
 let caNum = ref(0)
 let tagNum = ref(0)
+const toMe = () => {
+    router.push('/me')
+}
 onMounted(async () => {
     if (!localStorage.getItem('ABOUT_ME')) {
         const { data: ar } = await getDirNames({
@@ -58,6 +65,16 @@ onMounted(async () => {
 </script>
 
 <style lang="less" scoped>
+.animateImg:hover {
+    display: inline-block;
+    animation: rubberBand;
+    animation-duration: 1s;
+}
+
+.animateImg:active {
+    transform: scale(0.9);
+}
+
 .left {
     width: 24%;
     background-color: rgba(223, 211, 211, 0);
@@ -73,8 +90,10 @@ onMounted(async () => {
             width: 100px;
             height: 100px;
             border-radius: 50%;
+            cursor: pointer;
         }
     }
+
 
     .nav {
         width: 100%;
@@ -122,6 +141,10 @@ onMounted(async () => {
 
         .button:hover {
             box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+        }
+
+        .button:active {
+            box-shadow: unset;
         }
     }
 }

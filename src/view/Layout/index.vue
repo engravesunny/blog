@@ -82,6 +82,7 @@ let toTop = () => {
 }
 
 .layout_container {
+    padding-top: 55px;
     box-sizing: border-box;
     width: 100%;
     height: 100vh;

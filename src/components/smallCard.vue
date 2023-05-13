@@ -1,24 +1,26 @@
 <template>
     <div class="category_card_container">
         <!-- 分类卡片 -->
-        <div class="category_card" :class="{active:active}" :style="{backgroundColor:`${color[Math.floor(Math.random()*7)]}`}">{{name}} <span v-if="num">{{ ' ' + num }}</span></div>
+        <div class="category_card" :class="{ active: active }"
+            :style="{ backgroundColor: `${color[Math.floor(Math.random() * 7)]}` }">{{ name }} <span v-if="num">{{ ' ' + num
+            }}</span></div>
     </div>
 </template>
 
 <script setup>
 
 const props = defineProps({
-    name:{
-        type:String,
-        default:'小卡片'
+    name: {
+        type: String,
+        default: '小卡片'
     },
-    num:{
-        type:Number,
-        default:0
+    num: {
+        type: Number,
+        default: 0
     },
-    active:{
-        type:Boolean,
-        default:false
+    active: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -35,8 +37,8 @@ let color = reactive([
 </script>
 
 <style lang="less" scoped>
-.category_card_container{
-    .category_card{
+.category_card_container {
+    .category_card {
         margin: 10px;
         border-radius: 10px;
         padding: 10px 20px;
@@ -45,16 +47,25 @@ let color = reactive([
         line-height: 30px;
         font-size: 16px;
         font-weight: 700;
-        box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
         transition: all 0.5s;
         cursor: pointer;
     }
-    .category_card:hover{
+
+    .category_card:hover {
         color: #fff;
         font-weight: 800;
         background-color: rgb(44, 173, 69) !important;
+        box-shadow: 1px 1px 10px 4px rgba(0, 0, 0, 0.2);
     }
-    .active{
+
+    .category_card:active {
+        transition: unset;
+        background-color: rgb(50, 197, 79) !important;
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .active {
         color: #fff;
         font-weight: 800;
         background-color: rgb(44, 173, 69) !important;

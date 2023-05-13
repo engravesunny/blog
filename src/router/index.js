@@ -1,5 +1,5 @@
 import { ElMessage } from "element-plus";
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 
 import PubSub from "pubsub-js";
 
@@ -8,14 +8,14 @@ const routes = [
         path: '/',
         name: 'layout',
         redirect: '/home',
-        component: ()=>import('@/view/Layout/index.vue'),
-        children:[
+        component: () => import('@/view/Layout/index.vue'),
+        children: [
             {
-                path:"/home",
-                name:'home',
-                component:()=>import('@/view/Home/index.vue'),
-                meta:{
-                    component:'home'
+                path: "/home",
+                name: 'home',
+                component: () => import('@/view/Home/index.vue'),
+                meta: {
+                    component: 'home'
                 }
             },
             {
@@ -76,21 +76,21 @@ const routes = [
         ]
     },
     {
-        path:'/admin',
-        name:"admin",
-        component:()=>import('../BackgroundManagement/index.vue')
+        path: '/admin',
+        name: "admin",
+        component: () => import('../BackgroundManagement/index.vue')
     }
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 });
 
 // const routeNeedToken = ["/myLike","/suggestSong","/songList"]
 
-router.beforeEach((to,from,next)=>{
-    PubSub.publish('scrollToFast',0)
+router.beforeEach((to, from, next) => {
+    PubSub.publish('scrollToFast', 0)
     next()
 })
 

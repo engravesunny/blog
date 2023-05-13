@@ -65,6 +65,10 @@ const changeImg = (to) => {
 }
 
 .dailog {
+    @media screen and (min-width: 300px) and (max-width: 400px) {
+        height: 80vh;
+    }
+
     position: fixed;
     top: 70px;
     left: 50%;
@@ -125,19 +129,15 @@ const changeImg = (to) => {
         font-size: 13px;
     }
 
+    .right,
     .left {
-        position: fixed;
-        left: 20px;
-        top: 40%;
-        font-size: 40px;
-        padding: 20px;
-        border-radius: 50%;
-        text-align: center;
-        color: #fff;
-        mix-blend-mode: difference;
-    }
+        @media screen and (min-width: 300px) and (max-width: 400px) {
+            font-size: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            right: 5px;
+        }
 
-    .right {
         position: fixed;
         right: 20px;
         top: 40%;
@@ -152,15 +152,12 @@ const changeImg = (to) => {
     }
 
     .left {
-        position: fixed;
+        @media screen and (min-width: 300px) and (max-width: 400px) {
+            left: 5px;
+        }
+
         left: 20px;
-        top: 40%;
-        font-size: 40px;
-        padding: 20px;
-        border-radius: 50%;
-        text-align: center;
-        cursor: pointer;
-        transition: box-shadow 0.2s;
+        right: unset;
     }
 
     .left:hover,

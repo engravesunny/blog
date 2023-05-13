@@ -1,11 +1,14 @@
 <template>
     <div class="categoryPage_container unselectable">
-        <div class="categoryPage"  :style="{width:`${defaultWidth}%`}">
+        <div class="categoryPage" :style="{ width: `${defaultWidth}%` }">
             <div class="top">
                 <!-- 分类标题 -->
-                <div class="title"><h1>Post Categories</h1></div>
+                <div class="title">
+                    <h1>Post Categories</h1>
+                </div>
                 <div class="categoryCard">
-                    <smallCard @click="toCategory(item)" v-for="item in categoryList" :active="item === title" :key="item" :name="item" />
+                    <smallCard @click="toCategory(item)" v-for="item in categoryList" :active="item === title" :key="item"
+                        :name="item" />
                 </div>
             </div>
             <div v-if="isShowArList" class="article_list_display">
@@ -19,7 +22,7 @@
                     <articleList :articleList="categoryArList"></articleList>
                 </div>
             </div>
-            <div  v-show="!isShowArList" class="radar">
+            <div v-show="!isShowArList" class="radar">
                 <radar :categoryList="categoryList" :categoryLength="categoryLength"></radar>
             </div>
             <rightNav v-if="showRightNav"></rightNav>
@@ -44,7 +47,7 @@ let categoryList = reactive([])
 // 是否显示文章列表
 let isShowArList = ref(false)
 let showArList = (item) => {
-    if(!item){
+    if (!item) {
         title.value = ''
     }
     isShowArList.value = item
@@ -53,11 +56,11 @@ let showArList = (item) => {
 let categoryArList = reactive([])
 
 // 点击具体分类
-let toCategory = async(item) => {
+let toCategory = async (item) => {
     title.value = item
-    categoryArList.splice(0,categoryArList.length)
+    categoryArList.splice(0, categoryArList.length)
     const { data } = await getDirNames({
-        dir_path:"./posts/category/" + item
+        dir_path: "./posts/category/" + item
     })
     data?.data?.dir_names?.forEach(element => {
         categoryArList.push(element)
@@ -67,9 +70,9 @@ let toCategory = async(item) => {
 
 // 获取类别列表
 let getCategory = async () => {
-    categoryList.splice(0,categoryList.length)
+    categoryList.splice(0, categoryList.length)
     const { data } = await getDirNames({
-        dir_path:"./posts/category"
+        dir_path: "./posts/category"
     })
     data?.data?.dir_names?.forEach(element => {
         categoryList.push(element)
@@ -79,15 +82,15 @@ let getCategory = async () => {
 let categoryLength = reactive([])
 
 let getLength = () => {
-    categoryLength.splice(0,categoryLength.length)
-    categoryList.forEach(async item=>{
-        const { data:len } = await getDirNames({
-            dir_path:'./posts/category/' + item 
+    categoryLength.splice(0, categoryLength.length)
+    categoryList.forEach(async item => {
+        const { data: len } = await getDirNames({
+            dir_path: './posts/category/' + item
         })
         categoryLength.push({
-            name:item,
-            value:len.data.dir_names.length
-        }) 
+            name: item,
+            value: len.data.dir_names.length
+        })
     })
 }
 
@@ -95,16 +98,16 @@ let showRightNav = ref(true)
 
 let defaultWidth = ref(55)
 
-onMounted(async()=>{
-    if(document.body.clientWidth<1000){
+onMounted(async () => {
+    if (document.body.clientWidth < 1000) {
         defaultWidth.value = 80
         showRightNav.value = false
     }
-    PubSub.subscribe('closeSide',()=>{
+    PubSub.subscribe('closeSide', () => {
         defaultWidth.value = 80
         showRightNav.value = false
     })
-    PubSub.subscribe('openSide',()=>{
+    PubSub.subscribe('openSide', () => {
         defaultWidth.value = 55
         showRightNav.value = true
     })
@@ -112,99 +115,136 @@ onMounted(async()=>{
     await getLength()
 })
 
-watch(()=>route,(val)=>{
-    if(val.query?.name){
+watch(() => route, (val) => {
+    if (val.query?.name) {
         toCategory(val.query?.name)
     }
-},{
-    deep:true,
-    immediate:true
+}, {
+    deep: true,
+    immediate: true
 })
 
 </script>
 
 <style lang="less" scoped>
-    .categoryPage_container{
-        margin-top: 75px;
+.categoryPage_container {
+    @media screen and (min-width:300px) and (max-width:400px) {
+        margin-top: 0;
+    }
+
+    margin-top: 25px;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .categoryPage {
+        @media screen and (min-width:300px) and (max-width:400px) {
+            padding: 0;
+        }
+
+        padding: 20px;
         position: relative;
-        width: 100%;
+        border-radius: 10px;
+        border: 1px solid #fff;
+        width: 60%;
+        min-width: 375px;
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
         display: flex;
-        justify-content: center;
-        .categoryPage{
-            padding: 20px;
-            position: relative;
-            border-radius: 10px;
-            border: 1px solid #fff;
-            width: 60%;
-            min-width: 375px;
-            background: rgba(255, 255, 255, 0.5);
-            box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+
+        .top {
+            width: 100%;
             display: flex;
             flex-direction: column;
-            .top{
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 25px;
+            padding: 20px;
+            align-items: center;
+            box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
+
+            .title {
+                @media screen and (min-width:300px) and (max-width:400px) {
+                    font-size: 0.5rem;
+                }
+
+                font-size: 30px;
+                margin: 0 0 30px 0;
+            }
+
+            .categoryCard {
                 width: 100%;
                 display: flex;
-                flex-direction: column;
-                background: rgba(255, 255, 255, 0.8);
-                border-radius: 25px;
-                padding: 20px;
-                align-items: center;
-                box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
-                .title{
-                    font-size: 30px;
-                    margin: 0 0 30px 0;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+        }
+
+        .radar {
+            border-radius: 25px;
+
+            @media screen and (min-width:300px) and (max-width:400px) {
+                width: 375px;
+            }
+
+            width: 100%;
+            display: flex;
+            padding: 50px;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            margin: 20px 0;
+            box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .article_list_display {
+            width: 100%;
+
+            .over {
+                @media screen and (min-width:300px) and (max-width:400px) {
+                    width: 300px;
                 }
-                .categoryCard{
-                    width: 100%;
+
+                margin-left: 40px;
+                margin-top: 40px;
+                width: 100%;
+                height: 120px;
+
+                .title {
+                    @media screen and (min-width:300px) and (max-width:400px) {
+                        font-size: 0.4rem;
+                        width: 300px;
+                    }
+
+                    font-size: 18px;
+                    width: calc(100% - 200px);
                     display: flex;
-                    justify-content: flex-start;
-                    flex-wrap: wrap;
+                    align-items: center;
+                }
+
+                .back {
+                    width: 80px;
+                    display: block;
+                    font-size: 20px;
+                    line-height: 60px;
+                    color: rgb(0, 0, 0);
+                    cursor: pointer;
+                }
+
+                .back:hover {
+                    color: rgba(0, 0, 0, 0.5);
                 }
             }
-            .radar{
+
+            .article_list {
+                margin-top: 20px;
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0.5);
+                box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
                 border-radius: 25px;
-                width: 100%;
-                display: flex;
-                padding: 50px;
-                justify-content: center;
-                background-color: rgba(255,255,255,0.9);
-                margin: 20px 0;
-                box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
-            }
-            .article_list_display{
-                width: 100%;
-                .over{
-                    margin-left: 40px;
-                    margin-top: 40px;
-                    width: 100%;
-                    height: 120px;
-                    .title{
-                        font-size: 18px;
-                        width: calc(100% - 200px);
-                        display: flex;
-                        align-items: center;
-                    }
-                    .back{
-                        width: 80px;
-                        display: block;
-                        font-size: 20px;
-                        line-height: 60px;
-                        color: rgb(0, 0, 0);
-                        cursor: pointer;
-                    }
-                    .back:hover{
-                        color: rgba(0, 0, 0, 0.5);
-                    }
-                }
-                .article_list{
-                    margin-top: 20px;
-                    width: 100%;
-                    background-color: rgba(255, 255, 255, 0.5);
-                    box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
-                    border-radius: 25px;
-                    border: 1px solid #fff;
-                }
+                border: 1px solid #fff;
             }
         }
     }
+}
 </style>

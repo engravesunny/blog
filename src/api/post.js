@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const getPostRequest = axios.create({
-    baseURL:'http://kecat.top/'
+    baseURL: '/api'
 })
 
-const getPost = data=>getPostRequest({
-    method:'GET',
-    url:'/post/' + data
+const getPost = data => getPostRequest({
+    method: 'GET',
+    url: '/post/' + data
 })
 export default getPost

@@ -1,0 +1,61 @@
+
+
+.me_page {
+    margin: 5px auto;
+    max-width: 1000px;
+    width: 100vw;
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: var(--box-shadow);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    overflow: hidden;
+
+    .top {
+        position: relative;
+        width: 100%;
+        height: 30vh;
+        background-image: url(https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/6.webp);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 0 -50px;
+
+        .text {
+            @media screen and (min-width: 300px) and (max-width: 400px) {
+                font-size: 20px;
+                left: 10px;
+                bottom: 30px;
+            }
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            padding: 10px 30px;
+            font-size: 30px;
+            color: var(--text-color);
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+    }
+    .header{
+        width: 100%;
+        padding: 20px;
+        .avatar{
+            img{
+                width: 20%;
+                max-width: 150px;
+                border-radius:50%;
+                vertical-align: middle;
+            }
+        }
+        .name{
+            @media screen and (min-width: 300px) and (max-width: 400px) {
+                font-size: 18px;
+            }
+            font-size: 25px;
+        }
+    }
+}

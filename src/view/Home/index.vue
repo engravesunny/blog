@@ -1,24 +1,15 @@
 <template>
     <div class="home_container unselectable">
         <!-- 顶部标题壁纸展示 -->
-        <div class="top" :style="{backgroundImage:`url(${baseURL}/image/kiana.webp)`}">
-            <video
-            @contextmenu.prevent=""
-            class="animate_fadeIn"
-            v-show="isShowVideo"
-            autoplay 
-            loop 
-            muted 
-            playsinline 
-            webkit-playsinline 
-            :src="`${baseURL}/video/kiana2.mp4`"
-            style="position:absolute;width:100%;height:100%;z-index:0;object-fit:cover;"
-            @loadeddata="showVideo"
-            ></video>
+        <div class="top" :style="{ backgroundImage: `url(${baseURL}/image/kiana.webp)` }">
+            <video @contextmenu.prevent="" class="animate_fadeIn" v-show="isShowVideo" autoplay loop muted playsinline
+                webkit-playsinline :src="`${baseURL}/video/kiana2.mp4`"
+                style="position:absolute;width:100%;height:100%;z-index:0;object-fit:cover;"
+                @loadeddata="showVideo"></video>
             <div class="title" style="z-index:1" @click="test">KeCatCat</div>
             <div class="word" style="z-index:1">
-                {{text}} <span v-if="isShowFlash" class="flash animate_flash_fast"></span>
-                </div>
+                {{ text }} <span v-if="isShowFlash" class="flash animate_flash_fast"></span>
+            </div>
             <div class="btn">
                 <div class="iconfont animate_flash" @click="explore">&#xe60c;</div>
             </div>
@@ -27,8 +18,10 @@
 
         <el-card class="main_container">
             <div class="main_position">
-                <div class="left" :style="{width:`${leftSize}%`}">
-                    <div v-for="item in leftArList" :key="item" class="card" :style="{width:`${arCardSize}%`}"><arCard :postName="item"></arCard></div>  
+                <div class="left" :style="{ width: `${leftSize}%` }">
+                    <div v-for="item in leftArList" :key="item" class="card" :style="{ width: `${arCardSize}%` }">
+                        <arCard :postName="item"></arCard>
+                    </div>
                 </div>
                 <el-card v-if="showRightSideBar" class="right" body-style="padding:0;">
 
@@ -88,9 +81,9 @@ let showVideo = () => {
 }
 
 const props = defineProps({
-    scroller:{
-        type:Object,
-        default:{}
+    scroller: {
+        type: Object,
+        default: {}
     }
 })
 
@@ -99,9 +92,9 @@ const props = defineProps({
 const explore = () => {
     const scrollTop = parseFloat(props.scroller.$el.children[2].children[0].style.transform.split('(')[1]);
     const to = window.innerHeight
-    let move = (scrollTop/100)*innerHeight
+    let move = (scrollTop / 100) * innerHeight
     const increment = to / 100
-    const timer = setInterval(()=>{
+    const timer = setInterval(() => {
         props.scroller.setScrollTop(move)
         move += increment
         if (move >= to) {
@@ -113,10 +106,10 @@ const explore = () => {
 // 滚动指定距离有过程
 const scrollTo = (toThere) => {
     const scrollTop = parseFloat(props.scroller.$el.children[2].children[0].style.transform.split('(')[1]);
-    let move = (scrollTop/100)*window.innerHeight
+    let move = (scrollTop / 100) * window.innerHeight
     const increment = Math.abs(toThere - move) / 25
-    const timer = setInterval(()=>{
-        if(move < toThere){
+    const timer = setInterval(() => {
+        if (move < toThere) {
             props.scroller.setScrollTop(move)
             move += increment
             if (move >= toThere) {
@@ -140,36 +133,36 @@ const scrollToFast = (toThere) => {
 let word = ref('')
 let text = ref('')
 // 获取每日一言
-const getwords = async() => {
-    const {data} = await getWord()
-    word.value = data.hitokoto + ' ' + '——' +  data.from
+const getwords = async () => {
+    const { data } = await getWord()
+    word.value = data.hitokoto + ' ' + '——' + data.from
 }
 
-let getPosts = async() => {
+let getPosts = async () => {
     // 获取文章
-    leftArList.splice(0,leftArList.length)
-    rightArList.splice(0,rightArList.length)
-    const { data:arList } = await getDirNames({
-        dir_path:"./posts/postVirtual"
+    leftArList.splice(0, leftArList.length)
+    rightArList.splice(0, rightArList.length)
+    const { data: arList } = await getDirNames({
+        dir_path: "./posts/postVirtual"
     })
-    for(let i = 0;i < 18;i++){
-        if(arList.data.dir_names[i]){
-            leftArList.push(arList.data.dir_names[arList.data.dir_names.length - i -1])
+    for (let i = 0; i < 18; i++) {
+        if (arList.data.dir_names[i]) {
+            leftArList.push(arList.data.dir_names[arList.data.dir_names.length - i - 1])
         }
     }
-    for(let i = 0;i < 5;i++){
+    for (let i = 0; i < 5; i++) {
         rightArList.push(arList.data.dir_names[arList.data.dir_names.length - i - 1])
     }
 }
 
 // 页面大小改变函数
 const changeSizes = (size) => {
-    if(size<=1500){
+    if (size <= 1500) {
         arCardSize.value = 48
-        if(size<=1300) {
+        if (size <= 1300) {
             showRightSideBar.value = false
             leftSize.value = 99
-            if(size<=840) {
+            if (size <= 840) {
                 arCardSize.value = 99
             } else {
                 arCardSize.value = 48
@@ -191,7 +184,7 @@ const changeSizes = (size) => {
 
 
 
-onMounted(async()=>{
+onMounted(async () => {
     figlet.parseFont("Standard", standard);
 
     figlet.text(
@@ -200,15 +193,15 @@ onMounted(async()=>{
             font: "Standard",
         },
         function (err, data) {
-            console.log('\x1b[35;40m%s\x1b[0m',data);
+            console.log('\x1b[35;40m%s\x1b[0m', data);
         }
     );
     await getwords()
     let i = 0
     const timer = setInterval(() => {
         i++;
-        text.value = word.value.slice(0,i)
-        if(text.value === word.value){
+        text.value = word.value.slice(0, i)
+        if (text.value === word.value) {
             isShowFlash.value = false
             clearInterval(timer)
         }
@@ -216,13 +209,13 @@ onMounted(async()=>{
     let mountedSize = document.body.clientWidth
     changeSizes(mountedSize)
     // 网页大小改变时监听
-    PubSub.subscribe('homeSizeChange',(a,size)=>{
+    PubSub.subscribe('homeSizeChange', (a, size) => {
         changeSizes(size)
     })
-    PubSub.subscribe('scrollTo',(a,top)=>{
+    PubSub.subscribe('scrollTo', (a, top) => {
         scrollTo(top);
     })
-    PubSub.subscribe('scrollToFast',(a,to)=>{
+    PubSub.subscribe('scrollToFast', (a, to) => {
         scrollToFast(to);
     })
     getPosts()
@@ -231,34 +224,38 @@ onMounted(async()=>{
 </script>
 
 <style lang="less" scoped>
-
-.input{
+.input {
     width: 200px;
     height: 100px;
     background-color: #000;
 }
-.animate_flash{
+
+.animate_flash {
     animation: flash;
     animation-duration: 4s;
     animation-iteration-count: infinite;
 }
-.animate_fadeIn{
+
+.animate_fadeIn {
     animation: fadeIn;
     animation-duration: 1s;
 }
-.animate_flash_fast{
+
+.animate_flash_fast {
     animation: flash;
     animation-duration: 1.2s;
     animation-iteration-count: infinite;
 }
 
-.home_container{
+.home_container {
+    margin-top: -55px;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    .top{
+
+    .top {
         position: relative;
         width: 100vw;
         min-width: 375px;
@@ -270,24 +267,39 @@ onMounted(async()=>{
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        .title{
+
+        .title {
             text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 40px;
             color: #ffffff;
             font-weight: 700;
         }
-        .word{
+
+        .word {
+            @media screen and (min-width:300px) and (max-width:400px) {
+                padding: 10px;
+                text-align: center;
+                margin-top: 10px;
+                line-height: 50px;
+                font-size: 16px;
+            }
+
             position: relative;
             font-size: 20px;
             height: 100px;
             line-height: 100px;
             color: #fff;
             text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-            .flash{
+
+            .flash {
+                @media screen and (min-width:300px) and (max-width:400px) {
+                    top: 24px;
+                }
+
                 position: absolute;
                 top: 42px;
-                right:-5px;
+                right: -5px;
                 display: inline-block;
                 width: 2px;
                 height: 20px;
@@ -295,10 +307,12 @@ onMounted(async()=>{
                 box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
             }
         }
-        .btn{
+
+        .btn {
             position: absolute;
             bottom: 10px;
-            .iconfont{
+
+            .iconfont {
                 color: #fff;
                 font-size: 60px;
                 font-weight: 700;
@@ -308,7 +322,8 @@ onMounted(async()=>{
             }
         }
     }
-    .main_container{
+
+    .main_container {
         width: 100%;
         background: rgba(0, 0, 0, 0);
         text-align: center;
@@ -316,24 +331,45 @@ onMounted(async()=>{
         justify-content: center;
         border: none;
         box-shadow: none;
-        .main_position{
+
+        .main_position {
+            @media screen and (min-width:300px) and (max-width:400px) {
+                width: 100vw;
+                align-items: center;
+                justify-content: center;
+            }
+
             width: 80vw;
             display: flex;
             align-items: flex-start;
-            .left{
+
+            .left {
                 width: 75%;
                 display: flex;
+
+                @media screen and (min-width:300px) and (max-width:400px) {
+                    align-items: center;
+                    justify-content: center;
+                }
+
                 align-items: flex-start;
                 flex-wrap: wrap;
                 background: rgba(0, 0, 0, 0);
                 border: none;
                 box-shadow: none;
-                .card{
+
+                .card {
+                    @media screen and (min-width:300px) and (max-width:400px) {
+                        padding: 0;
+                        margin: 7px 0;
+                    }
+
                     box-sizing: border-box;
-                    padding:  0 10px 20px 10px;
+                    padding: 0 10px 20px 10px;
                 }
             }
-            .right{
+
+            .right {
                 width: 25%;
                 display: flex;
                 flex-direction: column;
