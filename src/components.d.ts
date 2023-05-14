@@ -17,7 +17,6 @@ declare module '@vue/runtime-core' {
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     IconsFriend: typeof import('./components/iconsFriend.vue')['default']
-    NormalCard: typeof import('./components/normalCard.vue')['default']
     Radar: typeof import('./components/radar.vue')['default']
     RightNav: typeof import('./components/rightNav.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
