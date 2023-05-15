@@ -28,7 +28,7 @@ import MainCon from './components/main.vue';
 import Footer from './components/footer.vue';
 import 'animate.css'
 
-const navList = ['个人简介', '技术栈', '兴趣爱好']
+const navList = ['个人简介', '我的技能', '兴趣爱好']
 const time = ref(0)
 
 const curNav = reactive([
