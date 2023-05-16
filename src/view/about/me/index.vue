@@ -4,7 +4,7 @@
             <div class="text">
                 关于我
             </div>
-            <div class="nav_btn">
+            <div class="nav_btn" v-if="!showMobile">
                 <div class="btn" v-for="(item, index) in navList" :key="index" :class="{ active: curNav[index].active }"
                     :style="{
                         transform: `translateY(${-100 + curNav[index].index * 50}px)`, transition: `all
@@ -19,6 +19,13 @@
         <Header v-if="curNav[0].active" />
         <MainCon v-if="curNav[1].active" />
         <Footer v-if="curNav[2].active" />
+        <div class="nav_btns" v-if="showMobile">
+            <div class="mobileBtn" @click="changeNav(index)" v-for="(item, index) in 3" :key="item">
+                <div class="iconfont" v-if="item === 1">&#xe600;</div>
+                <div class="iconfont" v-if="item === 2">&#xe638;</div>
+                <div class="iconfont" v-if="item === 3">&#xe639;</div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -46,31 +53,32 @@ const curNav = reactive([
     }
 ])
 
-const timer = null
+let timer = [0, 0, 0]
 
 const handleEnter = (index) => {
     time.value = 0.2
-    if (timer) {
-        return
-    }
+
     if (curNav[index].active) {
         return 0
     } else {
+        if (timer[index]) {
+            timer[index] = null
+            curNav[index].index = 0
+        }
         curNav[index].index = curNav[index].index + 1
     }
 }
 
 const handleLeave = (index) => {
-    if (timer) return
     if (curNav[index].active) {
         return 0
     } else {
         curNav[index].index = curNav[index].index + 1
-        timer = setTimeout(() => {
+        timer[index] = setTimeout(() => {
             time.value = 0
             curNav[index].index = 0
-            timer = null
-        }, 100)
+            timer[index] = null
+        }, 50)
     }
 }
 
@@ -83,6 +91,13 @@ const changeNav = (index) => {
     })
     curNav[index].active = true
 }
+
+const showMobile = ref(false)
+
+onMounted(() => {
+    showMobile.value = window.innerWidth < 400
+})
+
 </script>
 
 <style lang="less" scoped>
@@ -133,10 +148,6 @@ const changeNav = (index) => {
         }
 
         .nav_btn {
-            @media screen and (min-width:300px) and (max-width:400px) {
-                display: none;
-            }
-
             height: 50px;
             display: flex;
             position: absolute;
@@ -168,6 +179,39 @@ const changeNav = (index) => {
             }
 
         }
+    }
+
+    .nav_btns {
+        display: flex;
+        overflow: hidden;
+        position: fixed;
+        bottom: 100px;
+        right: 5px;
+        flex-direction: column;
+        height: auto;
+
+        .mobileBtn {
+            display: flex;
+            font-size: 16px;
+            margin: 2px 0;
+            padding: 5px;
+            background-color: rgba(29, 117, 241, 0.2);
+            border-radius: 5px;
+            color: #fff;
+
+            .iconfont {
+                font-size: 20px !important;
+            }
+        }
+
+        .mobileBtn:hover {
+            background-color: rgba(29, 117, 241, 0.5);
+        }
+    }
+
+    .mobileActive {
+        background-color: #333;
+        color: #fff;
     }
 
 }

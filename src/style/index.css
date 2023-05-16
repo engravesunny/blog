@@ -159,8 +159,9 @@ img {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 }
-.rightNav .el-scrollbar__thumb {
-  opacity: 0 !important;
+.rightNav .el-scrollbar__thumb,
+.mobile .el-scrollbar__thumb {
+  display: none;
 }
 * {
   font-family: "TsangerYuYangT_W04";
@@ -186,4 +187,10 @@ img {
   justify-content: center;
   align-items: center;
   overflow-x: unset !important;
+}
+.mobile .el-scrollbar {
+  overflow-x: unset !important;
+}
+.mobile el-scrollbar__bar {
+  z-index: 0 !important;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="stack">
+    <div v-if="!showWitch" class="stack">
         <div class="top animate_down">
             <div class="title">技术栈</div>
         </div>
@@ -59,8 +59,79 @@
             </div>
         </div>
     </div>
+    <div v-if="showWitch" class="mobile">
+        <div class="top animate_down">
+            <div class="title">技术栈</div>
+        </div>
+        <div class="main">
+            <div class="right animate_right">
+                <img src="https://bu.dusays.com/2023/04/09/643291fe62647.jpg" alt="" />
+            </div>
+            <div class="left animate_left">
+                <p>
+                    1.精通使用<span class="strong">H5+CSS3</span>对页面进行布局(成功的页面仔)
+                </p>
+                <p>
+                    2.熟悉使用原生 <span class="strong">JavaScript</span> 、<span class="strong">ES6</span>、<span
+                        class="strong">Ajax</span>、
+                    <span class="strong">Node.js</span>，熟练使用<span class="strong">axios</span>、熟悉<span
+                        class="strong">Promise</span>
+                </p>
+                <p>
+                    3.熟练使用<span class="strong">Vue全家桶</span>及其周边生态进行搭建项目，有相关项目经验，了解
+                    <span class="strong">React</span> 语法，了解<span class="strong">redux</span>
+                </p>
+                <p>
+                    4.熟练使用 <span class="strong"> Element-plus、Vant</span> 等组件库
+                </p>
+                <p>
+                    5.熟悉
+                    <span class="strong">Webpack、Vite、Rollup、esbuild</span>
+                    等等打包工具
+                </p>
+                <p>6.熟练编写前端标准代码，熟悉浏览器兼容问题解决(IE10以下另当别论)</p>
+                <p>7.熟悉 <span class="strong">git操作</span> ，有团队合作经验</p>
+            </div>
+        </div>
+        <div class="about">
+            <div class="top animate_down">
+                <div class="title">我的人格</div>
+            </div>
+            <div class="main">
+                <div class="left animate_left">
+                    <img src="https://www.16personalities.com/static/images/personality-types/headers/diplomats_Advocate_INFJ_personality_header.svg"
+                        alt="提倡者">
+                </div>
+                <div class="right animate_right">
+                    <div class="text">
+                        <div class="title">性格</div>
+                        <div class="name">提倡者</div>
+                        <div class="en_name">INFJ-A / INFJ-T</div>
+                    </div>
+                    <img src="https://webstatic.mihoyo.com/upload/contentweb/2022/07/04/d063646e97392638e07da24ce6b8c3cb_3567507076955258130.png"
+                        alt="刻晴">
+                    <div class="link">
+                        在 <span><a href="https://www.16personalities.com/" target="_blank">16personalities</a></span>
+                        了解更多关于
+                        <span><a href="https://www.16personalities.com/ch/infj-%E4%BA%BA%E6%A0%BC"
+                                target="_blank">提倡者</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
   
+<script setup>
+
+const showWitch = ref(false)
+
+onMounted(() => {
+    showWitch.value = window.innerWidth < 400
+})
+
+</script>
+
 <style lang="less" scoped>
 .animate_down {
     animation: fadeInDown;
@@ -77,7 +148,9 @@
     animation-duration: 0.5s;
 }
 
-.stack {
+.stack,
+.mobile {
+
     width: 100%;
     height: 80%;
     display: flex;
@@ -88,7 +161,7 @@
     .top {
         width: 100%;
         height: 10%;
-        padding: 0 10px;
+        padding: 5px 10px;
         border-radius: 10px;
         display: flex;
         align-items: center;
@@ -99,6 +172,7 @@
     }
 
     .main {
+
         font-size: 16px;
         font-weight: 100;
         width: 100%;
@@ -106,6 +180,7 @@
         justify-content: space-between;
 
         .left {
+
             padding: 20px;
             width: 68%;
             height: 100%;
@@ -138,6 +213,12 @@
                 left: 50%;
                 height: 100%;
                 transform: translate(-50%);
+                object-fit: cover;
+                transition: transform 0.5s;
+            }
+
+            img:hover {
+                transform: scale(1.1) translate(-45%);
             }
         }
     }
@@ -175,7 +256,7 @@
                     position: absolute;
                     top: 0;
                     left: 0;
-                    transform: translate(-50%);
+                    transform: translate(-40%);
                     height: 100%;
                     transition: transform 0.5s;
                 }
@@ -244,6 +325,84 @@
 
                 img {
                     transform: rotate(-5deg);
+                }
+            }
+        }
+    }
+}
+
+.mobile {
+    overflow-y: auto;
+    padding: 5px;
+
+    .top {
+        .title {
+            font-size: 18px;
+        }
+    }
+
+    .main {
+        flex-direction: column;
+
+        .left {
+            width: auto;
+            height: auto;
+            padding: 10px;
+
+            p {
+                line-height: 22px;
+                font-size: 14px;
+            }
+        }
+
+        .right {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .about {
+        margin-top: 0;
+
+        .top {
+            padding: 20px 10px;
+
+            .title {
+                font-size: 18px;
+            }
+        }
+
+        .main {
+            .left {
+                display: none;
+            }
+
+            .right {
+                width: 100%;
+                height: 150px;
+
+                .text {
+                    top: 10px;
+                    left: 10px;
+
+                    .title {
+                        font-size: 14px;
+                    }
+
+                    .name,
+                    .en_name {
+                        font-size: 22px;
+                        line-height: 25px;
+                    }
+
+
+                }
+
+                .link {
+                    left: 10px;
+                    bottom: 10px;
+                    font-size: 12px;
                 }
             }
         }

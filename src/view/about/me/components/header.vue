@@ -230,12 +230,13 @@ import 'animate.css'
     .bottom {
         @media screen and (min-width:300px) and (max-width:400px) {
             margin-top: 10px;
+
         }
 
+        max-height: 250px;
         margin-top: 20px;
         flex: 1;
         width: 100%;
-        max-height: 250px;
         display: flex;
         justify-content: space-between;
 
