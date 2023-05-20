@@ -48,15 +48,27 @@
                 <div class="edu">
                     <div class="birth">
                         <div class="small">生于</div>
-                        <div class="big" style="color:rgb(123, 150, 32)">2002</div>
+                        <div class="big " style="color:rgb(123, 150, 32)">
+                            2002
+                            <span class="iconfont" style="font-size: 24px;">&#xe64a; </span>
+                        </div>
                     </div>
                     <div class="professional">
                         <div class="small">中国矿业大学</div>
-                        <div class="big" style="color:rgb(58, 58, 141)">计算机科学与技术</div>
+                        <div class="big " style="color:rgb(58, 58, 141)">
+                            计算机科学与技术
+                            <span class="iconfont" style="font-size: 24px;">
+                                &#xe63a;
+                            </span>
+
+                        </div>
                     </div>
                     <div class="work">
                         <div class="small">职业</div>
-                        <div class="big" style="color:red">大二学生</div>
+                        <div class="big " style="color:red">
+                            大二学生
+                            <span class="iconfont" style="font-size: 24px;">&#xe63b; </span>
+                        </div>
                     </div>
                 </div>
             </div>

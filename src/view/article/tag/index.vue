@@ -29,9 +29,10 @@
                     <articleList :articleList="tagArList"></articleList>
                 </div>
             </div>
-            <rightNav v-if="showRightNav"></rightNav>
+
         </div>
-        <placeOrder v-if="showRightNav"></placeOrder>
+        <rightNav v-if="showRightNav"></rightNav>
+        <!-- <placeOrder v-if="showRightNav"></placeOrder> -->
     </div>
 </template>
 

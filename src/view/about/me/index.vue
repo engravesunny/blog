@@ -57,7 +57,9 @@ let timer = [0, 0, 0]
 
 const handleEnter = (index) => {
     time.value = 0.2
-
+    if (curNav[index].index !== 0) {
+        return
+    }
     if (curNav[index].active) {
         return 0
     } else {
@@ -70,6 +72,12 @@ const handleEnter = (index) => {
 }
 
 const handleLeave = (index) => {
+    if (timer[index]) {
+        return
+    }
+    if (curNav[index].index !== 1) {
+        return
+    }
     if (curNav[index].active) {
         return 0
     } else {
@@ -78,7 +86,7 @@ const handleLeave = (index) => {
             time.value = 0
             curNav[index].index = 0
             timer[index] = null
-        }, 50)
+        }, 200)
     }
 }
 
@@ -107,8 +115,13 @@ onMounted(() => {
 }
 
 .me_page {
+    @media screen and (min-width:300px) and (max-width:400px) {
+        min-width: unset;
+    }
+
     margin: 5px auto;
     max-width: 1000px;
+    min-width: 1000px;
     width: 100vw;
     height: calc(100vh - 70px);
     display: flex;

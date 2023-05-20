@@ -25,9 +25,10 @@
             <div v-show="!isShowArList" class="radar">
                 <radar :categoryList="categoryList" :categoryLength="categoryLength"></radar>
             </div>
-            <rightNav v-if="showRightNav"></rightNav>
+
         </div>
-        <placeOrder v-if="showRightNav"></placeOrder>
+        <rightNav v-if="showRightNav"></rightNav>
+        <!-- <placeOrder v-if="showRightNav"></placeOrder> -->
     </div>
 </template>
 
@@ -194,7 +195,7 @@ watch(() => route, (val) => {
             justify-content: center;
             background-color: rgba(255, 255, 255, 0.9);
             margin: 20px 0;
-            box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
+            box-shadow:B 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
         }
 
         .article_list_display {

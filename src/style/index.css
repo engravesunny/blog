@@ -159,6 +159,7 @@ img {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 }
+.me_page .el-scrollbar__thumb,
 .rightNav .el-scrollbar__thumb,
 .mobile .el-scrollbar__thumb {
   display: none;
@@ -191,6 +192,6 @@ img {
 .mobile .el-scrollbar {
   overflow-x: unset !important;
 }
-.mobile el-scrollbar__bar {
+.mobile .el-scrollbar__bar {
   z-index: 0 !important;
 }

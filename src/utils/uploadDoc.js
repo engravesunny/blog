@@ -171,7 +171,7 @@ const uploadDoc = async (file, dir_path, categoryName, tagName, albumName) => {
             "五月": "may"
         }
         const { data: img_tar } = await uploads({
-            dir_path: `../../serve/blogServe/public/blog/images/${nameToDir[albumName]}/`,
+            dir_path: `../../serve/blogServe/public/images/${nameToDir[albumName]}/`,
             file
         })
         if (img_tar.code === 0) {

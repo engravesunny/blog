@@ -10,7 +10,7 @@
             <!-- 内容区域 -->
 
             <!-- 底部 -->
-            <FootBar v-if="route.path === '/home'"></FootBar>
+            <FootBar></FootBar>
             <!-- 底部 -->
         </div>
         <div v-if="showToTop" @click="toTop" class="toTop iconfont unselectable">&#xe610;</div>
@@ -26,7 +26,7 @@
         <!-- 内容区域 -->
 
         <!-- 底部 -->
-        <FootBar v-if="route.path === '/home'"></FootBar>
+        <FootBar></FootBar>
         <!-- 底部 -->
     </div>
     <div v-if="showToTop" @click="toTop" class="toTop iconfont unselectable">&#xe610;</div>

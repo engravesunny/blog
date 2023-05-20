@@ -45,15 +45,18 @@ onMounted(() => {
         padding: 0;
     }
 
-    padding: 30px;
+    padding:0;
 
     ul {
         width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
 
         li {
-            display: inline-block;
-            margin: 10px;
+            margin: 10px 0;
             width: 45%;
         }
     }
-}</style>
+}
+</style>

@@ -100,7 +100,7 @@ watch(() => route, (val) => {
 
 <style lang="less" scoped>
 .rightNav {
-    position: fixed;
+    position: sticky;
     top: 75px;
     right: 9vw;
     width: 23vw;
@@ -116,7 +116,7 @@ watch(() => route, (val) => {
         background-color: rgba(255, 255, 255, 0.8);
         border-radius: 25px;
         margin: 10px auto;
-        margin-top: 30px;
+        margin-top: 20px;
         box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
     }
 
