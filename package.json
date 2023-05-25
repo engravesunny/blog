@@ -15,6 +15,8 @@
     "element-plus": "^2.2.29",
     "figlet": "^1.6.0",
     "github-markdown-css": "^5.2.0",
+    "js-sha256": "^0.9.0",
+    "octokit": "^2.0.18",
     "pinia": "^2.0.32",
     "prismjs": "^1.29.0",
     "pubsub-js": "^1.9.4",

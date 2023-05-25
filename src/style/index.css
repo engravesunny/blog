@@ -129,6 +129,10 @@ textarea {
   white-space: nowrap;
 }
 
+.el-scrollbar__thumb {
+  display: none;
+}
+
 .inline {
   display: inline-block;
 
@@ -143,14 +147,17 @@ textarea {
   -ms-user-select: none;
   user-select: none;
 }
+
 img {
   -webkit-user-drag: none;
 }
+
 .shenglue {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
 .shenglue2 {
   display: -webkit-box;
   overflow: hidden;
@@ -159,11 +166,13 @@ img {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 }
+
 .me_page .el-scrollbar__thumb,
 .rightNav .el-scrollbar__thumb,
 .mobile .el-scrollbar__thumb {
   display: none;
 }
+
 * {
   font-family: "TsangerYuYangT_W04";
 }
@@ -189,9 +198,11 @@ img {
   align-items: center;
   overflow-x: unset !important;
 }
+
 .mobile .el-scrollbar {
   overflow-x: unset !important;
 }
+
 .mobile .el-scrollbar__bar {
   z-index: 0 !important;
 }

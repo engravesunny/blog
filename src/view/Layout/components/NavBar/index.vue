@@ -188,6 +188,9 @@ let controls = reactive(
                     name: '友链',
                     path: '/friend'
                 }, {
+                    name: '网站统计',
+                    path: '/statistical'
+                }, {
                     name: '关于我',
                     path: '/me'
                 }

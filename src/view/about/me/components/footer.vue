@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="head-left-bottom">
-                        <img src="https://count.himiku.com/get/@text?theme=gelbooru" alt="访问计数">
+                        <img src="https://count.himiku.com/get/@kemaomao?theme=gelbooru" alt="访问计数">
                         <div class="btn">
                             <a href="https://count.himiku.com/" target="_blank">
                                 <span class="iconfont icon">&#xe62d;</span>
@@ -104,6 +104,7 @@ const playSong = () => {
         audio.src = songUrl.value
         audio.volume = 0.5
         audio.style = 'display:none;'
+        audio.loop = true
         document.body.appendChild(audio)
         // 音乐就绪
         audio.playing = () => {
@@ -130,6 +131,13 @@ onMounted(() => {
     if (audios.length) {
         playing.value = !audios[0].paused
     }
+})
+
+onBeforeUnmount(() => {
+    const audios = document.querySelectorAll('audio')
+    audios.forEach(audio => {
+        audio.remove()
+    })
 })
 
 </script>
@@ -159,12 +167,26 @@ onMounted(() => {
         transform: scale(1.1);
     }
 
+    @media screen and (min-width:300px) and (max-width:400px) {
+        padding: 10px;
+    }
+
     width: 100%;
     display: flex;
     flex-direction: column;
     padding: 20px;
 
     .btn {
+        @media screen and (min-width:300px) and (max-width:400px) {
+            padding: 3px 7px;
+            bottom: 2px;
+            right: 2px;
+
+        }
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: absolute;
         bottom: 5px;
         right: 5px;
@@ -178,6 +200,10 @@ onMounted(() => {
         transform: scale(0.9);
 
         a {
+            @media screen and (min-width:300px) and (max-width:400px) {
+                font-size: 12px;
+            }
+
             width: 100%;
             height: 100%;
             font-size: 14px;
@@ -185,6 +211,10 @@ onMounted(() => {
         }
 
         .icon {
+            @media screen and (min-width:300px) and (max-width:400px) {
+                font-size: 12px;
+            }
+
             font-size: 16px;
             color: #0818fb;
         }
@@ -213,6 +243,10 @@ onMounted(() => {
 
             .head-left-bottom,
             .head-left-top {
+                @media screen and (min-width:300px) and (max-width:400px) {
+                    min-height: 100px;
+                }
+
                 min-height: 210px;
                 max-height: 250px;
                 position: relative;
@@ -223,6 +257,14 @@ onMounted(() => {
 
                 img {
                     width: 100%;
+                }
+            }
+
+            .head-left-top {
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: over;
                 }
             }
 
@@ -304,6 +346,9 @@ onMounted(() => {
                 border-radius: 50%;
                 cursor: pointer;
                 transition: transform 0.3s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 transition: box-shadow 0.3s;
 
                 .paused,

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const getPostRequest = axios.create({
-    baseURL: 'http://kecat.top/'
+    baseURL: 'https://kecat.top/'
 })
 
 const getPost = data => getPostRequest({

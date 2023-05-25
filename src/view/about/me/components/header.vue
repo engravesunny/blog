@@ -77,6 +77,13 @@
                     <p>心有所向，</p>
                     <p>日复一日，</p>
                     <p>必有精进！</p>
+                    <div class="tag ">
+                        <span class="iconfont icon">&#xe62a;</span> 座右铭
+                    </div>
+                </div>
+                <div class="btn" @click="play">
+                    <span v-if="playing" class="iconfont icon">&#xe63c;</span>
+                    <span v-else class="iconfont icon">&#xe87c;</span>
                 </div>
             </div>
         </div>
@@ -87,6 +94,62 @@
 <script setup>
 import { baseURL } from '../../../../constant/index'
 import 'animate.css'
+
+const playing = ref(false)
+
+const play = () => {
+    playing.value = !playing.value
+    const audios = document.querySelectorAll('audio')
+    if (audios.length) {
+        if (!playing.value) {
+            audios[0].pause()
+        } else {
+            audios[0].play()
+        }
+    } else {
+        const audio = document.createElement('audio')
+        audio.src = 'http://kecat.top/audio/%E5%88%BB%E6%99%B4%E8%AF%AD%E9%9F%B3_%E7%9F%AD.mp3'
+        audio.volume = 0.4
+        audio.style = 'display:none;'
+        audio.loop = false
+        audio.onended = () => {
+            playing.value = false
+        }
+        document.body.appendChild(audio)
+        // 音乐就绪
+        audio.playing = () => {
+            ElMessage('当前网络较差，请稍后重试')
+        }
+        let timer = null
+        timer = setTimeout(() => {
+            ElMessage('正在缓冲，请耐心等待')
+        }, 3000);
+        audio.oncanplaythrough = () => {
+            audio.play();
+            clearTimeout(timer)
+            timer = null
+            audio.oncanplaythrough = null
+        }
+    }
+}
+
+onMounted(() => {
+    const audios = document.querySelectorAll('audio')
+    if (audios.length) {
+        if (audios.length > 1) {
+            audios.length = 1
+        }
+        playing.value = !audios[0].paused
+    }
+})
+
+onBeforeUnmount(() => {
+    const audios = document.querySelectorAll('audio')
+    audios.forEach(audio => {
+        audio.remove()
+    })
+})
+
 </script>
 
 <style lang="less" scoped>
@@ -257,22 +320,101 @@ import 'animate.css'
                 height: 48%;
             }
 
+            position: relative;
+
             width: 39%;
             height: 100%;
             box-shadow: var(--box-shadow-s);
             border-radius: 10px;
+            background-image: url(http://kecat.top/images/may/49.webp);
+            background-size: cover;
+            overflow: hidden;
+
+            .btn {
+                @media screen and (min-width:300px) and (max-width:400px) {
+                    width: 30px;
+                    height: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    box-sizing: border-box;
+                    top: 5px;
+                    right: 5px;
+                }
+
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                padding: 10px;
+                text-align: center;
+                background-color: #fff;
+                box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
+                border-radius: 50%;
+                cursor: pointer;
+                transition: unset;
+
+                .icon {
+                    @media screen and (min-width:300px) and (max-width:400px) {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .btn:active {
+                @media screen and (min-width:300px) and (max-width:400px) {
+                    transform: scale(0.5);
+                }
+
+                transform: scale(0.9);
+                box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+            }
 
             .motto {
                 @media screen and (min-width:300px) and (max-width:400px) {
                     font-size: 22px;
+                    padding: 5px;
                 }
 
+                position: relative;
                 height: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                padding: 10px;
-                font-size: 40px;
+                padding: 20px;
+                font-size: 50px;
+                background-color: rgba(255, 255, 255, 0.8);
+                color: #3f8eef;
+                text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+                transition: opacity 0.6s;
+
+                .tag {
+                    @media screen and (min-width: 300px) and (max-width: 400px) {
+                        transform: scale(0.5);
+                        bottom: -8px;
+                        right: -20px;
+                    }
+
+                    padding: 10px 15px;
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    background: rgba(255, 255, 255, 0.8);
+                    border-radius: 20px;
+                    text-shadow: unset !important;
+
+                    .icon {
+                        font-size: 18px;
+                        color: #2877de;
+                        font-weight: 700;
+                    }
+                }
+
+
+            }
+
+            .motto:hover {
+                opacity: 0;
             }
         }
 

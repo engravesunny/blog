@@ -89,6 +89,12 @@ let toTop = () => {
 }
 
 .toTop {
+    @media screen and (min-width:300px) and (max-width:400px) {
+        font-size: 20px;
+        padding: 7px;
+        border-radius: 5px;
+    }
+
     position: fixed;
     bottom: 10px;
     right: 10px;

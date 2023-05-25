@@ -23,6 +23,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SmallArCard: typeof import('./components/smallArCard.vue')['default']
     SmallCard: typeof import('./components/smallCard.vue')['default']
+    Waves: typeof import('./components/waves.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
