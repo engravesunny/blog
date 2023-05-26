@@ -1,5 +1,5 @@
 <template>
-    <div class="articleDir unselectable">
+    <div class="articleDir box_border unselectable">
         <div class="title">文章目录</div>
         <div class="dir">
             <ul>

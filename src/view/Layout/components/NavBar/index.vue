@@ -2,7 +2,7 @@
     <div class="navbar_container unselectable" :style="{
         transform: `translate(0,-${isFloded}%)`,
         background: `rgba(255,255,255,0.${isOpacity})`,
-        color: `${'#000'}`
+        color: `${color}`
     }">
 
         <!-- logo -->
@@ -76,6 +76,10 @@ const porps = defineProps({
     isFloded: {
         type: Number,
         default: 0
+    },
+    color: {
+        type: String,
+        default: '#fff'
     }
 })
 
@@ -327,7 +331,8 @@ onMounted(() => {
 
         .logo_name {
             font-size: 25px;
-            font-weight: 700;
+            font-weight: 500;
+            text-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
         }
     }
 
@@ -346,12 +351,13 @@ onMounted(() => {
             width: 90px;
             height: 55px;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 500;
             text-align: center;
             line-height: 55px;
             cursor: pointer;
             border-radius: 10px;
             transition: all 0.5s;
+            text-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
         }
 
         .btn:hover {

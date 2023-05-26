@@ -1,5 +1,5 @@
 <template>
-    <div class="articleList">
+    <div class="articleList" v-loading="!articleList.length">
         <ul>
             <li :style="{ width: `${liWidth}%` }" v-for="item in articleList" :key="item">
                 <arCard :postName="item"></arCard>
@@ -40,6 +40,7 @@ onMounted(() => {
 <style lang="less" scoped>
 .articleList {
     width: 100%;
+    min-height: 400px;
 
     @media screen and (min-width:300px) and (max-width:400px) {
         padding: 0;

@@ -2,7 +2,7 @@
     <el-scrollbar v-if="route.path !== '/photo'" ref="scroller" height="100vh" @scroll="topFlodFn">
         <div class="layout_container">
             <!-- 顶部 -->
-            <NavBar :is-floded="isFloded" :is-opacity="isOpacity"></NavBar>
+            <NavBar :color="color" :is-floded="isFloded" :is-opacity="isOpacity"></NavBar>
             <!-- 顶部 -->
 
             <!-- 内容区域 -->
@@ -41,6 +41,7 @@ let scroller = ref(null)
 let showToTop = ref(false)
 // 顶部导航栏显示与隐藏及透明度变化
 // 最开始不隐藏且透明
+let color = ref('#fff')
 let isFloded = ref(0)
 let isOpacity = ref(0)
 let curScrollY = ref(0)
@@ -65,8 +66,10 @@ let topFlodFn = (e) => {
     }
     if (e.scrollTop === 0) {
         isOpacity.value = 0
+        color.value = '#fff'
     } else {
-        isOpacity.value = 3
+        isOpacity.value = 9
+        color.value = '#333'
     }
 }
 
@@ -85,7 +88,7 @@ let toTop = () => {
     padding-top: 55px;
     box-sizing: border-box;
     width: 100%;
-    height: 100vh;
+    height: 100vh
 }
 
 .toTop {

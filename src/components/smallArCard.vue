@@ -1,5 +1,5 @@
 <template>
-    <div class="smallArCard_container" @click="toArticle">
+    <div class="smallArCard_container box_border" @click="toArticle">
         <div class="left">
             <img loading="lazy" :src="`${baseURL}/image/${Math.floor(Math.random() * 23)}.webp`" alt="">
         </div>
@@ -71,13 +71,10 @@ watch(() => props, (val) => {
 .smallArCard_container {
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
-    box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     overflow: hidden;
-    transition: transform 0.3s;
     cursor: pointer;
 
     .left {
@@ -140,15 +137,5 @@ watch(() => props, (val) => {
             }
         }
     }
-}
-
-.smallArCard_container:hover {
-    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
-    transform: translate(0, -5px);
-}
-
-.smallArCard_container:active {
-    box-shadow: unset;
-    transform: unset;
 }
 </style>

@@ -19,24 +19,31 @@ import iconsFriend from '../../../components/iconsFriend.vue';
 </script>
 
 <style lang="less" scoped>
+.friendMe:hover {
+    border: var(--box-border-active);
+    background: var(--background-hover);
+}
 
-.friendMe{
+.friendMe {
     margin: 20px 0;
     width: 100%;
     padding: 20px;
-    background: rgba(255,255, 255, 0.9);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 25px;
-    box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
-    .right{
+    border-radius: 15px;
+    transition: all 0.5s;
+    border: var(--box-border);
+    background: var(--background-transparent);
+
+    .right {
         float: right;
         width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;      
-        .description{
+        align-items: center;
+
+        .description {
             display: flex;
             width: 100%;
             justify-content: center;
@@ -48,14 +55,15 @@ import iconsFriend from '../../../components/iconsFriend.vue';
             font-weight: 700;
         }
     }
-    .img1{
+
+    .img1 {
         width: 100%;
         float: left;
-        img{
+
+        img {
             border-radius: 15px;
             width: 100%;
         }
     }
 }
-    
 </style>

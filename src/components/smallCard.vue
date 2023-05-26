@@ -47,9 +47,9 @@ let color = reactive([
         line-height: 30px;
         font-size: 16px;
         font-weight: 700;
-        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
         transition: all 0.5s;
         cursor: pointer;
+        border: 1px solid rgb(44, 173, 69);
     }
 
     .category_card:hover {

@@ -1,5 +1,5 @@
 <template>
-    <div class="left">
+    <div class="left" :class="{ box_border: route.path !== '/home' }">
         <div class="avatar">
             <img @click="toMe" class="animateImg" src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/avatar.jpg"
                 alt="">
@@ -31,7 +31,8 @@
 <script setup>
 import 'animate.css'
 import { getDirNames } from '../api/postApi.js'
-
+import { useRoute } from 'vue-router';
+const route = useRoute()
 const router = useRouter()
 let arNum = ref(0)
 let caNum = ref(0)
@@ -77,7 +78,6 @@ onMounted(async () => {
 
 .left {
     width: 24%;
-    background-color: rgba(223, 211, 211, 0);
 
     .avatar {
         width: 100%;

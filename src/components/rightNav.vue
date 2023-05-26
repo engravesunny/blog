@@ -3,11 +3,11 @@
         <el-scrollbar height="100vh">
             <articleDir :articleDir="headings" v-if="showArticleDir"></articleDir>
             <aboutMe></aboutMe>
-            <div class="icons">
+            <div class="icons box_border">
                 <iconsFriend></iconsFriend>
             </div>
             <latestAr :arList="rightArList"></latestAr>
-            <div class="articleDir">
+            <div class="articleDir box_border">
                 <div class="title">公告</div>
                 <div class="dir">
 
@@ -106,43 +106,33 @@ watch(() => route, (val) => {
     width: 23vw;
     height: 85vh;
     border-radius: 25px;
-    overflow: hidden;
-    // box-shadow: 8px 8px 20px 1px rgba(0, 0, 0, 0.1);
     z-index: 1;
 
     .left {
         width: 90%;
-        border-right: 0;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 25px;
+        border-radius: 10px;
         margin: 10px auto;
         margin-top: 20px;
-        box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
     }
 
     .icons {
         width: 90%;
         display: flex;
         justify-content: center;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 25px;
+        border-radius: 10px;
         margin: 10px 0;
-        box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
         padding: 10px;
     }
 
     .latestArt {
         width: 90%;
-        // box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
     }
 
     .articleDir {
         margin: 10px 0;
         width: 90%;
-        background-color: rgba(255, 255, 255, 0.8);
         padding: 20px;
-        border-radius: 25px;
-        box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
 
         .title {
             text-align: center;

@@ -16,29 +16,37 @@ import aboutMe from '../../../components/aboutMe.vue';
 </script>
 
 <style lang="less" scoped>
-    .personAbout{
-            border-radius: 25px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background: rgba(255,255, 255, 0.9);
-            box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
-            .left{
-                width: 100%;
-            }
-            .right{
-                margin-left: 20px;
-                float: right;
-                width: 100%;
-                display: flex;
-                align-items: center;
-                background-color: rgba(0, 0, 0, 0);
-                // background-color: #fff;
-                font-size: 2vh;
-                font-weight: 700;
-            }
-        }
+.personAbout:hover {
+    background: var(--background-hover);
+    border: var(--box-border-active);
+}
+
+.personAbout {
+    border-radius: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: var(--background-transparent);
+    border: var(--box-border);
+    transition: all 0.5s;
+
+    .left {
+        width: 100%;
+    }
+
+    .right {
+        margin-left: 20px;
+        float: right;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0);
+        // background-color: #fff;
+        font-size: 2vh;
+        font-weight: 700;
+    }
+}
 </style>

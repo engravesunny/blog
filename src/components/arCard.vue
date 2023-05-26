@@ -33,6 +33,25 @@ const props = defineProps({
         default: '文章标题'
     }
 })
+
+const addClass = () => {
+    const { top } = el.getBoundingClientRect()
+    const h = window.innerHeight
+    if (top < h) {
+        if (el.className.indexOf(binding.value) === -1) {
+            // 初次还未绑定过，则新增类名(注意：下面单引号中间是一个空格！！！)
+            el.className = `${binding.value} ${el.className}`
+        }
+        if (binding.arg === 'once') {
+            // 如果指令参数是 'once'，则只触发一次
+            window.removeEventListener('scroll', addClass)
+        }
+    }
+}
+// window.addEventListener('scroll', addClass, true)
+// binding.addClass = addClass
+// addClass()
+
 // 分类名
 let category = ref('')
 // 标签信息
@@ -101,16 +120,17 @@ onMounted(() => {
 .card_container {
     width: 100%;
     min-width: 290px;
-    padding: 20px;
-    border-radius: 25px;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    background: var(--background-transparent);
+    border: var(--box-border);
     transition: all 0.5s;
     cursor: pointer;
 
     .top {
         position: relative;
-        border-radius: 20px;
+        border-radius: 10px;
         width: 100%;
         height: 180px;
         text-align: center;
@@ -227,6 +247,7 @@ onMounted(() => {
 
 .card_container:hover {
     box-shadow: 5px 5px 20px 1px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02);
+    border: var(--box-border-active);
+    background: var(--background-hover);
 }
 </style>

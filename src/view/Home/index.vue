@@ -1,11 +1,7 @@
 <template>
     <div class="home_container unselectable">
         <!-- 顶部标题壁纸展示 -->
-        <div class="top" :style="{ backgroundImage: `url(${baseURL}/image/kiana.webp)` }">
-            <video @contextmenu.prevent="" class="animate_fadeIn" v-show="isShowVideo" autoplay loop muted playsinline
-                webkit-playsinline :src="`${baseURL}/video/kiana2.mp4`"
-                style="position:absolute;width:100%;height:100%;z-index:0;object-fit:cover;"
-                @loadeddata="showVideo"></video>
+        <div class="top">
             <div class="title" style="z-index:1" @click="test">KeCatCat</div>
             <div class="word" style="z-index:1">
                 {{ text }} <span v-if="isShowFlash" class="flash animate_flash_fast"></span>
@@ -23,7 +19,7 @@
                         <arCard :postName="item"></arCard>
                     </div>
                 </div>
-                <el-card v-if="showRightSideBar" class="right" body-style="padding:0;">
+                <div v-if="showRightSideBar" class="right" body-style="padding:0;">
 
                     <!-- 个人描述等等 -->
                     <personnalAbout v-animate="'animate_fadeIn'"></personnalAbout>
@@ -40,7 +36,7 @@
                     <!-- 最新文章展示 -->
                     <latestAr :arList="rightArList" v-animate="'animate_fadeIn'"></latestAr>
                     <!-- 最新文章展示 -->
-                </el-card>
+                </div>
             </div>
         </el-card>
     </div>
@@ -260,20 +256,19 @@ onMounted(async () => {
         width: 100vw;
         min-width: 375px;
         height: 100vh;
-        background-size: cover;
-        background-position: center center;
-        background-attachment: fixed;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3) 97%, rgba(0, 0, 0, 0.4) 100%);
 
         .title {
-            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 40px;
             color: #ffffff;
             font-weight: 700;
+            line-height: 1.5;
         }
 
         .word {
@@ -290,7 +285,7 @@ onMounted(async () => {
             height: 100px;
             line-height: 100px;
             color: #fff;
-            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
 
             .flash {
                 @media screen and (min-width:300px) and (max-width:400px) {

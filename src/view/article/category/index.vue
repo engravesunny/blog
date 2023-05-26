@@ -1,7 +1,7 @@
 <template>
     <div class="categoryPage_container unselectable">
         <div class="categoryPage" :style="{ width: `${defaultWidth}%` }">
-            <div class="top">
+            <div class="top box_border">
                 <!-- 分类标题 -->
                 <div class="title">
                     <h1>Post Categories</h1>
@@ -13,7 +13,7 @@
             </div>
             <div v-if="isShowArList" class="article_list_display">
                 <!-- 具体分类列表展示 -->
-                <div class="article_list">
+                <div class="article_list box_border">
                     <!-- 返回按钮 -->
                     <div class="over">
                         <div class="back iconfont" @click="showArList(false)">&#xe60b; 返回</div>
@@ -22,7 +22,7 @@
                     <articleList :articleList="categoryArList"></articleList>
                 </div>
             </div>
-            <div v-show="!isShowArList" class="radar">
+            <div v-show="!isShowArList" class="radar box_border">
                 <radar :categoryList="categoryList" :categoryLength="categoryLength"></radar>
             </div>
 
@@ -159,8 +159,7 @@ watch(() => route, (val) => {
             width: 100%;
             display: flex;
             flex-direction: column;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 25px;
+            border-radius: 10px;
             padding: 20px;
             align-items: center;
             box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
@@ -183,7 +182,7 @@ watch(() => route, (val) => {
         }
 
         .radar {
-            border-radius: 25px;
+            border-radius: 10px;
 
             @media screen and (min-width:300px) and (max-width:400px) {
                 width: 375px;
@@ -193,9 +192,8 @@ watch(() => route, (val) => {
             display: flex;
             padding: 50px;
             justify-content: center;
-            background-color: rgba(255, 255, 255, 0.9);
             margin: 20px 0;
-            box-shadow:B 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .article_list_display {
@@ -241,9 +239,7 @@ watch(() => route, (val) => {
                 margin-top: 20px;
                 width: 100%;
                 background-color: rgba(255, 255, 255, 0.5);
-                box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
-                border-radius: 25px;
-                border: 1px solid #fff;
+                border-radius: 10px;
             }
         }
     }
