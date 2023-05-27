@@ -1,26 +1,25 @@
 <template>
     <div class="container unselectable">
         <div class="Page" :style="{ width: `${defaultWidth}%` }">
-            <div class="top" v-if="showTop">
+            <div class="top box_border" v-if="showTop">
                 <!-- 分类标题 -->
                 <div class="title">
                     <h1>Post Tags</h1>
                 </div>
                 <div class="tagCard" v-loading="loading">
-                    <smallCard :active="item.name === title" v-if="!loading" @click="toTag(item.name)"
-                        v-for="item in tagFinalList" :key="item.name" :name="item.name" :num="item.num"></smallCard>
+                    <histogram v-if="!loading" :tag="tagFinalList"></histogram>
                 </div>
             </div>
 
             <!-- 标签概览列表 -->
-            <div v-if="!isShowArList && !loading" class="tagList">
+            <div v-if="!isShowArList && !loading" class="tagList box_border">
                 <tagList :tagFinalList="tagFinalList"></tagList>
             </div>
 
             <!-- 文章卡片列表 -->
-            <div v-else class="article_list_display">
+            <div v-else class="article_list_display aniamte_fadeIn">
                 <!-- 具体分类列表展示 -->
-                <div v-if="!loading" class="article_list">
+                <div v-loading="!tagArList.length" class="article_list box_border">
                     <!-- 返回按钮 -->
                     <div class="over">
                         <div class="back iconfont" @click="back(false)">&#xe60b; 返回 </div>
@@ -40,15 +39,16 @@
 import articleList from '../../../components/articleList.vue';
 import smallCard from '../../../components/smallCard.vue'
 import tagList from './components/tagList.vue'
-import placeOrder from '../article/components/placeOrder.vue';
 import { getDirNames } from '../../../api/postApi.js'
+import histogram from './components/histogram.vue';
+import router from '../../../router';
 
 const showTop = ref(true)
 
 let title = ref('')
 const route = useRoute()
 let showRightNav = ref(true)
-let loading = ref(false)
+let loading = ref(true)
 let defaultWidth = ref(55)
 let isShowArList = ref(false)
 // 标签列表
@@ -74,6 +74,7 @@ let toTag = async (item) => {
 let back = (item) => {
 
     if (!item) {
+        router.push('/tag')
         title.value = ''
         showTop.value = true
     }
@@ -86,13 +87,9 @@ let getTags = async () => {
     const { data: tags } = await getDirNames({
         dir_path: './posts/tag'
     })
-    loading.value = true
     tags.data.dir_names.forEach(element => {
         tagsList.push(element)
     });
-    if (tagsList.length === tags.data.dir_names.length) {
-        loading.value = false
-    }
 }
 // 获取标签数量
 let getTagNum = async (tag) => {
@@ -114,7 +111,10 @@ const props = defineProps(['scroller'])
 
 watch(() => route, (val) => {
     if (val.query.name) {
+        console.log(val.query.name);
         toTag(val.query.name)
+    } else {
+        console.log(val);
     }
 
 }, {
@@ -145,6 +145,11 @@ onMounted(async () => {
 </script>
 
 <style lang="less" scoped>
+.aniamte_fadeIn {
+    animation: fadeIn;
+    animation-duration: 1s;
+}
+
 .container {
     @media screen and (min-width:300px) and (max-width:400px) {
         margin-top: 5px;
@@ -181,8 +186,7 @@ onMounted(async () => {
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 25px;
+            border-radius: 10px;
             padding: 20px;
             align-items: center;
             box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
@@ -192,30 +196,30 @@ onMounted(async () => {
                     font-size: 0.5rem;
                 }
 
-                font-size: 30px;
+                font-size: 25px;
                 margin: 0 0 30px 0;
             }
 
             .tagCard {
                 width: 100%;
                 display: flex;
-                justify-content: flex-start;
+                justify-content: center;
+                min-height: 200px;
                 flex-wrap: wrap;
+                border-radius: 10px;
                 overflow: hidden;
             }
         }
 
         .tagList {
             width: 100%;
-            box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
 
             @media screen and (min-width:300px) and (max-width:400px) {
                 padding: 0;
             }
 
             padding: 20px;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
             transition: all 0.5s;
         }
 
@@ -263,9 +267,7 @@ onMounted(async () => {
             .article_list {
                 width: 100%;
                 background-color: rgba(255, 255, 255, 0.5);
-                box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
-                border-radius: 25px;
-                border: 1px solid #fff;
+                border-radius: 10px;
             }
         }
     }

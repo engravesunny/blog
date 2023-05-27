@@ -9,6 +9,7 @@
             <div class="btn">
                 <div class="iconfont animate_flash" @click="explore">&#xe60c;</div>
             </div>
+            <wave></wave>
         </div>
         <!-- 顶部标题壁纸展示 -->
 
@@ -22,19 +23,19 @@
                 <div v-if="showRightSideBar" class="right" body-style="padding:0;">
 
                     <!-- 个人描述等等 -->
-                    <personnalAbout v-animate="'animate_fadeIn'"></personnalAbout>
+                    <personnalAbout></personnalAbout>
                     <!-- 个人描述等等 -->
 
                     <!-- 认识我 -->
-                    <friendMe v-animate="'animate_fadeIn'"></friendMe>
+                    <friendMe></friendMe>
                     <!-- 认识我 -->
 
                     <!-- 文章分类，文章标签 -->
-                    <articleDisplay v-animate="'animate_fadeIn'"></articleDisplay>
+                    <articleDisplay></articleDisplay>
                     <!-- 文章分类，文章标签 -->
 
                     <!-- 最新文章展示 -->
-                    <latestAr :arList="rightArList" v-animate="'animate_fadeIn'"></latestAr>
+                    <latestAr :arList="rightArList"></latestAr>
                     <!-- 最新文章展示 -->
                 </div>
             </div>
@@ -43,7 +44,7 @@
 </template>
 
 <script setup>
-import { baseURL } from '../../constant/index'
+import wave from '../../components/waves.vue'
 import figlet from 'figlet'
 import standard from 'figlet/importable-fonts/Standard.js'
 import PubSub from 'pubsub-js'
@@ -305,7 +306,7 @@ onMounted(async () => {
 
         .btn {
             position: absolute;
-            bottom: 10px;
+            bottom: 50px;
 
             .iconfont {
                 color: #fff;
@@ -316,6 +317,7 @@ onMounted(async () => {
                 text-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
             }
         }
+
     }
 
     .main_container {

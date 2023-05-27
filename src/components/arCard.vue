@@ -1,7 +1,9 @@
 <template>
-    <div @click="toArticle" v-animate="'animate_zoomIn'" class="card_container">
+    <div @click="toArticle" class="card_container">
         <div class="top">
-            <img loading="lazy" :src="`${baseURL}/image/${Math.floor(Math.random() * 23)}.webp`" alt="">
+            <img v-if="loading" :src="`${baseURL}/image/loading.gif`">
+            <img v-show="!loading" @load="handleLoad" loading="lazy"
+                :src="`${baseURL}/image/${Math.floor(Math.random() * 23)}.webp`" alt="">
         </div>
         <div class="bottom">
             <div class="bTop">
@@ -25,7 +27,12 @@
 import { baseURL } from '../constant'
 import toPath from '../utils/toPath';
 import { getDirNames, getAllFileInfo } from '@/api/postApi.js'
-import PubSub from 'pubsub-js';
+
+const loading = ref(true)
+const handleLoad = () => {
+    loading.value = false
+}
+
 const router = useRouter()
 const props = defineProps({
     postName: {
@@ -146,6 +153,7 @@ onMounted(() => {
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s;
+            filter: blur(1.2);
         }
 
         img:hover {

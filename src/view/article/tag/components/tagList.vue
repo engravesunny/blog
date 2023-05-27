@@ -1,11 +1,12 @@
 <template>
     <div class="tagList_container">
         <div class="tags_box">
-            <div class="tags_item" v-for="(item,index) in tagList" :key="index">
-                <div class="tags_text" @click="toTag(item.name)" :style="{fontSize:`${(1+item.num/15)*multiple}px`,color:`${textColor[Math.floor(Math.random()*7)]}`}">
-                    {{item.name}}
+            <div class="tags_item" v-for="(item, index) in tagList" :key="index">
+                <div class="tags_text" @click="toTag(item.name)"
+                    :style="{ fontSize: `${(1 + item.num / 15) * multiple}px`, color: `${textColor[Math.floor(Math.random() * 7)]}` }">
+                    {{ item.name }}
                     <div v-if="isShowNum" class="num">
-                        {{item.num}}
+                        {{ item.num }}
                     </div>
                 </div>
             </div>
@@ -20,14 +21,14 @@ const router = useRouter()
 const route = useRoute()
 
 const props = defineProps({
-    tagFinalList:{
-        type:Array,
-        default:[]
+    tagFinalList: {
+        type: Array,
+        default: []
     }
 })
 
 let toTag = (name) => {
-    toPath('/tag',name)
+    toPath('/tag', name)
 }
 
 let multiple = ref(20)
@@ -46,60 +47,65 @@ let tagList = reactive([])
 
 let isShowNum = ref(true)
 
-onMounted(()=>{
-    tagList = tagList.sort(()=>{ return Math.random()-0.5})
+onMounted(() => {
+    tagList = tagList.sort(() => { return Math.random() - 0.5 })
 })
 
-watch(()=>props,(val)=>{
-    if(val.tagFinalList.length){
-        tagList.splice(0,tagList.length)
+watch(() => props, (val) => {
+    if (val.tagFinalList.length) {
+        tagList.splice(0, tagList.length)
         val.tagFinalList.forEach(item => {
             tagList.push(item)
         });
     }
-    tagList = tagList.sort(()=>{ return Math.random()-0.5})
-},{deep:true,immediate:true})
+    tagList = tagList.sort(() => { return Math.random() - 0.5 })
+}, { deep: true, immediate: true })
 
 
-watch(()=>route,(val)=>{
-    if(val.path==='/home'){
+watch(() => route, (val) => {
+    if (val.path === '/home') {
         isShowNum.value = false
         multiple.value = 15
     }
-},{
-    deep:true,
-    immediate:true
+}, {
+    deep: true,
+    immediate: true
 })
 
 </script>
 
 <style lang="less" scoped>
-    .tagList_container{
+.tagList_container {
 
-        width: 100%;
-        .tags_box{
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-            flex-wrap: wrap;
-        }
-        .tags_item{
-            margin: 25px;
-        }
-        .tags_text{
-            position: relative;
-            cursor: pointer;
-        }
-        .tags_text:hover{
-            color: rgb(237, 168, 168)!important;
-            text-decoration: underline;
-        }
-        .num{
-            font-size: 12px;
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            
-        }
+    width: 100%;
+
+    .tags_box {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        flex-wrap: wrap;
     }
+
+    .tags_item {
+        margin: 25px;
+    }
+
+    .tags_text {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .tags_text:hover {
+        color: rgb(237, 168, 168) !important;
+        text-decoration: underline;
+    }
+
+    .num {
+        font-size: 12px;
+        position: absolute;
+        top: -5px;
+        right: -10px;
+
+    }
+}
 </style>

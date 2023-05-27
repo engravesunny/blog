@@ -48,25 +48,25 @@
         use:nth-child(1) {
             animation-delay: -2s;
             animation-duration: 7s;
-            fill: #f7f9febd;
+            fill: rgba(223, 86, 209, 0.3);
         }
 
         use:nth-child(2) {
             animation-delay: -3s;
             animation-duration: 10s;
-            fill: #f7f9fe82;
+            fill: rgba(223, 86, 209, 0.5);
         }
 
         use:nth-child(3) {
             animation-delay: -4s;
             animation-duration: 13s;
-            fill: #f7f9fe36;
+            fill: rgba(223, 86, 209, 0.55);
         }
 
         use:nth-child(4) {
             animation-delay: -5s;
             animation-duration: 20s;
-            fill: #f7f9fe;
+            fill: rgba(223, 86, 209, 0.35);
         }
     }
 }

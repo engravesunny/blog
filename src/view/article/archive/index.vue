@@ -2,7 +2,7 @@
     <div>
         <div class="container unselectable">
             <div class="Page" :style="{ width: `${defaultWidth}%` }">
-                <div class="top">
+                <div class="top box_border">
                     <!-- 分类标题 -->
                     <div class="title">
                         <h1>Post Archive</h1>
@@ -15,7 +15,7 @@
                 <!-- 文章卡片列表 -->
                 <div v-if="true" class="article_list_display">
                     <!-- 具体分类列表展示 -->
-                    <div class="article_list">
+                    <div class="article_list box_border">
                         <!-- 返回按钮 -->
                         <!-- <div class="over" v-if="route.path!=='/archive'">
                             <div class="back iconfont">&#xe60b; 返回</div>
@@ -128,8 +128,7 @@ onMounted(() => {
             width: 100%;
             display: flex;
             flex-direction: column;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 25px;
+            border-radius: 10px;
             padding: 20px;
             align-items: center;
             box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
@@ -185,9 +184,7 @@ onMounted(() => {
                 margin-top: 20px;
                 width: 100%;
                 background-color: rgba(255, 255, 255, 0.5);
-                box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
-                border-radius: 25px;
-                border: 1px solid #fff;
+                border-radius: 10px;
             }
         }
     }
