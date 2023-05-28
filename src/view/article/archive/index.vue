@@ -7,20 +7,16 @@
                     <div class="title">
                         <h1>Post Archive</h1>
                     </div>
-                    <div class="dateBox">
-                        <smallCard :active="title === item" @click="getDatePost(item)" v-for="item in dateList" :key="item"
-                            :name="item"></smallCard>
+                    <div class="dateBox" v-loading="!dateInfo.length">
+                        <archiveEcahrts v-if="dateInfo.length" :dateInfo="dateInfo"></archiveEcahrts>
                     </div>
                 </div>
                 <!-- 文章卡片列表 -->
                 <div v-if="true" class="article_list_display">
                     <!-- 具体分类列表展示 -->
                     <div class="article_list box_border">
-                        <!-- 返回按钮 -->
-                        <!-- <div class="over" v-if="route.path!=='/archive'">
-                            <div class="back iconfont">&#xe60b; 返回</div>
-                        </div> -->
-                        <articleList :articleList="postList"></articleList>
+                        <midCard></midCard>
+                        <midCard></midCard>
                     </div>
                 </div>
 
@@ -32,30 +28,19 @@
 </template>
 
 <script setup>
-import articleList from '@/components/articleList.vue'
+import midCard from '../../../components/midCard.vue';
+import archiveEcahrts from './components/archiveEcahrts.vue';
 import rightNav from '../../../components/rightNav.vue';
-import placeOrder from '../article/components/placeOrder.vue';
 import { getDirNames } from '../../../api/postApi';
+import { getArchivePosts } from '../../../utils/getArchiveInfo'
+
 let showRightNav = ref(true)
 let defaultWidth = ref(55)
-let title = ref('')
-let dateList = reactive([])
 
-let archiveArList = reactive([])
+const dateList = reactive([])
+const dateInfo = reactive([])
 
-let postList = reactive([]);
-
-let getPosts = async () => {
-    postList.splice(0, postList.length)
-    const { data: postListInfo } = await getDirNames({
-        dir_path: './posts/postVirtual'
-    })
-    postListInfo.data.dir_names.forEach(item => {
-        postList.push(item);
-    });
-}
-
-let getDateLsit = async () => {
+const getDateList = async () => {
     dateList.splice(0, dateList.length)
     const { data: dateListInfo } = await getDirNames({
         dir_path: './posts/date'
@@ -65,16 +50,18 @@ let getDateLsit = async () => {
     })
 }
 
-let getDatePost = async (date) => {
-    title.value = date
-    postList.splice(0, postList.length)
-    const { data: postListInfo } = await getDirNames({
-        dir_path: './posts/date/' + date
+onBeforeMount(async () => {
+    await getDateList()
+    dateList.map(async item => {
+        const year = item.split('-')[0]
+        const month = item.split('-')[1]
+        const posts = await getArchivePosts(year, month)
+        dateInfo.push({
+            date: item,
+            value: posts.length
+        })
     })
-    postListInfo.data.dir_names.forEach(item => {
-        postList.push(item);
-    })
-}
+})
 
 onMounted(() => {
     if (document.body.clientWidth < 1000) {
@@ -89,8 +76,6 @@ onMounted(() => {
         defaultWidth.value = 55
         showRightNav.value = true
     })
-    getPosts()
-    getDateLsit()
 })
 
 </script>
@@ -129,7 +114,7 @@ onMounted(() => {
             display: flex;
             flex-direction: column;
             border-radius: 10px;
-            padding: 20px;
+            padding: 10px;
             align-items: center;
             box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
 
@@ -144,6 +129,8 @@ onMounted(() => {
 
             .dateBox {
                 width: 100%;
+                min-height: 100px;
+                border-radius: 10px;
                 display: flex;
                 justify-content: flex-start;
                 flex-wrap: wrap;
@@ -182,9 +169,12 @@ onMounted(() => {
 
             .article_list {
                 margin-top: 20px;
+                padding: 20px;
                 width: 100%;
                 background-color: rgba(255, 255, 255, 0.5);
                 border-radius: 10px;
+                display: flex;
+                justify-content: space-around;
             }
         }
     }

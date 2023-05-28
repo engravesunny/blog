@@ -6,5 +6,6 @@
   --background-transparent: rgba(255, 255, 255, 0.7);
   --background-eight: rgba(255, 255, 255, 0.8);
   --background-nine: rgba(255, 255, 255, 0.9);
-  --background-hover: rgba(255, 255, 255, 1)
+  --background-hover: rgba(255, 255, 255, 1);
+  --dark-gray: #a0a0a0;
 }

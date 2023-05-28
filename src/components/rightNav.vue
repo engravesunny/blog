@@ -23,16 +23,15 @@ import latestAr from '@/view/Home/components/latestAr.vue';
 import aboutMe from './aboutMe.vue'
 import iconsFriend from './iconsFriend.vue';
 import { getDirNames } from '@/api/postApi.js'
+import { getLatestPostInfo } from '../utils/latestPosts';
 const route = useRoute()
 let showArticleDir = ref(false)
 let rightArList = reactive([])
 let getPosts = async () => {
     // 获取文章
-    const { data: arList } = await getDirNames({
-        dir_path: "./posts/postVirtual"
-    })
+    const latestPost = await getLatestPostInfo()
     for (let i = 0; i < 5; i++) {
-        rightArList.push(arList.data.dir_names[arList.data.dir_names.length - i - 1])
+        rightArList.push(latestPost[i])
     }
 }
 

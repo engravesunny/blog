@@ -23,10 +23,11 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { baseURL } from '../constant'
 import toPath from '../utils/toPath';
-import { getDirNames, getAllFileInfo } from '@/api/postApi.js'
+import { getPostInfo } from '../utils/getPostInfo';
+
 
 const loading = ref(true)
 const handleLoad = () => {
@@ -41,61 +42,33 @@ const props = defineProps({
     }
 })
 
-const addClass = () => {
-    const { top } = el.getBoundingClientRect()
-    const h = window.innerHeight
-    if (top < h) {
-        if (el.className.indexOf(binding.value) === -1) {
-            // 初次还未绑定过，则新增类名(注意：下面单引号中间是一个空格！！！)
-            el.className = `${binding.value} ${el.className}`
-        }
-        if (binding.arg === 'once') {
-            // 如果指令参数是 'once'，则只触发一次
-            window.removeEventListener('scroll', addClass)
-        }
-    }
-}
-// window.addEventListener('scroll', addClass, true)
-// binding.addClass = addClass
-// addClass()
+// const addClass = (el: HTMLElement) => {
+//     const { top } = el.getBoundingClientRect()
+//     const h = window.innerHeight
+//     if (top < h) {
+//         if (el.className.indexOf(binding.value) === -1) {
+//             // 初次还未绑定过，则新增类名(注意：下面单引号中间是一个空格！！！)
+//             el.className = `${binding.value} ${el.className}`
+//         }
+//         if (binding.arg === 'once') {
+//             // 如果指令参数是 'once'，则只触发一次
+//             window.removeEventListener('scroll', addClass)
+//         }
+//     }
+// }
 
 // 分类名
 let category = ref('')
 // 标签信息
-let tags = reactive([])
+let tags = reactive<string[]>([])
 // 日期信息
 let dateInfo = ref('')
-
-// 获取分类信息
-let getCategory = async () => {
-    const { data: categoryName } = await getDirNames({
-        dir_path: './posts/postVirtual/' + props.postName + '/category'
-    })
-    category.value = categoryName.data.dir_names[0]
-}
-// 获取标签信息
-let getTag = async () => {
-    tags.splice(0, tags.length)
-    const { data: tagList } = await getDirNames({
-        dir_path: './posts/postVirtual/' + props.postName + '/tag'
-    })
-    tagList.data.dir_names.forEach(element => {
-        tags.push(element)
-    });
-}
-// 获取日期信息
-let getDateInfo = async () => {
-    const { data: date_info } = await getAllFileInfo({
-        dir_path: './posts/postVirtual/' + props.postName + '/'
-    })
-    dateInfo.value = date_info.data.files[0].mod_time
-}
 let timer = null
 // 跳转
 let toCategory = () => {
     toPath('/category', category.value)
 }
-let toTag = (item) => {
+let toTag = (item: string) => {
     toPath('/tag', item)
 }
 let toArticle = () => {
@@ -109,11 +82,18 @@ let toArticle = () => {
         }
     })
 }
+const init = async () => {
+    const info = await getPostInfo(props.postName)
+
+    category.value = info.category
+    info.tag.map(item => {
+        tags.push(item)
+    })
+    dateInfo.value = info.date
+}
 
 onMounted(() => {
-    getCategory()
-    getTag()
-    getDateInfo()
+    init()
 })
 
 </script>
@@ -145,19 +125,14 @@ onMounted(() => {
         overflow: hidden;
 
         img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s;
-            filter: blur(1.2);
         }
 
         img:hover {
-            transform: scale(1.1) translate(-45%, -45%);
+            transform: scale(1.2);
         }
     }
 

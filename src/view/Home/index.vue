@@ -55,6 +55,7 @@ import articleDisplay from './components/article.vue';
 import latestAr from './components/latestAr.vue';
 import getWord from '@/api/randomWord.js'
 import { getDirNames } from '../../api/postApi';
+import { getLatestPostInfo } from '../../utils/latestPosts';
 // 每日一言后闪烁条
 let isShowFlash = ref(true)
 
@@ -139,16 +140,12 @@ let getPosts = async () => {
     // 获取文章
     leftArList.splice(0, leftArList.length)
     rightArList.splice(0, rightArList.length)
-    const { data: arList } = await getDirNames({
-        dir_path: "./posts/postVirtual"
+    const latestPostInfo = await getLatestPostInfo()
+    latestPostInfo.map(item => {
+        leftArList.push(item)
     })
-    for (let i = 0; i < 18; i++) {
-        if (arList.data.dir_names[i]) {
-            leftArList.push(arList.data.dir_names[arList.data.dir_names.length - i - 1])
-        }
-    }
     for (let i = 0; i < 5; i++) {
-        rightArList.push(arList.data.dir_names[arList.data.dir_names.length - i - 1])
+        rightArList.push(latestPostInfo[i])
     }
 }
 

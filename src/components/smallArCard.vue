@@ -16,13 +16,14 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+
+import { getPostInfo } from '../utils/getPostInfo'
 import { baseURL } from '../constant';
-import { getAllFileInfo, getDirNames } from '../api/postApi';
 const router = useRouter()
 let dateInfo = ref('')
 
-let tagInfo = reactive([])
+let tagInfo = reactive<string[]>([])
 
 const props = defineProps({
     postName: {
@@ -30,23 +31,6 @@ const props = defineProps({
         default: '文章标题'
     }
 })
-// 获取日期信息
-let getDateInfo = async (val) => {
-    tagInfo.splice(0, tagInfo.length)
-    const { data: tag_info } = await getDirNames({
-        dir_path: './posts/postVirtual/' + val.postName + '/tag'
-    })
-    tag_info.data.dir_names.forEach(item => {
-        tagInfo.push(item)
-    });
-}
-// 获取标签信息
-let getTagInfo = async (val) => {
-    const { data: date_info } = await getAllFileInfo({
-        dir_path: './posts/postVirtual/' + val.postName + '/'
-    })
-    dateInfo.value = date_info.data.files[0].mod_time
-}
 let toArticle = () => {
     router.push({
         path: '/article',
@@ -57,9 +41,12 @@ let toArticle = () => {
         }
     })
 }
-watch(() => props, (val) => {
-    getDateInfo(val)
-    getTagInfo(val)
+watch(() => props, async (val) => {
+    const info = await getPostInfo(val.postName)
+    dateInfo.value = info.date
+    info.tag.map(item => {
+        tagInfo.push(item)
+    })
 }, {
     deep: true,
     immediate: true

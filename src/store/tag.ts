@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { TagSingle } from "../types";
+import { PostSingle, TagSingle } from "../types";
 
 interface TagState {
     tagInfo: TagSingle[]
@@ -15,12 +15,33 @@ export const tag = defineStore('tag', {
         setState(info: TagSingle[]) {
             this.tagInfo = info
         },
-        getTagPost(name: string) {
+        checkTag(tag: string) {
+            return this.tagInfo.some(item => item.name === tag)
+        },
+        getTagInfo(tag: string) {
+            let temp: TagSingle = {
+                posts: [],
+                num: 0,
+                name: ''
+            }
             this.tagInfo.map(item => {
-                if (item.name === name) {
-                    return item.posts
+                if (item.name === tag) {
+                    temp = item
                 }
             })
+            return temp
+        },
+        getTagPost(name: string) {
+            let postList: PostSingle[] = []
+            this.tagInfo.map(item => {
+                if (item.name === name) {
+                    postList = item.posts
+                }
+            })
+            return postList
+        },
+        addTagInfo(tagInfo: TagSingle) {
+            this.tagInfo.push(tagInfo)
         }
     },
 })

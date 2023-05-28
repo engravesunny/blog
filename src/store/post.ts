@@ -3,29 +3,46 @@ import { defineStore } from "pinia";
 import { PostSingle } from "../types";
 
 interface PostState {
-    postInfo: PostSingle[]
+    postInfo: PostSingle[],
+    latestPosts: string[]
 }
 
 export const post = defineStore('post', {
     state: (): PostState => ({
-        postInfo: []
+        postInfo: [],
+        latestPosts: []
     }),
     actions: {
         addPost(info: PostSingle) {
             this.postInfo.push(info)
+        },
+        setLatestPost(posts: string[]) {
+            this.latestPosts = posts
+        },
+        checkLatestPosts() {
+            return this.latestPosts.length !== 0
+        },
+        getLatestPost(): string[] {
+            return this.latestPosts
         },
         checkPost(name: string) {
             return this.postInfo.some(item => {
                 return item.name = name
             })
         },
-        getPost(name: string): PostSingle | boolean {
+        getPost(name: string): PostSingle {
+            let temp: PostSingle = {
+                category: '',
+                tag: [],
+                date: '',
+                name: ''
+            }
             this.postInfo.map(item => {
                 if (item.name === name) {
-                    return item
+                    temp = item
                 }
             })
-            return false
+            return temp
         }
     }
 })

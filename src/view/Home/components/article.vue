@@ -8,8 +8,8 @@
             <div class="strip" :style="{ transform: `translate(${stripTranslateX}%)` }"></div>
         </div>
         <div class="display box_border">
-            <div v-if="showWhat === 'tag'" class="category_art">
-                <smallCard @click="toTag(item)" v-for="item in tagList" :key="item" :name="item"></smallCard>
+            <div v-if="showWhat === 'tag'" v-loading="tagLoading" class="category_art">
+                <tagList v-if="!tagLoading" :tagFinalList="tagFinalList"></tagList>
             </div>
             <div v-if="showWhat === 'category'" class="category_art">
                 <smallCard @click="toCategory(item)" v-for="item in categoryList" :key="item" :name="item"></smallCard>
@@ -22,10 +22,14 @@
 import toPath from '../../../utils/toPath';
 import smallCard from '../../../components/smallCard.vue';
 import { getDirNames } from '../../../api/postApi';
+import tagList from '../../article/tag/components/tagList.vue';
+import { getTagInfo } from '../../../utils/getTagInfo';
+
+
 let stripTranslateX = ref(300)
 
 let showWhat = ref('category')
-
+const tagLoading = ref(true)
 
 let timer = null
 
@@ -46,11 +50,12 @@ let showCategory = () => {
 }
 
 let categoryList = reactive([])
-let tagList = reactive([])
-
+let tagLists = []
+const tagFinalList = reactive([])
 let getInfo = async () => {
-    categoryList.splice(0, categoryList.length)
-    tagList.splice(0, tagList.length)
+    categoryList.length = 0
+    tagLists.length = 0
+    tagFinalList.length = 0
     const { data: category } = await getDirNames({
         dir_path: './posts/category'
     })
@@ -61,12 +66,34 @@ let getInfo = async () => {
         dir_path: './posts/tag'
     })
     tags.data.dir_names.forEach(item => {
-        tagList.push(item)
+        tagLists.push(item)
     });
+}
+
+const getTagInfos = async (tag) => {
+    const tagInfo = await getTagInfo(tag)
+    tagFinalList.push({
+        name: tagInfo.name,
+        num: tagInfo.num
+    })
+    if (tagFinalList.length === tagLists.length) {
+        tagLoading.value = false
+    } else {
+        tagLoading.value = true
+    }
 }
 
 onMounted(() => {
     getInfo()
+})
+
+watch(showWhat, (val) => {
+    if (val === 'tag') {
+        tagFinalList.length = 0
+        tagLists.map(item => {
+            getTagInfos(item)
+        })
+    }
 })
 
 </script>

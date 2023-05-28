@@ -7,8 +7,8 @@
                     <h1>Post Categories</h1>
                 </div>
                 <div class="categoryCard">
-                    <smallCard @click="toCategory(item)" v-for="item in categoryList" :active="item === title" :key="item"
-                        :name="item" />
+                    <smallCard @click="toCategory(item.name)" v-for="item in categoryInfo" :active="item === title"
+                        :key="item" :name="item.name" :num="item.value" />
                 </div>
             </div>
             <div v-if="isShowArList" class="article_list_display">
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div v-show="!isShowArList" class="radar box_border">
-                <radar :categoryList="categoryList" :categoryLength="categoryLength"></radar>
+                <radar :categoryList="categoryList" :categoryLength="categoryInfo"></radar>
             </div>
 
         </div>
@@ -36,7 +36,6 @@
 import radar from '../../../components/radar.vue'
 import rightNav from '../../../components/rightNav.vue';
 import articleList from '../../../components/articleList.vue';
-import placeOrder from '../article/components/placeOrder.vue'
 import smallCard from '../../../components/smallCard.vue'
 import { getDirNames } from '../../../api/postApi.js'
 
@@ -80,15 +79,15 @@ let getCategory = async () => {
     });
 }
 
-let categoryLength = reactive([])
+let categoryInfo = reactive([])
 
 let getLength = () => {
-    categoryLength.splice(0, categoryLength.length)
+    categoryInfo.splice(0, categoryInfo.length)
     categoryList.forEach(async item => {
         const { data: len } = await getDirNames({
             dir_path: './posts/category/' + item
         })
-        categoryLength.push({
+        categoryInfo.push({
             name: item,
             value: len.data.dir_names.length
         })

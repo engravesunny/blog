@@ -42,6 +42,7 @@ import tagList from './components/tagList.vue'
 import { getDirNames } from '../../../api/postApi.js'
 import histogram from './components/histogram.vue';
 import router from '../../../router';
+import { getTagInfo, getTagPost } from '../../../utils/getTagInfo';
 
 const showTop = ref(true)
 
@@ -58,15 +59,13 @@ let tagFinalList = reactive([])
 // 具体标签文章列表
 let tagArList = reactive([])
 // 展示具体标签文章列表
-let toTag = async (item) => {
+let toTag = (item) => {
     showTop.value = false
     title.value = item
     tagArList.splice(0, tagArList.length)
-    const { data: articleData } = await getDirNames({
-        dir_path: './posts/tag/' + item
-    })
-    articleData.data.dir_names.forEach(item => {
-        tagArList.push(item)
+    const postList = getTagPost(item)
+    postList.forEach(item => {
+        tagArList.push(item.name)
     })
     back(true)
 }
@@ -93,12 +92,10 @@ let getTags = async () => {
 }
 // 获取标签数量
 let getTagNum = async (tag) => {
-    const { data: tagNum } = await getDirNames({
-        dir_path: `./posts/tag/${tag}/`
-    })
+    const tagInfo = await getTagInfo(tag)
     tagFinalList.push({
-        name: tag,
-        num: tagNum.data.dir_names.length
+        name: tagInfo.name,
+        num: tagInfo.num
     })
     if (tagsList.length === tagFinalList.length) {
         loading.value = false
@@ -111,10 +108,9 @@ const props = defineProps(['scroller'])
 
 watch(() => route, (val) => {
     if (val.query.name) {
-        console.log(val.query.name);
         toTag(val.query.name)
     } else {
-        console.log(val);
+
     }
 
 }, {
@@ -122,11 +118,10 @@ watch(() => route, (val) => {
     immediate: true
 })
 
-onMounted(async () => {
+const init = async () => {
     await getTags()
     await tagsList.forEach((item, index) => {
         getTagNum(item)
-
     });
     if (window.innerWidth < 1000) {
         defaultWidth.value = 80
@@ -140,6 +135,10 @@ onMounted(async () => {
         defaultWidth.value = 55
         showRightNav.value = true
     })
+}
+
+onMounted(() => {
+    init()
 })
 
 </script>

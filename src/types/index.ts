@@ -1,5 +1,5 @@
 export interface PostSingle {
-    category: string[]
+    category: string
     tag: string[]
     date: string
     name: string
@@ -12,8 +12,13 @@ export interface TagSingle {
 export interface CategorySingle {
     posts: PostSingle[]
     name: string
+    num: number
+}
+export interface ArchiveMonthSingle {
+    month: string,
+    posts: PostSingle[]
 }
 export interface ArchiveSingle {
-    posts: PostSingle[]
+    monthInfos: ArchiveMonthSingle[]
     year: string
 }

@@ -1,9 +1,9 @@
 <template>
     <div class="tagList_container">
-        <div class="tags_box">
-            <div class="tags_item" v-for="(item, index) in tagList" :key="index">
+        <div class="tags_box" v-loading="!tagList.length">
+            <div class="tags_item" v-for="(item, index) in tagList" :key="index" :style="{ margin: `${marginNum}px` }">
                 <div class="tags_text" @click="toTag(item.name)"
-                    :style="{ fontSize: `${(1 + item.num / 15) * multiple}px`, color: `${textColor[Math.floor(Math.random() * 7)]}` }">
+                    :style="{ fontSize: `${(1 + item.num / 10) * multiple}px`, color: `${textColor[Math.floor(Math.random() * 7)]}` }">
                     {{ item.name }}
                     <div v-if="isShowNum" class="num">
                         {{ item.num }}
@@ -32,6 +32,8 @@ let toTag = (name) => {
 }
 
 let multiple = ref(20)
+const marginNum = ref(25)
+
 
 let textColor = reactive([
     'rgb(133, 200, 234)',
@@ -53,7 +55,7 @@ onMounted(() => {
 
 watch(() => props, (val) => {
     if (val.tagFinalList.length) {
-        tagList.splice(0, tagList.length)
+        tagList.length = 0
         val.tagFinalList.forEach(item => {
             tagList.push(item)
         });
@@ -64,8 +66,8 @@ watch(() => props, (val) => {
 
 watch(() => route, (val) => {
     if (val.path === '/home') {
-        isShowNum.value = false
-        multiple.value = 15
+        multiple.value = 18
+        marginNum.value = 2
     }
 }, {
     deep: true,
@@ -84,10 +86,6 @@ watch(() => route, (val) => {
         justify-content: center;
         align-items: stretch;
         flex-wrap: wrap;
-    }
-
-    .tags_item {
-        margin: 25px;
     }
 
     .tags_text {

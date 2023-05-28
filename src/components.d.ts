@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AboutMe: typeof import('./components/aboutMe.vue')['default']
     ArCard: typeof import('./components/arCard.vue')['default']
+    ArchiveEcahrts: typeof import('./components/archiveEcahrts.vue')['default']
     ArticleDir: typeof import('./components/articleDir.vue')['default']
     ArticleList: typeof import('./components/articleList.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']

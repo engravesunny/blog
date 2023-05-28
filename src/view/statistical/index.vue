@@ -16,6 +16,7 @@
                     <div class="tarffic">
                         <traffic></traffic>
                     </div>
+                    <el-button @click="test">测试按钮</el-button>
                 </div>
             </div>
         </div>
@@ -28,6 +29,10 @@ import traffic from './components/traffic/index.vue'
 import waves from '../../components/waves.vue'
 import { getContribution } from '../../api/github'
 import { reactive } from 'vue';
+
+const test = () => {
+
+}
 
 const githubData = reactive([])
 const colorData = reactive([])
