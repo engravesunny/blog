@@ -6,7 +6,9 @@ let getDatePost = async (date: string) => {
     const { data: postListInfo } = await getDirNames({
         dir_path: './posts/date/' + date
     })
-    return postListInfo.data.dir_names as string[]
+    const postList = postListInfo.data.dir_names as string[]
+    postList.reverse()
+    return postList
 }
 
 let postList: string[] = []
