@@ -1,7 +1,4 @@
 import { getDirNames } from "../api/postApi"
-import { ArchiveSingle, ArchiveMonthSingle } from "../types"
-import { getPostInfo } from "./getPostInfo"
-import { PostSingle } from '../types/index';
 import { archive } from "../store/archive";
 const archiveStore = archive()
 
@@ -17,10 +14,7 @@ let postList: string[] = []
 export const getArchivePosts = async (year: string, month: string) => {
     postList.length = 0
     if (archiveStore.checkMonth(year, month)) {
-        console.log('通过测试');
         const temp = archiveStore.getArchivePosts(year, month)
-        console.log(temp);
-
         return temp
     } else {
         const date = year + '-' + month
@@ -31,10 +25,6 @@ export const getArchivePosts = async (year: string, month: string) => {
             month: date.split('-')[1],
             posts: [...postList]
         })
-        const test1 = archiveStore.archiveInfo
-        console.log('测试', test1);
-
         return postList
     }
 }
-

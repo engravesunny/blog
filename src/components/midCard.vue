@@ -1,50 +1,85 @@
 <template>
     <div class="mid_card">
         <div class="left">
-            <img src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/4.webp" alt="postImg">
+            <img src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/4.webp" alt="postImg" />
         </div>
         <div class="main">
             <div class="top">
-                <div class="title">
-                    文章标题
-                </div>
+                <div class="title shenglue">{{ postInfo.name }}</div>
             </div>
             <div class="bottom">
-                <div class="category"> <span class="iconfont icon">&#xe811;</span> 分类</div>
+                <div class="category">
+                    <span class="iconfont icon">&#xe811;</span> {{ postInfo.category }}
+                </div>
                 <div class="tags">
-                    <div class="tag"> <span class="iconfont icon">&#xe62f;</span>标签1</div>
-                    <div class="tag"> <span class="iconfont icon">&#xe62f;</span>标签2</div>
+                    <div class="tag" v-for="item in postInfo.tag" :key="item">
+                        <span class="iconfont icon">&#xe62f;</span>{{ item }}
+                    </div>
                 </div>
             </div>
         </div>
         <div class="right">
             <div class="top">
                 <div class="index">
-                    <h1>1</h1>
+                    <h1>{{ index + 1 }}</h1>
                 </div>
             </div>
             <div class="bottom">
-                <div class="date">2023-05-05</div>
+                <div class="date">{{ postInfo.date }}</div>
             </div>
         </div>
     </div>
 </template>
-
+  
 <script setup>
+import { getPostInfo } from "../utils/getPostInfo";
+const props = defineProps({
+    postName: {
+        type: String,
+        default: "文章标题",
+    },
+    index: {
+        type: Number,
+        default: 1,
+    },
+});
 
+const emits = defineEmits(['loadFinish'])
+
+const postInfo = reactive({
+    name: "",
+    tag: [],
+    category: "",
+    date: "",
+});
+
+const init = async () => {
+    const info = await getPostInfo(props.postName);
+    console.log(1);
+    emits('loadFinish')
+    postInfo.category = info.category;
+    postInfo.date = info.date;
+    postInfo.name = info.name;
+    postInfo.tag = info.tag;
+}
+
+onBeforeMount(() => {
+    init()
+});
 </script>
-
+  
 <style lang="less" scoped>
 .mid_card {
-    width: 65%;
+    width: 70%;
     min-height: 100px;
     display: flex;
     padding: 10px;
     border-radius: 10px;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
 
     .left {
         width: 160px;
-        height: 100%;
         overflow: hidden;
         border-radius: 5px;
 
@@ -63,7 +98,7 @@
 
     .main {
         margin-left: 10px;
-        flex: 1;
+        width: 50%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -78,6 +113,7 @@
             width: 100%;
 
             .title {
+                width: 100%;
                 font-size: 18px;
                 font-weight: 700;
             }
@@ -110,14 +146,14 @@
     }
 
     .right {
-        width: 20%;
+        flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
         .top {
             .index {
-                opacity: .5;
+                opacity: 0.5;
                 font-size: 18px;
                 text-align: right;
                 font-style: italic;
