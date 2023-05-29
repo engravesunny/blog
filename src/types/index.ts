@@ -16,7 +16,7 @@ export interface CategorySingle {
 }
 export interface ArchiveMonthSingle {
     month: string,
-    posts: PostSingle[]
+    posts: string[]
 }
 export interface ArchiveSingle {
     monthInfos: ArchiveMonthSingle[]

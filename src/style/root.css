@@ -8,4 +8,5 @@
   --background-nine: rgba(255, 255, 255, 0.9);
   --background-hover: rgba(255, 255, 255, 1);
   --dark-gray: #a0a0a0;
+  --border-left: 3px solid rgb(6, 147, 255);
 }

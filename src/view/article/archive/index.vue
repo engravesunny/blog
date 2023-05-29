@@ -7,16 +7,42 @@
                     <div class="title">
                         <h1>Post Archive</h1>
                     </div>
-                    <div class="dateBox" v-loading="!dateInfo.length">
-                        <archiveEcahrts v-if="dateInfo.length" :dateInfo="dateInfo"></archiveEcahrts>
+                    <div class="dateBox" v-loading="archiveLoading">
+                        <archiveEcahrts v-if="!archiveLoading" :dateInfo="dateInfo"></archiveEcahrts>
                     </div>
                 </div>
                 <!-- 文章卡片列表 -->
                 <div v-if="true" class="article_list_display">
                     <!-- 具体分类列表展示 -->
-                    <div class="article_list box_border">
-                        <midCard></midCard>
-                        <midCard></midCard>
+                    <div class="date_list box_border">
+                        <div class="date_item">
+                            <div class="date_title">
+                                <h1>2023.01</h1>
+                            </div>
+                            <div class="card">
+                                <midCard></midCard>
+                            </div>
+                            <div class="card">
+                                <midCard></midCard>
+                            </div>
+                            <div class="card">
+                                <midCard></midCard>
+                            </div>
+                        </div>
+                        <div class="date_item">
+                            <div class="date_title">
+                                <h1>2023.01</h1>
+                            </div>
+                            <div class="card">
+                                <midCard></midCard>
+                            </div>
+                            <div class="card">
+                                <midCard></midCard>
+                            </div>
+                            <div class="card">
+                                <midCard></midCard>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -50,17 +76,25 @@ const getDateList = async () => {
     })
 }
 
+const getArchivePost = async (date) => {
+    const year = date.split('-')[0]
+    const month = date.split('-')[1]
+    const posts = await getArchivePosts(year, month)
+    return {
+        date: date,
+        value: posts.length
+    }
+}
+
+const archiveLoading = ref(true)
+
 onBeforeMount(async () => {
     await getDateList()
-    dateList.map(async item => {
-        const year = item.split('-')[0]
-        const month = item.split('-')[1]
-        const posts = await getArchivePosts(year, month)
-        dateInfo.push({
-            date: item,
-            value: posts.length
-        })
-    })
+    const promises = dateList.map(item => getArchivePost(item))
+    for await (let res of promises) {
+        dateInfo.push(res)
+    }
+    archiveLoading.value = false
 })
 
 onMounted(() => {
@@ -167,14 +201,83 @@ onMounted(() => {
                 }
             }
 
-            .article_list {
+            .date_list {
                 margin-top: 20px;
                 padding: 20px;
+                padding-top: 40px;
+                padding-left: 30px;
                 width: 100%;
                 background-color: rgba(255, 255, 255, 0.5);
                 border-radius: 10px;
                 display: flex;
                 justify-content: space-around;
+                flex-direction: column;
+
+                .date_item {
+                    padding-top: 25px;
+                    padding-bottom: 25px;
+                    position: relative;
+                    width: 100%;
+                    border-left: var(--border-left);
+
+                    .date_title {
+                        padding-left: 20px;
+                        position: absolute;
+                        top: -15px;
+                        left: 0;
+                        font-style: italic;
+                        color: #333;
+                    }
+
+                    .date_title::before {
+                        content: '';
+                        width: 10px;
+                        height: 10px;
+                        position: absolute;
+                        left: -7px;
+                        top: 5px;
+                        background-color: #fff;
+                        border-radius: 50%;
+                    }
+
+                    .date_title::after {
+                        content: '';
+                        border: var(--box-border-active);
+                        width: 10px;
+                        height: 10px;
+                        position: absolute;
+                        border-radius: 50%;
+                        left: -10px;
+                        top: 2px;
+                    }
+
+                    .card {
+                        position: relative;
+                        margin: 20px 0;
+                        width: 100%;
+                        padding-left: 10px;
+                    }
+
+
+
+                    .card::after {
+                        content: '';
+                        border: var(--box-border-active);
+                        width: 6px;
+                        height: 6px;
+                        position: absolute;
+                        border-radius: 50%;
+                        left: -8px;
+                        top: 50%;
+                        background-color: #fff;
+                        transform: translateY(-100%);
+                    }
+                }
+            }
+
+            .date_list:hover {
+                transition: all 0.5s;
+                background-color: rgba(255, 255, 255, 0.9);
             }
         }
     }

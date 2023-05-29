@@ -12,28 +12,28 @@ let getDatePost = async (date: string) => {
     return postListInfo.data.dir_names as string[]
 }
 
-const monthItem: ArchiveMonthSingle = {
-    month: '',
-    posts: []
-}
-const postList: PostSingle[] = []
+let postList: string[] = []
 
 export const getArchivePosts = async (year: string, month: string) => {
     postList.length = 0
-    let temp: PostSingle[] = []
     if (archiveStore.checkMonth(year, month)) {
-        return archiveStore.getArchivePosts(year, month)
+        console.log('通过测试');
+        const temp = archiveStore.getArchivePosts(year, month)
+        console.log(temp);
+
+        return temp
     } else {
         const date = year + '-' + month
         const res = await getDatePost(date)
-        const promises = res.map(name => getPostInfo(name))
-        for await (let res of promises) {
-            postList.push(res)
-        }
-        monthItem.month = date.split('-')[1]
-        monthItem.posts = postList
+        postList = [...res]
         const year_x: string = date.split('-')[0]
-        archiveStore.addArchive(year_x, monthItem)
+        archiveStore.addArchive(year_x, {
+            month: date.split('-')[1],
+            posts: [...postList]
+        })
+        const test1 = archiveStore.archiveInfo
+        console.log('测试', test1);
+
         return postList
     }
 }

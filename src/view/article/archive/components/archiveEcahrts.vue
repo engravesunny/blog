@@ -27,7 +27,7 @@ echarts.use([
 ]);
 
 
-const porps = defineProps({
+const props = defineProps({
     dateInfo: {
         type: Array,
         default: []
@@ -117,7 +117,10 @@ option = {
 };
 
 onBeforeMount(() => {
-    console.log('before', porps.dateInfo[0]);
+    props.dateInfo.map(item => {
+        dataKey.push(item.date)
+        dataValue.push(item.value)
+    })
 })
 
 onMounted(() => {

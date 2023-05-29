@@ -1,5 +1,5 @@
 <template>
-    <div class="mid_card box_border">
+    <div class="mid_card">
         <div class="left">
             <img src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/4.webp" alt="postImg">
         </div>
@@ -36,27 +36,33 @@
 
 <style lang="less" scoped>
 .mid_card {
-    width: 48%;
+    width: 65%;
     min-height: 100px;
     display: flex;
-    padding: 5px;
+    padding: 10px;
     border-radius: 10px;
-    cursor: pointer;
 
     .left {
         width: 160px;
         height: 100%;
+        overflow: hidden;
+        border-radius: 5px;
 
         img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+
+        img:hover {
+            transform: scale(1.1);
         }
     }
 
     .main {
-        margin-left: 5px;
+        margin-left: 10px;
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -68,7 +74,7 @@
         }
 
         .top {
-            padding-top: 5px;
+            padding-top: 2px;
             width: 100%;
 
             .title {
@@ -78,6 +84,7 @@
         }
 
         .bottom {
+            padding-bottom: 5px;
             width: 100%;
             display: flex;
             flex-direction: column;

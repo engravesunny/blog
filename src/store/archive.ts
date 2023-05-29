@@ -16,49 +16,59 @@ export const archive = defineStore('archive', {
         setState(info: ArchiveSingle[]) {
             this.archiveInfo = info
         },
-        checkYear(year: string): number | boolean {
-            this.archiveInfo.map((item, index) => {
-                if (item.year === year) {
-                    return index
-                }
-            })
-            return false
-        },
-        checkMonth(year: string, month: string) {
-            const index = this.checkYear(year)
-            if (index) {
-                return this.archiveInfo[index as number].monthInfos.some(item => item.month === month)
-            } else {
-                return index
-            }
-        },
-        addArchive(year: string, archiveItem: ArchiveMonthSingle) {
-            this.archiveInfo.map(item => {
-                const index = this.checkYear(year)
-                if (index) {
-                    this.archiveInfo[index as number].monthInfos.push(archiveItem)
-                } else {
-                    this.archiveInfo.push({
-                        year,
-                        monthInfos: [
-                            archiveItem
-                        ]
-                    })
-                }
-            })
-        },
-        getArchivePosts(year: string, month: string): PostSingle[] {
-            let temp: PostSingle[] = []
+        checkYear(year: string): boolean {
+            let temp = false
             this.archiveInfo.map(item => {
                 if (item.year === year) {
-                    item.monthInfos.map(item => {
-                        if (item.month === month) {
-                            temp = item.posts
-                        }
-                    })
+                    console.log('year===year');
+                    temp = true
                 }
             })
             return temp
+        },
+        checkMonth(year: string, month: string) {
+            const index = this.checkYear(year)
+            let temp = false
+            if (index) {
+                this.archiveInfo.map(item => {
+                    if (item.year === year) {
+                        temp = item.monthInfos.some(item => item.month === month)
+                        console.log('这里是month通过', temp);
+                    }
+                })
+            }
+            return temp
+        },
+        addArchive(year: string, archiveItem: ArchiveMonthSingle) {
+            const index = this.checkYear(year)
+            if (index) {
+                this.archiveInfo.map(item => {
+                    if (item.year === year) {
+                        item.monthInfos.push(archiveItem)
+                    }
+                })
+            } else {
+                console.log('index是什么', index);
+                this.archiveInfo.push({
+                    year,
+                    monthInfos: [
+                        archiveItem
+                    ]
+                })
+            }
+        },
+        getArchivePosts(year: string, month: string) {
+            for (let item of this.archiveInfo) {
+                if (item.year === year) {
+                    for (let t of item.monthInfos) {
+                        if (t.month === month) {
+                            console.log('返回结果', t);
+
+                            return t.posts
+                        }
+                    }
+                }
+            }
         }
     },
 })
