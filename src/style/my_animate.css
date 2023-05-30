@@ -1,0 +1,24 @@
+.animate_show {
+    animation: animate_show;
+    animation-duration: 1s;
+}
+
+@keyframes animate_show {
+    0% {
+        filter: blur(10px);
+    }
+
+    100% {
+        filter: unset;
+    }
+}
+
+@keyframes animate_blur {
+    0% {
+        filter: unset;
+    }
+
+    100% {
+        filter: blur(3px);
+    }
+}

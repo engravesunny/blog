@@ -1,9 +1,8 @@
 <template>
-    <div @click="toArticle" class="card_container">
+    <div ref="dom" @click="toArticle" v-loading="loading" class="card_container">
         <div class="top">
-            <img v-if="loading" :src="`${baseURL}/image/loading.gif`">
-            <img v-show="!loading" @load="handleLoad" loading="lazy"
-                :src="`${baseURL}/image/${Math.floor(Math.random() * 23)}.webp`" alt="">
+            <img v-if="loading" :src="`${baseURL}/image/loading.gif`" alt="loading">
+            <img v-else class="animate_show" :src="`${postImgUrl}/${postImg}`" alt="postImg">
         </div>
         <div class="bottom">
             <div class="bTop">
@@ -24,16 +23,12 @@
 </template>
 
 <script setup lang="ts">
-import { baseURL } from '../constant'
+import { postImgUrl, baseURL } from '../constant'
 import toPath from '../utils/toPath';
 import { getPostInfo } from '../utils/getPostInfo';
 
 
 const loading = ref(true)
-const handleLoad = () => {
-    loading.value = false
-}
-
 const router = useRouter()
 const props = defineProps({
     postName: {
@@ -42,20 +37,7 @@ const props = defineProps({
     }
 })
 
-// const addClass = (el: HTMLElement) => {
-//     const { top } = el.getBoundingClientRect()
-//     const h = window.innerHeight
-//     if (top < h) {
-//         if (el.className.indexOf(binding.value) === -1) {
-//             // 初次还未绑定过，则新增类名(注意：下面单引号中间是一个空格！！！)
-//             el.className = `${binding.value} ${el.className}`
-//         }
-//         if (binding.arg === 'once') {
-//             // 如果指令参数是 'once'，则只触发一次
-//             window.removeEventListener('scroll', addClass)
-//         }
-//     }
-// }
+const dom = ref<Element>()
 
 // 分类名
 let category = ref('')
@@ -63,7 +45,11 @@ let category = ref('')
 let tags = reactive<string[]>([])
 // 日期信息
 let dateInfo = ref('')
+// 封面信息
+let postImg = ref('')
+
 let timer = null
+
 // 跳转
 let toCategory = () => {
     toPath('/category', category.value)
@@ -82,7 +68,9 @@ let toArticle = () => {
         }
     })
 }
+
 const init = async () => {
+    loading.value = true
     const info = await getPostInfo(props.postName)
 
     category.value = info.category
@@ -90,10 +78,23 @@ const init = async () => {
         tags.push(item)
     })
     dateInfo.value = info.date
+    postImg.value = info.postImg
+    loading.value = false
 }
 
+const handleLazy = (el: Element) => {
+    const intersectionObserver = new IntersectionObserver((changes) => {
+        changes.forEach((item, index) => {
+            if (item.intersectionRatio > 0) {
+                intersectionObserver.unobserve(item.target)
+                init()
+            }
+        })
+    })
+    intersectionObserver.observe(el)
+}
 onMounted(() => {
-    init()
+    handleLazy(dom.value as Element)
 })
 
 </script>

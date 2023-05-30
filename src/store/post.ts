@@ -26,9 +26,8 @@ export const post = defineStore('post', {
             return this.latestPosts
         },
         checkPost(name: string) {
-            return this.postInfo.some(item => {
-                return item.name = name
-            })
+
+            return this.postInfo.some(item => item.name === name)
         },
         getPost(name: string): PostSingle {
             let temp: PostSingle = {

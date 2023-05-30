@@ -14,16 +14,24 @@
                 <!-- 文章卡片列表 -->
                 <div v-loading="postLoading" class="article_list_display">
                     <!-- 具体分类列表展示 -->
-                    <div v-show="!postLoading" class="date_list box_border">
-                        <div class="date_item" v-for="item in postInfo" :key="item.date">
-                            <div class="date_title">
+                    <div v-show="!postLoading" v-if="!changing" class="date_list box_border">
+                        <div class="top_title">
+                            <div class="text">
+                                <h1>{{ '文章总览' + ' - ' + postNum }}</h1>
+                            </div>
+                        </div>
+                        <div class="date_item" v-for="item in pagePost" :key="item.date">
+                            <div class="date_title" v-if="item.posts.length">
                                 <h1>{{ item.date }}</h1>
                             </div>
                             <div class="card" v-for="(post, index) in item.posts" :key="post">
                                 <midCard @loadFinish="loaded" :postName="post" :index="index"></midCard>
                             </div>
                         </div>
+                        <page-table @toPage="toPage" :cur-page="curPage" :page-size="pageSize"
+                            :total="postNum"></page-table>
                     </div>
+
                 </div>
             </div>
             <rightNav v-if="showRightNav"></rightNav>
@@ -33,6 +41,7 @@
 </template>
   
 <script setup>
+import pageTable from './components/pageTable.vue'
 import midCard from "../../../components/midCard.vue";
 import archiveEcahrts from "./components/archiveEcahrts.vue";
 import rightNav from "../../../components/rightNav.vue";
@@ -42,18 +51,19 @@ import { getArchivePosts } from "../../../utils/getArchiveInfo";
 let showRightNav = ref(true);
 let defaultWidth = ref(55);
 
-const dateList = reactive([]);
-const dateInfo = reactive([]);
 
-
+// 加载中标志
 const archiveLoading = ref(true);
 const postLoading = ref(true)
 
+// 文章卡片加载完成事件
 const loaded = () => {
-    console.log(1);
     postLoading.value = false
 }
 
+// 各月份发布文章统计 {date：日期，value：发布数目}
+const dateList = reactive([]);
+const dateInfo = reactive([]);
 const getDateList = async () => {
     dateList.splice(0, dateList.length);
     const { data: dateListInfo } = await getDirNames({
@@ -63,7 +73,6 @@ const getDateList = async () => {
         dateList.push(item);
     });
 };
-
 const getArchivePost = async (date) => {
     const year = date.split("-")[0];
     const month = date.split("-")[1];
@@ -73,7 +82,24 @@ const getArchivePost = async (date) => {
         value: posts.length,
     };
 };
+const loadingArchiveInfo = async () => {
+    const promises = dateList.map((item) => getArchivePost(item));
+    for await (let res of promises) {
+        dateInfo.push(res);
+    }
+    archiveLoading.value = false;
+};
 
+// 获取文章数量（number）
+const postNum = ref(0)
+const getPostNum = async () => {
+    const { data: arList } = await getDirNames({
+        dir_path: "./posts/postVirtual"
+    })
+    postNum.value = arList.data.dir_names.length
+}
+
+// 文章信息{date：日期，posts:文章列表}
 const postInfo = reactive([]);
 const getPostInfo = async (date) => {
     const year = date.split("-")[0];
@@ -84,31 +110,61 @@ const getPostInfo = async (date) => {
         posts: posts,
     };
 };
-
-
-const loadingArchiveInfo = async () => {
-    const promises = dateList.map((item) => getArchivePost(item));
-    for await (let res of promises) {
-        dateInfo.push(res);
-    }
-    archiveLoading.value = false;
-};
-
 const loadingPostInfo = async () => {
     const promises = dateList.map((item) => getPostInfo(item));
     for await (let res of promises) {
         postInfo.unshift(res);
     }
-    console.log(postInfo);
 };
 
+
+
+// 分页信息
+const changing = ref(false)
+const curPage = ref(0)
+const pageSize = 10
+const pagePost = computed(() => {
+    let res = []
+    let temp = 0
+    postInfo.map((item, index) => {
+        if (temp < pageSize * (curPage.value + 1)) {
+            res.push({
+                date: item.date,
+                posts: []
+            })
+            item.posts.map(post => {
+                temp++
+                if (temp <= pageSize * (curPage.value + 1) && temp > pageSize * curPage.value) {
+                    res[index].posts.push(post)
+                }
+            })
+        }
+    })
+    return res
+})
+// 转到分页函数
+const toPage = (pageNum) => {
+    changing.value = true
+    archiveLoading.value = true
+    postLoading.value = true
+    curPage.value = pageNum
+    changing.value = false
+    let timer = setTimeout(() => {
+        archiveLoading.value = false
+        clearTimeout(timer)
+    }, 100)
+}
+
+// 初始化函数
 const init = async () => {
     await getDateList();
     await loadingArchiveInfo();
     await loadingPostInfo();
 };
 
+// 初始化
 onBeforeMount(async () => {
+    await getPostNum()
     await init();
 });
 
@@ -126,6 +182,8 @@ onMounted(() => {
         showRightNav.value = true;
     });
 });
+
+
 </script>
 
 <style lang="less" scoped>
@@ -159,7 +217,6 @@ onMounted(() => {
             border-radius: 10px;
             padding: 10px;
             align-items: center;
-            box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
             min-height: 250px;
 
             .title {
@@ -193,15 +250,41 @@ onMounted(() => {
                 padding-top: 40px;
                 padding-left: 30px;
                 width: 100%;
-                background-color: rgba(255, 255, 255, 0.5);
+                background-color: rgba(255, 255, 255, 95%);
                 border-radius: 10px;
                 display: flex;
                 justify-content: space-around;
                 flex-direction: column;
 
+                .top_title {
+                    position: relative;
+                    font-size: 16px;
+                    box-sizing: border-box;
+                    height: 80px;
+                    padding-left: 20px;
+                    border-left: var(--border-left);
+
+                    .text {
+                        position: absolute;
+                        top: -20px;
+                    }
+                }
+
+                .top_title::after {
+                    position: absolute;
+                    content: '';
+                    width: 13px;
+                    height: 13px;
+                    border-radius: 50%;
+                    background-color: #fff;
+                    border: 5px solid rgb(6, 147, 255);
+                    top: -13px;
+                    left: -13px;
+                }
+
                 .date_item {
-                    padding-top: 25px;
-                    padding-bottom: 25px;
+                    padding-top: 0px;
+                    padding-bottom: 0px;
                     position: relative;
                     width: 100%;
                     border-left: var(--border-left);
@@ -217,11 +300,11 @@ onMounted(() => {
 
                     .date_title::before {
                         content: "";
-                        width: 10px;
-                        height: 10px;
+                        width: 11px;
+                        height: 11px;
                         position: absolute;
                         left: -7px;
-                        top: 5px;
+                        top: 4px;
                         background-color: #fff;
                         border-radius: 50%;
                     }
@@ -229,26 +312,26 @@ onMounted(() => {
                     .date_title::after {
                         content: "";
                         border: var(--box-border-active);
-                        width: 10px;
-                        height: 10px;
+                        width: 11px;
+                        height: 11px;
                         position: absolute;
                         border-radius: 50%;
-                        left: -10px;
-                        top: 2px;
+                        left: -11px;
+                        top: 0px;
                     }
 
                     .card {
                         position: relative;
                         margin: 20px 0;
-                        width: 100%;
+                        width: 70%;
                         padding-left: 10px;
                     }
 
                     .card::after {
                         content: "";
                         border: var(--box-border-active);
-                        width: 6px;
-                        height: 6px;
+                        width: 5px;
+                        height: 5px;
                         position: absolute;
                         border-radius: 50%;
                         left: -8px;

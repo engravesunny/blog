@@ -35,6 +35,8 @@
 <script setup>
 import NavBar from './components/NavBar/index.vue'
 import FootBar from './components/FootBar/index.vue'
+import { onMounted } from 'vue';
+import PubSub from 'pubsub-js';
 const route = useRoute()
 // 滚动条
 let scroller = ref(null)
@@ -76,6 +78,12 @@ let topFlodFn = (e) => {
 let toTop = () => {
     scroller.value.setScrollTop(0)
 }
+
+onMounted(() => {
+    PubSub.subscribe('toTop', () => {
+        toTop()
+    })
+})
 
 </script>
 

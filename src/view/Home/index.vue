@@ -261,7 +261,7 @@ onMounted(async () => {
         background-image: linear-gradient(rgba(0, 0, 0, 0.3) 97%, rgba(0, 0, 0, 0.4) 100%);
 
         .title {
-            text-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
+            text-shadow: 1px 1px 3px rgb(255 255 255 / 30%);
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 40px;
             color: #ffffff;
@@ -315,6 +315,21 @@ onMounted(async () => {
             }
         }
 
+    }
+
+    .top::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        filter: blur(3px);
+        animation: animate_blur;
+        animation-duration: 0.5s;
+        background-image: url(https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/4.webp);
+        background-size: cover;
+        background-position: center 10;
+        background-attachment: fixed;
     }
 
     .main_container {

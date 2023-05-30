@@ -1,4 +1,4 @@
-import { post } from "../store/post";
+import { post } from '../store/post';
 const postStore = post()
 import { getDirNames, getAllFileInfo } from "../api/postApi";
 import { PostSingle } from "../types";
@@ -25,17 +25,27 @@ let getDateInfo = async (postName: string) => {
     return date_info.data.files[0].mod_time
 }
 
+// 请求获取文章封面信息
+let getPostImg = async (postName: string) => {
+    const { data: post_info } = await getDirNames({
+        dir_path: './posts/postVirtual/' + postName + '/'
+    })
+    const postImg = post_info.data.dir_names[2] as string
+    return postImg
+}
+
 
 export const getPostInfo = async (postName: string): Promise<PostSingle> => {
-    // 检查状态管理是否以加载了对应文章
+
     if (postStore.checkPost(postName)) {
-        // 获取状态管理中的文章信息
         return postStore.getPost(postName) as PostSingle
     } else {
         const category = await getCategory(postName)
         const tag = await getTag(postName)
         const date = await getDateInfo(postName)
+        const postImg = await getPostImg(postName)
         const info: PostSingle = {
+            postImg,
             category,
             tag,
             date,

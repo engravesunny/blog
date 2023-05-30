@@ -1,11 +1,11 @@
 <template>
     <div class="mid_card">
         <div class="left">
-            <img src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/4.webp" alt="postImg" />
+            <img class="animate_show" src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/4.webp" alt="postImg" />
         </div>
         <div class="main">
             <div class="top">
-                <div class="title shenglue">{{ postInfo.name }}</div>
+                <div class="title shenglue">{{ postName }}</div>
             </div>
             <div class="bottom">
                 <div class="category">
@@ -25,13 +25,15 @@
                 </div>
             </div>
             <div class="bottom">
-                <div class="date">{{ postInfo.date }}</div>
+                <div class="date"> <span class="icon iconfont">&#xe662;</span> {{ postInfo.date }}</div>
             </div>
         </div>
     </div>
 </template>
   
 <script setup>
+import { post } from "../store/post";
+const postStore = post()
 import { getPostInfo } from "../utils/getPostInfo";
 const props = defineProps({
     postName: {
@@ -55,7 +57,6 @@ const postInfo = reactive({
 
 const init = async () => {
     const info = await getPostInfo(props.postName);
-    console.log(1);
     emits('loadFinish')
     postInfo.category = info.category;
     postInfo.date = info.date;
@@ -63,20 +64,18 @@ const init = async () => {
     postInfo.tag = info.tag;
 }
 
-onBeforeMount(() => {
-    init()
+onMounted(async () => {
+    await init()
 });
 </script>
   
 <style lang="less" scoped>
 .mid_card {
-    width: 70%;
+    width: 100%;
     min-height: 100px;
     display: flex;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3);
-    background-color: rgba(255, 255, 255, 0.3);
 
     .left {
         width: 160px;
@@ -98,7 +97,7 @@ onBeforeMount(() => {
 
     .main {
         margin-left: 10px;
-        width: 50%;
+        width: 40%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -161,11 +160,18 @@ onBeforeMount(() => {
         }
 
         .bottom {
+            width: 100%;
+
             .date {
                 text-align: right;
                 font-size: 14px;
                 font-weight: 700;
                 color: var(--dark-gray);
+
+                .icon {
+                    margin-right: 1px;
+                    font-size: 16px;
+                }
             }
         }
     }

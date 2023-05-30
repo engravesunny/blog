@@ -3,6 +3,7 @@ export interface PostSingle {
     tag: string[]
     date: string
     name: string
+    postImg: string
 }
 export interface TagSingle {
     posts: PostSingle[]

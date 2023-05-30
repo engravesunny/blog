@@ -20,7 +20,6 @@ export const archive = defineStore('archive', {
             let temp = false
             this.archiveInfo.map(item => {
                 if (item.year === year) {
-                    console.log('year===year');
                     temp = true
                 }
             })
@@ -33,7 +32,6 @@ export const archive = defineStore('archive', {
                 this.archiveInfo.map(item => {
                     if (item.year === year) {
                         temp = item.monthInfos.some(item => item.month === month)
-                        console.log('这里是month通过', temp);
                     }
                 })
             }
@@ -48,7 +46,6 @@ export const archive = defineStore('archive', {
                     }
                 })
             } else {
-                console.log('index是什么', index);
                 this.archiveInfo.push({
                     year,
                     monthInfos: [
@@ -62,7 +59,6 @@ export const archive = defineStore('archive', {
                 if (item.year === year) {
                     for (let t of item.monthInfos) {
                         if (t.month === month) {
-                            console.log('返回结果', t);
 
                             return t.posts
                         }

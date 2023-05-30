@@ -15,6 +15,7 @@ import PubSub from 'pubsub-js';
 
 let nextTo = (item) => {
     PubSub.publish('nextTo', item)
+    PubSub.publish('toTop')
 }
 
 const props = defineProps({
@@ -22,10 +23,6 @@ const props = defineProps({
         type: Array,
         default: []
     }
-})
-
-onMounted(() => {
-
 })
 
 

@@ -1,3 +1,5 @@
+@import './my_animate.css';
+
 html,
 body,
 div,
@@ -205,4 +207,8 @@ img {
 
 .mobile .el-scrollbar__bar {
   z-index: 0 !important;
+}
+
+.article_list_display .date_list .top_title {
+  font-family: 'W03' !important;
 }

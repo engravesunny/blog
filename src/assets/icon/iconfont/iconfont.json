@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11673278",
+      "name": "日历",
+      "font_class": "rili",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
       "icon_id": "12598991",
       "name": "统计",
       "font_class": "tongji",
@@ -504,7 +511,7 @@
     },
     {
       "icon_id": "34289894",
-      "name": "Address book",
+      "name": "Addressbook",
       "font_class": "tongxunlu",
       "unicode": "e624",
       "unicode_decimal": 58916
