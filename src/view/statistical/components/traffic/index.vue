@@ -4,7 +4,7 @@
             <div class="title">网站访客统计📈</div>
         </div>
         <div class="main">
-            <el-button @click="getData">获取数据</el-button>
+            马上做好
         </div>
     </div>
 </template>

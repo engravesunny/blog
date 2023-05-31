@@ -1,5 +1,98 @@
 <template>
-    <div class="header">
+    <el-scrollbar v-if="!showWitch">
+        <div class="header">
+
+            <!-- // avatar 头像 name 名，introduce 介绍， adress 地址， edu 大学， professional 专业， Show off 炫技， motto 座右铭 -->
+            <!-- // character 性格， -->
+            <div class="top animate_down">
+                <div class="left">
+                    <div class="avatar">
+                        <img class="animateImg" src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/avatar.jpg"
+                            alt="">
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="name">刻猫猫</div>
+                    <div class="frind">QQ:<span class="qq">3170557037</span><span> | </span> 微信:<span
+                            class="wechat">Abandon-bin200211</span></div>
+                    <div class="adress">
+                        <span>现居江苏徐州</span>
+                        <span> | </span>
+                        <span>来自山东</span>
+                    </div>
+                </div>
+            </div>
+            <div class="main_card  animate_left">
+                <div class="introduce">
+                    <div class="windows">
+                        <p>你好啊👋，我是一个来自山东的02年25届大二学生，喜欢做前端开发，嗯，算是个快乐的码农吧！（又菜又爱码😁）这个博客是我完全自己写得🥳（主要是框架改不明白🤯），主要是想记录一下自己的学习和生活经历吧😁，其中还穿插了许多类似相册，音乐，导航等其他出博客文章以外的内容🧐
+                            啊，正想知道在等个十年之后回到这个博客的时候会是什么心情啊🤩（不过也得坚持到那时候啊😂）</p>
+                    </div>
+                    <div class="mobile">
+                        <p>你好啊👋，我是一个来自山东的02年25届大二学生，喜欢做前端开发，嗯，算是个快乐的码农吧！（又菜又爱码😁）</p>
+                    </div>
+                </div>
+                <div class="emoji">
+                    <img :src="baseURL + '/image/haha.gif'" alt="">
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="left  animate_left">
+                    <div class="img_card">
+                        <span class="text">
+                            console.log("Hello,World!")
+                        </span>
+                        <div class="mobile">
+                            <p>console.log</p>
+                            <p>("Hello,World!")</p>
+                        </div>
+                    </div>
+                    <div class="edu">
+                        <div class="birth">
+                            <div class="small">生于</div>
+                            <div class="big " style="color:rgb(123, 150, 32)">
+                                2002
+                                <span class="iconfont" style="font-size: 24px;">&#xe64a; </span>
+                            </div>
+                        </div>
+                        <div class="professional">
+                            <div class="small">中国矿业大学</div>
+                            <div class="big " style="color:rgb(58, 58, 141)">
+                                计算机科学与技术
+                                <span class="iconfont" style="font-size: 24px;">
+                                    &#xe63a;
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="work">
+                            <div class="small">职业</div>
+                            <div class="big " style="color:red">
+                                大二学生
+                                <span class="iconfont" style="font-size: 24px;">&#xe63b; </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right animate_right">
+                    <div class="motto">
+                        <p>心有所向，</p>
+                        <p>日复一日，</p>
+                        <p>必有精进！</p>
+                        <div class="tag ">
+                            <span class="iconfont icon">&#xe62a;</span> 座右铭
+                        </div>
+                    </div>
+                    <div class="btn" @click="play">
+                        <span v-if="playing" class="iconfont icon">&#xe63c;</span>
+                        <span v-else class="iconfont icon">&#xe87c;</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </el-scrollbar>
+    <div class="header" v-if="showWitch">
 
         <!-- // avatar 头像 name 名，introduce 介绍， adress 地址， edu 大学， professional 专业， Show off 炫技， motto 座右铭 -->
         <!-- // character 性格， -->
@@ -132,7 +225,7 @@ const play = () => {
         }
     }
 }
-
+const showWitch = ref(false)
 onMounted(() => {
     const audios = document.querySelectorAll('audio')
     if (audios.length) {
@@ -141,6 +234,7 @@ onMounted(() => {
         }
         playing.value = !audios[0].paused
     }
+    showWitch.value = window.innerWidth < 400
 })
 
 onBeforeUnmount(() => {

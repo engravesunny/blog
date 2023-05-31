@@ -326,7 +326,7 @@ onMounted(async () => {
         filter: blur(3px);
         animation: animate_blur;
         animation-duration: 0.5s;
-        background-image: url(https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/4.webp);
+        background-image: url(https://cdn.jsdelivr.net/gh/engravesunny/CDN/image/postImg/55.webp);
         background-size: cover;
         background-position: center 10;
         background-attachment: fixed;

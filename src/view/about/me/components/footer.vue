@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="head-left-bottom">
-                        <img src="https://count.himiku.com/get/@kemaomao?theme=gelbooru" alt="访问计数">
+                        <img src="https://count.himiku.com/get/@kecat?theme=gelbooru" alt="访问计数">
                         <div class="btn">
                             <a href="https://count.himiku.com/" target="_blank">
                                 <span class="iconfont icon">&#xe62d;</span>
@@ -159,6 +159,8 @@ onBeforeUnmount(() => {
 }
 
 .footer {
+    width: 100%;
+
     img {
         transition: transform 0.5s;
     }

@@ -24,9 +24,11 @@
                             <div class="date_title" v-if="item.posts.length">
                                 <h1>{{ item.date }}</h1>
                             </div>
-                            <div class="card" v-for="(post, index) in item.posts" :key="post">
+                            <div class="card" :style="{ width: `${postCardWidth}%` }" v-for="(post, index) in item.posts"
+                                :key="post">
                                 <midCard @loadFinish="loaded" :postName="post" :index="index"></midCard>
                             </div>
+                            <div class="bottom_place" v-if="item.posts.length"></div>
                         </div>
                         <page-table @toPage="toPage" :cur-page="curPage" :page-size="pageSize"
                             :total="postNum"></page-table>
@@ -50,15 +52,19 @@ import { getArchivePosts } from "../../../utils/getArchiveInfo";
 
 let showRightNav = ref(true);
 let defaultWidth = ref(55);
-
+const postCardWidth = ref(70);
 
 // 加载中标志
 const archiveLoading = ref(true);
 const postLoading = ref(true)
 
 // 文章卡片加载完成事件
+const loadedNum = ref(0)
 const loaded = () => {
-    postLoading.value = false
+    loadedNum.value = loadedNum.value + 1
+    if (loadedNum.value === 10) {
+        postLoading.value = false
+    }
 }
 
 // 各月份发布文章统计 {date：日期，value：发布数目}
@@ -144,6 +150,7 @@ const pagePost = computed(() => {
 })
 // 转到分页函数
 const toPage = (pageNum) => {
+    loadedNum.value = 0
     changing.value = true
     archiveLoading.value = true
     postLoading.value = true
@@ -169,16 +176,19 @@ onBeforeMount(async () => {
 });
 
 onMounted(() => {
-    if (document.body.clientWidth < 1000) {
-        defaultWidth.value = 80;
+    if (document.body.clientWidth < 1200) {
+        defaultWidth.value = 95;
+        postCardWidth.value = 100;
         showRightNav.value = false;
     }
     PubSub.subscribe("closeSide", () => {
-        defaultWidth.value = 80;
+        defaultWidth.value = 95;
+        postCardWidth.value = 100;
         showRightNav.value = false;
     });
     PubSub.subscribe("openSide", () => {
         defaultWidth.value = 55;
+        postCardWidth.value = 70;
         showRightNav.value = true;
     });
 });
@@ -246,6 +256,10 @@ onMounted(() => {
             overflow: hidden;
 
             .date_list {
+                @media screen and (min-width: 300px) and (max-width: 400px) {
+                    padding-left: 10px;
+                }
+
                 padding: 20px;
                 padding-top: 40px;
                 padding-left: 30px;
@@ -257,6 +271,10 @@ onMounted(() => {
                 flex-direction: column;
 
                 .top_title {
+                    @media screen and (min-width: 300px) and (max-width: 400px) {
+                        font-size: 12px;
+                    }
+
                     position: relative;
                     font-size: 16px;
                     box-sizing: border-box;
@@ -289,10 +307,18 @@ onMounted(() => {
                     width: 100%;
                     border-left: var(--border-left);
 
+                    .bottom_place {
+                        height: 40px;
+                    }
+
                     .date_title {
+                        @media screen and (min-width: 300px) and (max-width: 400px) {
+                            font-size: 14px;
+                        }
+
                         padding-left: 20px;
                         position: absolute;
-                        top: -15px;
+                        top: -40px;
                         left: 0;
                         font-style: italic;
                         color: #333;
@@ -323,7 +349,6 @@ onMounted(() => {
                     .card {
                         position: relative;
                         margin: 20px 0;
-                        width: 70%;
                         padding-left: 10px;
                     }
 

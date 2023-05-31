@@ -33,6 +33,12 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/song/, ''),
         // 要记得加rewrite这句
       },
+      '/post': {
+        target: 'https://kecat.top',
+        ws: true,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/post/, ''),
+      }
     }
   },
   resolve: {

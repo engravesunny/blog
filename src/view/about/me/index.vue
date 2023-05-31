@@ -134,13 +134,18 @@ onMounted(() => {
     overflow: hidden;
 
     .top {
+        @media screen and (min-width: 300px) and (max-width: 400px) {
+            height: 20vh;
+            background-position: 0 -20px;
+        }
+
         position: relative;
         width: 100%;
-        height: 20vh;
-        background-image: url(https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/6.webp);
+        height: 40vh;
+        background-image: url(https://cdn.jsdelivr.net/gh/engravesunny/CDN/image/postImg/1.webp);
         background-size: cover;
         background-repeat: no-repeat;
-        background-position: 0 -50px;
+        background-position: 0 -60px;
 
         .text {
             @media screen and (min-width: 300px) and (max-width: 400px) {

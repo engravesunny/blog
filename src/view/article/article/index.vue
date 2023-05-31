@@ -1,33 +1,41 @@
 <template>
-    <div class="article_container line-numbers match-braces">
-
-        <article ref="article" :style="{ width: `${defaultWidth}%` }" class="article">
-            <div class="top">
-                <div class="title iconfont">&#xe634; {{ postName }}</div>
-                <div class="bottom">
-                    <div class="date iconfont">&#xe663; {{ date }}</div>
-                    <div class="tagList iconfont">
-                        <div class="tag shenglue iconfont" v-for="(item, index) in tagList" :key="item">
-                            &#xe62f; {{ item }}
+    <div class="container">
+        <div class="header" :style="{ backgroundImage: `url(${postImgUrl}/${postImg})` }">
+            <div class="site-info">
+                <h1>{{ postName }}</h1>
+                <div class="top">
+                    <div class="bottom">
+                        <div class="date iconfont">&#xe663; {{ date }}</div>
+                        <div class="tagList iconfont">
+                            <div class="tag shenglue iconfont" v-for="(item, index) in tagList" :key="item">
+                                &#xe62f; {{ item }}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div v-loading="loading" class="markdown-body" v-html="html"></div>
+            <waves />
+        </div>
+        <div class="article_container line-numbers match-braces">
 
-        </article>
-        <rightNav v-if="showRightNav"></rightNav>
-        <!-- <placeOrder v-if="showRightNav"></placeOrder> -->
+            <article ref="article" :style="{ width: `${defaultWidth}%` }" class="article">
+                <div v-loading="loading" class="markdown-body" v-html="html"></div>
+
+            </article>
+            <rightNav v-if="showRightNav"></rightNav>
+            <!-- <placeOrder v-if="showRightNav"></placeOrder> -->
+        </div>
     </div>
 </template>
 
 <script setup>
+import { postImgUrl } from '../../../constant';
 import rightNav from '../../../components/rightNav.vue'
-import placeOrder from './components/placeOrder.vue';
 import 'github-markdown-css'
 import Prism from 'prismjs';
 import showdown from 'showdown';
 import getPost from '@/api/post'
+import { getPostInfo } from '../../../utils/getPostInfo';
 
 let loading = ref(false)
 
@@ -40,6 +48,12 @@ let html = ref('')
 let postName = ref('文章标题')
 let date = ref('')
 let tagList = reactive([])
+let postImg = ref('')
+
+const getPostImg = async () => {
+    const res = await getPostInfo(postName)
+    postImg.value = res.postImg
+}
 
 const route = useRoute()
 
@@ -64,6 +78,7 @@ watch(() => route, (val) => {
         loading.value = true
         tagList.splice(0, tagList.length)
         postName = val.query.postName
+        getPostImg()
         date = val.query.date
         if (val?.query?.tag?.forEach) {
             val?.query?.tag?.forEach(item => {
@@ -101,67 +116,39 @@ watch(() => route, (val) => {
 </script>
 
 <style lang="less" scoped>
-.article_container {
-    @media screen and (min-width:300px) and (max-width:400px) {
-        margin-top: 5px;
-    }
+.container {
+    margin-top: -55px;
+}
 
-    margin-top: 25px;
+.header {
+    padding-top: 55px;
     position: relative;
     width: 100%;
-    min-height: 900px;
-    display: flex;
-    justify-content: center;
+    height: 400px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
 
-    .article {
-        @media screen and (min-width:300px) and (max-width:400px) {
-            padding: 5px;
-            border-radius: 10px;
-        }
-
-        position: relative;
-        border-radius: 25px;
-        width: 50%;
-        min-width: 375px;
-        padding: 40px;
-        background: rgba(123, 123, 123, 0.5);
-        box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
+    .site-info {
+        position: absolute;
+        top: 145px;
+        width: 100%;
 
         .top {
             @media screen and (min-width:300px) and (max-width:400px) {
                 height: 80px;
             }
 
-            border-radius: 10px;
-            margin: 0 0 20px 0;
             width: 100%;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex;
-            flex-direction: column;
-
-            .title {
-                @media screen and (min-width:300px) and (max-width:400px) {
-                    padding: 10px;
-                    font-size: 20px;
-                }
-
-                padding: 20px;
-                height: 50%;
-                font-size: 25px;
-                font-weight: 700;
-            }
 
             .bottom {
                 @media screen and (min-width:300px) and (max-width:400px) {
                     padding: 0 10px;
                 }
 
-                display: flex;
-                justify-content: space-between;
                 width: 100%;
-                flex: 1;
-                align-items: center;
+                display: flex;
+                justify-content: center;
                 padding: 0 20px;
 
                 .date {
@@ -169,13 +156,13 @@ watch(() => route, (val) => {
                         font-size: 12px;
                     }
 
-                    font-size: 14px;
-                    color: gray;
-                    width: 200px;
+                    margin-right: 20px;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, .45);
+                    font-size: 20px;
+                    color: #fff;
                 }
 
                 .tagList {
-                    flex: 1;
                     display: flex;
                     justify-content: flex-end;
 
@@ -201,6 +188,50 @@ watch(() => route, (val) => {
                 }
             }
         }
+
+        h1 {
+            @media screen and (min-width: 300px) and (max-width: 400px) {
+                font-size: 1.5em;
+            }
+
+            color: #fff;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, .45);
+            line-height: 2;
+            font-size: 3em;
+        }
+    }
+
+
+}
+
+.article_container {
+    @media screen and (min-width:300px) and (max-width:400px) {
+        margin-top: 5px;
+    }
+
+    margin-top: 25px;
+    position: relative;
+    width: 100%;
+    min-height: 900px;
+    display: flex;
+    justify-content: center;
+
+
+
+    .article {
+        @media screen and (min-width:300px) and (max-width:400px) {
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        position: relative;
+        border-radius: 25px;
+        width: 50%;
+        min-width: 375px;
+        padding: 40px;
+        background: rgba(123, 123, 123, 0.5);
+        box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
 
         .markdown-body {
             @media screen and (min-width:300px) and (max-width:400px) {

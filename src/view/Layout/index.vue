@@ -29,7 +29,7 @@
         <FootBar></FootBar>
         <!-- 底部 -->
     </div>
-    <div v-if="showToTop" @click="toTop" class="toTop iconfont unselectable">&#xe610;</div>
+    <!-- <div v-if="showToTop" @click="toTop" class="toTop iconfont unselectable">&#xe610;</div> -->
 </template>
 
 <script setup>

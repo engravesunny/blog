@@ -1,8 +1,7 @@
 <template>
-    <div ref="dom" @click="toArticle" v-loading="loading" class="card_container">
+    <div ref="dom" @click="toArticle" class="card_container">
         <div class="top">
-            <img v-if="loading" :src="`${baseURL}/image/loading.gif`" alt="loading">
-            <img v-else class="animate_show" :src="`${postImgUrl}/${postImg}`" alt="postImg">
+            <img ref="imgDom" :src="`${baseURL}/image/loading.gif`" :data-src="`${postImgUrl}/${postImg}`" alt="postImg">
         </div>
         <div class="bottom">
             <div class="bTop">
@@ -27,8 +26,6 @@ import { postImgUrl, baseURL } from '../constant'
 import toPath from '../utils/toPath';
 import { getPostInfo } from '../utils/getPostInfo';
 
-
-const loading = ref(true)
 const router = useRouter()
 const props = defineProps({
     postName: {
@@ -38,7 +35,7 @@ const props = defineProps({
 })
 
 const dom = ref<Element>()
-
+const imgDom = ref<Element>()
 // 分类名
 let category = ref('')
 // 标签信息
@@ -69,8 +66,14 @@ let toArticle = () => {
     })
 }
 
+const handleLoad = () => {
+    (dom.value as Element).classList.add('animate_zoomIn');
+    if (postImg.value) {
+        (imgDom.value as HTMLImageElement).src = (imgDom.value as HTMLImageElement).dataset.src as string
+    }
+}
+
 const init = async () => {
-    loading.value = true
     const info = await getPostInfo(props.postName)
 
     category.value = info.category
@@ -79,20 +82,29 @@ const init = async () => {
     })
     dateInfo.value = info.date
     postImg.value = info.postImg
-    loading.value = false
+    if ((imgDom.value as HTMLImageElement).src.includes('loading')) {
+        (imgDom.value as HTMLImageElement).src = postImgUrl + '/' + postImg.value
+    }
 }
 
 const handleLazy = (el: Element) => {
     const intersectionObserver = new IntersectionObserver((changes) => {
         changes.forEach((item, index) => {
+            console.log(1);
+
             if (item.intersectionRatio > 0) {
                 intersectionObserver.unobserve(item.target)
-                init()
+                handleLoad()
             }
         })
     })
     intersectionObserver.observe(el)
 }
+
+onBeforeMount(async () => {
+    await init()
+})
+
 onMounted(() => {
     handleLazy(dom.value as Element)
 })
@@ -124,6 +136,9 @@ onMounted(() => {
         text-align: center;
         transition: all 0.5s;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         img {
             width: 100%;
@@ -134,6 +149,12 @@ onMounted(() => {
 
         img:hover {
             transform: scale(1.2);
+        }
+
+        .loadingImg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
 
@@ -227,11 +248,5 @@ onMounted(() => {
             }
         }
     }
-}
-
-.card_container:hover {
-    box-shadow: 5px 5px 20px 1px rgba(0, 0, 0, 0.2);
-    border: var(--box-border-active);
-    background: var(--background-hover);
 }
 </style>

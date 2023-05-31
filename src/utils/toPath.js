@@ -1,9 +1,11 @@
 import router from "../router";
+import pubsub from 'pubsub-js'
 const router1 = router
-const toPath = (path,name) => {
+const toPath = (path, name) => {
+    pubsub.publish('toTop')
     router1.push({
         path,
-        query:{
+        query: {
             name
         }
     })

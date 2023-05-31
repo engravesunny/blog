@@ -203,6 +203,10 @@ onMounted(() => {
 }
 
 .github {
+    @media screen and (min-width: 300px) and (max-width: 400px) {
+        padding: 0px 0px;
+    }
+
     width: 100%;
     box-sizing: border-box;
     padding: 20px 10px;
@@ -233,6 +237,10 @@ onMounted(() => {
             justify-content: space-between;
 
             .weeks {
+                @media screen and (min-width: 300px) and (max-width: 400px) {
+                    font-size: 12px;
+                }
+
                 text-align: right;
                 color: #aea2a2;
                 padding-right: 2px;
@@ -345,6 +353,10 @@ onMounted(() => {
                 align-items: center;
 
                 .from {
+                    @media screen and (min-width: 300px) and (max-width: 400px) {
+                        font-size: 12px;
+                    }
+
                     a {
                         color: rgb(98, 98, 219);
                     }
@@ -377,6 +389,9 @@ onMounted(() => {
     .footer {
         width: 100%;
         height: 100px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
 
         .container {
             margin-top: 10px;

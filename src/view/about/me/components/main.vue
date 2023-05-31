@@ -1,64 +1,69 @@
 <template>
-    <div v-if="!showWitch" class="stack">
-        <div class="top animate_down">
-            <div class="title">技术栈</div>
-        </div>
-        <div class="main">
-            <div class="left animate_left">
-                <p>
-                    1.精通使用<span class="strong">H5+CSS3</span>对页面进行布局(成功的页面仔)
-                </p>
-                <p>
-                    2.熟悉使用原生 <span class="strong">JavaScript</span> 、<span class="strong">ES6</span>、<span
-                        class="strong">Ajax</span>、
-                    <span class="strong">Node.js</span>，熟练使用<span class="strong">axios</span>、熟悉<span
-                        class="strong">Promise</span>
-                </p>
-                <p>
-                    3.熟练使用<span class="strong">Vue全家桶</span>及其周边生态进行搭建项目，有相关项目经验，了解
-                    <span class="strong">React</span> 语法，了解<span class="strong">redux</span>
-                </p>
-                <p>
-                    4.熟练使用 <span class="strong"> Element-plus、Vant</span> 等组件库
-                </p>
-                <p>
-                    5.熟悉
-                    <span class="strong">Webpack、Vite、Rollup、esbuild</span>
-                    等等打包工具
-                </p>
-                <p>6.熟练编写前端标准代码，熟悉浏览器兼容问题解决(IE10以下另当别论)</p>
-                <p>7.熟悉 <span class="strong">git操作</span> ，有团队合作经验</p>
-            </div>
-            <div class="right animate_right">
-                <img src="https://bu.dusays.com/2023/04/09/643291fe62647.jpg" alt="" />
-            </div>
-        </div>
-        <div class="about">
+    <el-scrollbar v-if="!showWitch" style="width:100%;">
+        <div class="stack">
+
             <div class="top animate_down">
-                <div class="title">我的人格</div>
+                <div class="title">技术栈</div>
             </div>
             <div class="main">
                 <div class="left animate_left">
-                    <img src="https://www.16personalities.com/static/images/personality-types/headers/diplomats_Advocate_INFJ_personality_header.svg"
-                        alt="提倡者">
+                    <p>
+                        1.精通使用<span class="strong">H5+CSS3</span>对页面进行布局(成功的页面仔)
+                    </p>
+                    <p>
+                        2.熟悉使用原生 <span class="strong">JavaScript</span> 、<span class="strong">ES6</span>、<span
+                            class="strong">Ajax</span>、
+                        <span class="strong">Node.js</span>，熟练使用<span class="strong">axios</span>、熟悉<span
+                            class="strong">Promise</span>
+                    </p>
+                    <p>
+                        3.熟练使用<span class="strong">Vue全家桶</span>及其周边生态进行搭建项目，有相关项目经验，了解
+                        <span class="strong">React</span> 语法，了解<span class="strong">redux</span>
+                    </p>
+                    <p>
+                        4.熟练使用 <span class="strong"> Element-plus、Vant</span> 等组件库
+                    </p>
+                    <p>
+                        5.熟悉
+                        <span class="strong">Webpack、Vite、Rollup、esbuild</span>
+                        等等打包工具
+                    </p>
+                    <p>6.熟练编写前端标准代码，熟悉浏览器兼容问题解决(IE10以下另当别论)</p>
+                    <p>7.熟悉 <span class="strong">git操作</span> ，有团队合作经验</p>
                 </div>
                 <div class="right animate_right">
-                    <div class="text">
-                        <div class="title">性格</div>
-                        <div class="name">提倡者</div>
-                        <div class="en_name">INFJ-A / INFJ-T</div>
+                    <img src="https://bu.dusays.com/2023/04/09/643291fe62647.jpg" alt="" />
+                </div>
+            </div>
+            <div class="about">
+                <div class="top animate_down">
+                    <div class="title">我的人格</div>
+                </div>
+                <div class="main">
+                    <div class="left animate_left">
+                        <img src="https://www.16personalities.com/static/images/personality-types/headers/diplomats_Advocate_INFJ_personality_header.svg"
+                            alt="提倡者">
                     </div>
-                    <img src="https://webstatic.mihoyo.com/upload/contentweb/2022/07/04/d063646e97392638e07da24ce6b8c3cb_3567507076955258130.png"
-                        alt="刻晴">
-                    <div class="link">
-                        在 <span><a href="https://www.16personalities.com/" target="_blank">16personalities</a></span> 了解更多关于
-                        <span><a href="https://www.16personalities.com/ch/infj-%E4%BA%BA%E6%A0%BC"
-                                target="_blank">提倡者</a></span>
+                    <div class="right animate_right">
+                        <div class="text">
+                            <div class="title">性格</div>
+                            <div class="name">提倡者</div>
+                            <div class="en_name">INFJ-A / INFJ-T</div>
+                        </div>
+                        <img src="https://webstatic.mihoyo.com/upload/contentweb/2022/07/04/d063646e97392638e07da24ce6b8c3cb_3567507076955258130.png"
+                            alt="刻晴">
+                        <div class="link">
+                            在 <span><a href="https://www.16personalities.com/" target="_blank">16personalities</a></span>
+                            了解更多关于
+                            <span><a href="https://www.16personalities.com/ch/infj-%E4%BA%BA%E6%A0%BC"
+                                    target="_blank">提倡者</a></span>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
-    </div>
+    </el-scrollbar>
     <div v-if="showWitch" class="mobile">
         <div class="top animate_down">
             <div class="title">技术栈</div>
@@ -156,7 +161,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0px 10px 10px;
+    padding: 0 20px 20px;
 
     .top {
         width: 100%;
@@ -242,13 +247,14 @@ onMounted(() => {
 
         .main {
             width: 100%;
-            flex: 1;
+            min-height: 200px;
             display: flex;
             justify-content: space-between;
 
             .left {
                 position: relative;
                 width: 30%;
+                min-height: 200px;
                 padding: 0;
                 overflow: hidden;
 

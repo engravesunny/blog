@@ -36,7 +36,6 @@ const cubeList = computed(() => {
     } else {
         num = (props.total / props.pageSize) + 1
     }
-    console.log(props.total, props.pageSize, num);
     const res = []
     for (let i = 1; i < num; i++) {
         res.push(i)
@@ -62,10 +61,6 @@ const toPage = (pageNum) => {
 
 onMounted(() => {
 
-})
-
-watch(props, () => {
-    console.log(cubeList.value);
 })
 
 </script>

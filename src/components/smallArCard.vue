@@ -1,7 +1,7 @@
 <template>
     <div class="smallArCard_container box_border" @click="toArticle">
         <div class="left">
-            <img loading="lazy" :src="`${baseURL}/image/${Math.floor(Math.random() * 23)}.webp`" alt="">
+            <img loading="lazy" :src="`${baseURL}/image/postImg/${Math.floor(Math.random() * 23)}.webp`" alt="">
         </div>
         <div class="right">
             <div class="top">

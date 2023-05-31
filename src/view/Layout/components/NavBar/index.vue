@@ -133,18 +133,6 @@ let controls = reactive(
             ]
         },
         {
-            name: "导航",
-            children: [
-                {
-                    name: '常用网站',
-                    path: '/common_web'
-                }, {
-                    name: '个人导航',
-                    path: '/person_web'
-                }
-            ]
-        },
-        {
             name: '媒体',
             children: [
                 {

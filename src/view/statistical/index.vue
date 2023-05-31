@@ -16,7 +16,7 @@
                     <div class="tarffic">
                         <traffic></traffic>
                     </div>
-                    <el-button @click="test">测试按钮</el-button>
+                    <el-button @click="test">测试</el-button>
                 </div>
             </div>
         </div>
@@ -24,13 +24,14 @@
 </template>
 
 <script setup>
+import { getGithubToken } from '../../api/post'
 import github from './components/github/index.vue'
 import traffic from './components/traffic/index.vue'
 import waves from '../../components/waves.vue'
 import { getContribution } from '../../api/github'
 import { reactive } from 'vue';
 
-const test = () => {
+const test = async () => {
 
 }
 
@@ -136,16 +137,17 @@ const computedCommit = (data) => {
 
 const getData = async () => {
     loadingGithub.value = true
-    const { data: resData } = await getContribution()
+    const { data: token } = await getGithubToken()
+    const { data: resData } = await getContribution(token)
     console.log(resData);
-    const weeks = resData?.data.user.contributionsCollection.contributionCalendar.weeks
-    const colors = resData?.data.user.contributionsCollection.contributionCalendar.colors
+    const weeks = resData?.user.contributionsCollection.contributionCalendar.weeks
+    const colors = resData?.user.contributionsCollection.contributionCalendar.colors
     githubData.length = 0
     colorData.length = 0
     colorData.push('rgb(235, 237, 240)')
     console.log('正在赋值');
     // 计算各时间段数据
-    computedCommit(resData?.data.user.contributionsCollection.contributionCalendar)
+    computedCommit(resData?.user.contributionsCollection.contributionCalendar)
     // 装入各个时间段提交信息
     commitInfo.push(yearData, monthData, weekData)
 
@@ -167,6 +169,8 @@ onBeforeMount(() => {
 
 <style lang="less" scoped>
 .statistical_container {
+
+
     min-height: calc(100vh - 55px - 267px);
 
     .sta_main {
@@ -184,9 +188,13 @@ onBeforeMount(() => {
                 width: 100%;
 
                 h1 {
-                    color: #300000;
+                    @media screen and (min-width: 300px) and (max-width: 400px) {
+                        font-size: 1.5em;
+                    }
+
+                    color: #fff;
                     text-align: center;
-                    text-shadow: 2px 2px 4px rgba(0, 0, 0, .15);
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, .45);
                     line-height: 1.5;
                     font-size: 3em;
                 }
@@ -196,6 +204,10 @@ onBeforeMount(() => {
         }
 
         .layout {
+            @media screen and (min-width: 300px) and (max-width: 400px) {
+                padding: 10px 5px;
+            }
+
             max-width: 1400px;
             display: flex;
             -webkit-box-flex: 1;
@@ -204,6 +216,10 @@ onBeforeMount(() => {
             padding: 40px 15px;
 
             .page {
+                @media screen and (min-width: 300px) and (max-width: 400px) {
+                    padding: 20px 10px;
+                }
+
                 min-width: 350px;
                 display: flex;
                 flex-direction: column;
