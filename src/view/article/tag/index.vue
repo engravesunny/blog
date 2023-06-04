@@ -59,11 +59,13 @@ let tagFinalList = reactive([])
 // 具体标签文章列表
 let tagArList = reactive([])
 // 展示具体标签文章列表
-let toTag = (item) => {
+let toTag = async (item) => {
+    console.log('test');
     showTop.value = false
     title.value = item
-    tagArList.splice(0, tagArList.length)
-    const postList = getTagPost(item)
+    tagArList.length = 0
+    const postList = await getTagPost(item)
+    console.log(postList);
     postList.forEach(item => {
         tagArList.push(item.name)
     })
@@ -106,9 +108,9 @@ let getTagNum = async (tag) => {
 
 const props = defineProps(['scroller'])
 
-watch(() => route, (val) => {
+watch(() => route, async (val) => {
     if (val.query.name) {
-        toTag(val.query.name)
+        await toTag(val.query.name)
     } else {
 
     }
@@ -135,6 +137,9 @@ const init = async () => {
         defaultWidth.value = 55
         showRightNav.value = true
     })
+    if (document.body.clientWidth < 500) {
+        defaultWidth.value = 100;
+    }
 }
 
 onMounted(() => {

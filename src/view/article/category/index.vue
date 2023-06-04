@@ -99,6 +99,7 @@ let showRightNav = ref(true)
 let defaultWidth = ref(55)
 
 onMounted(async () => {
+
     if (document.body.clientWidth < 1000) {
         defaultWidth.value = 80
         showRightNav.value = false
@@ -111,6 +112,9 @@ onMounted(async () => {
         defaultWidth.value = 55
         showRightNav.value = true
     })
+    if (document.body.clientWidth < 500) {
+        defaultWidth.value = 100;
+    }
     await getCategory()
     await getLength()
 })

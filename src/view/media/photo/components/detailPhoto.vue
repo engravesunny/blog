@@ -31,7 +31,7 @@ const open = (index) => {
 }
 
 .slower {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -40,7 +40,7 @@ const open = (index) => {
 }
 
 .slower1 {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -48,7 +48,7 @@ const open = (index) => {
 }
 
 .slower-down {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -56,7 +56,7 @@ const open = (index) => {
 }
 
 .faster {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -64,7 +64,7 @@ const open = (index) => {
 }
 
 .faster1 {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -72,7 +72,7 @@ const open = (index) => {
 }
 
 .fastest {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -80,9 +80,10 @@ const open = (index) => {
 }
 
 .vertical {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
     transform: rotate(90deg) translateZ(-.1px) scale(1.6) translateX(0) translateY(-3vh) !important;
-}</style>
+}
+</style>

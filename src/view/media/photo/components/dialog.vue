@@ -65,7 +65,7 @@ const changeImg = (to) => {
 }
 
 .dailog {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         height: 80vh;
     }
 
@@ -131,7 +131,7 @@ const changeImg = (to) => {
 
     .right,
     .left {
-        @media screen and (min-width: 300px) and (max-width: 400px) {
+        @media screen and (min-width: 300px) and (max-width: 500px) {
             font-size: 25px;
             border: 1px solid rgba(0, 0, 0, 0.2);
             padding: 10px;
@@ -152,7 +152,7 @@ const changeImg = (to) => {
     }
 
     .left {
-        @media screen and (min-width: 300px) and (max-width: 400px) {
+        @media screen and (min-width: 300px) and (max-width: 500px) {
             left: 5px;
         }
 

@@ -5,7 +5,7 @@
                 <h1>{{ postName }}</h1>
                 <div class="top">
                     <div class="bottom">
-                        <div class="date iconfont">&#xe663; {{ date }}</div>
+                        <div class="date shenglue iconfont">&#xe663; {{ date }}</div>
                         <div class="tagList iconfont">
                             <div class="tag shenglue iconfont" v-for="(item, index) in tagList" :key="item">
                                 &#xe62f; {{ item }}
@@ -67,6 +67,9 @@ onMounted(() => {
         defaultWidth.value = 80
         showRightNav.value = false
     })
+    if (document.body.clientWidth < 500) {
+        defaultWidth.value = 100;
+    }
     PubSub.subscribe('openSide', () => {
         defaultWidth.value = 55
         showRightNav.value = true
@@ -190,8 +193,8 @@ watch(() => route, (val) => {
         }
 
         h1 {
-            @media screen and (min-width: 300px) and (max-width: 400px) {
-                font-size: 1.5em;
+            @media screen and (min-width: 300px) and (max-width: 500px) {
+                font-size: 22px;
             }
 
             color: #fff;

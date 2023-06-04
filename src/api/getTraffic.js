@@ -1,5 +1,6 @@
 import axios from "axios"
-import { myInfo } from '../constant/index'
+import { myInfo, secretKey } from '../constant/index'
+import { computedSha256 } from "../utils/computedSHA256"
 
 const data = myInfo
 
@@ -8,10 +9,14 @@ const request = axios.create({
     baseURL,
 })
 
-export const getTraffic = () => request({
-    method: 'post',
-    url: '/open/overview/get',
-    data
-})
+export const getTraffic = () => {
+    data.timestamp = Date.now()
+    data.sign = computedSha256(`accessKey=${data.accessKey}&nonce=${data.nonce}&secretKey=${secretKey}&timestamp=${data.timestamp}`)
+    return request({
+        method: 'post',
+        url: '/open/overview/get',
+        data
+    })
+}
 
 

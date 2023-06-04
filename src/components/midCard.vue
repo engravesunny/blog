@@ -123,7 +123,7 @@ onMounted(() => {
   
 <style lang="less" scoped>
 .mid_card {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         min-height: unset;
         position: relative;
         padding: 5px;
@@ -136,7 +136,7 @@ onMounted(() => {
     border-radius: 10px;
 
     .left {
-        @media screen and (min-width: 300px) and (max-width: 400px) {
+        @media screen and (min-width: 300px) and (max-width: 500px) {
             width: 100px;
             height: 100px;
         }
@@ -159,7 +159,7 @@ onMounted(() => {
     }
 
     .main {
-        @media screen and (min-width: 300px) and (max-width: 400px) {
+        @media screen and (min-width: 300px) and (max-width: 500px) {
             margin-left: 10px;
             width: 55%;
         }
@@ -180,7 +180,7 @@ onMounted(() => {
             width: 100%;
             cursor: pointer;
 
-            @media screen and (min-width: 300px) and (max-width: 400px) {
+            @media screen and (min-width: 300px) and (max-width: 500px) {
                 height: 100%;
             }
 
@@ -206,7 +206,7 @@ onMounted(() => {
             font-size: 14px;
             font-weight: 700;
 
-            @media screen and (min-width: 300px) and (max-width: 400px) {
+            @media screen and (min-width: 300px) and (max-width: 500px) {
                 display: none;
             }
 
@@ -239,7 +239,7 @@ onMounted(() => {
 
         .top {
             .index {
-                @media screen and (min-width: 300px) and (max-width: 400px) {
+                @media screen and (min-width: 300px) and (max-width: 500px) {
                     margin-top: 20px;
                 }
 
@@ -254,7 +254,7 @@ onMounted(() => {
             width: 100%;
 
             .date {
-                @media screen and (min-width: 300px) and (max-width: 400px) {
+                @media screen and (min-width: 300px) and (max-width: 500px) {
                     width: 120px;
                     position: absolute;
                     bottom: 5px;

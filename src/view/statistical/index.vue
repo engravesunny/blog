@@ -16,7 +16,6 @@
                     <div class="tarffic">
                         <traffic></traffic>
                     </div>
-                    <el-button @click="test">测试</el-button>
                 </div>
             </div>
         </div>
@@ -188,7 +187,7 @@ onBeforeMount(() => {
                 width: 100%;
 
                 h1 {
-                    @media screen and (min-width: 300px) and (max-width: 400px) {
+                    @media screen and (min-width: 300px) and (max-width: 500px) {
                         font-size: 1.5em;
                     }
 
@@ -204,7 +203,7 @@ onBeforeMount(() => {
         }
 
         .layout {
-            @media screen and (min-width: 300px) and (max-width: 400px) {
+            @media screen and (min-width: 300px) and (max-width: 500px) {
                 padding: 10px 5px;
             }
 
@@ -216,7 +215,7 @@ onBeforeMount(() => {
             padding: 40px 15px;
 
             .page {
-                @media screen and (min-width: 300px) and (max-width: 400px) {
+                @media screen and (min-width: 300px) and (max-width: 500px) {
                     padding: 20px 10px;
                 }
 
@@ -236,6 +235,12 @@ onBeforeMount(() => {
                     width: 100%;
                     min-height: 100px;
                     border-radius: 10px;
+                }
+
+                .tarffic {
+                    margin-top: 10px;
+                    width: 100%;
+                    min-height: 100px;
                 }
             }
         }

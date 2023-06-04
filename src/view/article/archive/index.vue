@@ -176,6 +176,7 @@ onBeforeMount(async () => {
 });
 
 onMounted(() => {
+
     if (document.body.clientWidth < 1200) {
         defaultWidth.value = 95;
         postCardWidth.value = 100;
@@ -191,6 +192,9 @@ onMounted(() => {
         postCardWidth.value = 70;
         showRightNav.value = true;
     });
+    if (document.body.clientWidth < 500) {
+        defaultWidth.value = 100;
+    }
 });
 
 
@@ -198,7 +202,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .container {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         margin-top: 5px;
     }
 
@@ -209,7 +213,7 @@ onMounted(() => {
     justify-content: center;
 
     .Page {
-        @media screen and (min-width: 300px) and (max-width: 400px) {
+        @media screen and (min-width: 300px) and (max-width: 500px) {
             padding: 0px;
         }
 
@@ -230,7 +234,7 @@ onMounted(() => {
             min-height: 250px;
 
             .title {
-                @media screen and (min-width: 300px) and (max-width: 400px) {
+                @media screen and (min-width: 300px) and (max-width: 500px) {
                     font-size: 20px;
                 }
 
@@ -256,7 +260,7 @@ onMounted(() => {
             overflow: hidden;
 
             .date_list {
-                @media screen and (min-width: 300px) and (max-width: 400px) {
+                @media screen and (min-width: 300px) and (max-width: 500px) {
                     padding-left: 10px;
                 }
 
@@ -271,7 +275,7 @@ onMounted(() => {
                 flex-direction: column;
 
                 .top_title {
-                    @media screen and (min-width: 300px) and (max-width: 400px) {
+                    @media screen and (min-width: 300px) and (max-width: 500px) {
                         font-size: 12px;
                     }
 
@@ -312,7 +316,7 @@ onMounted(() => {
                     }
 
                     .date_title {
-                        @media screen and (min-width: 300px) and (max-width: 400px) {
+                        @media screen and (min-width: 300px) and (max-width: 500px) {
                             font-size: 14px;
                         }
 

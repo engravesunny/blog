@@ -134,7 +134,7 @@ onMounted(() => {
     overflow: hidden;
 
     .top {
-        @media screen and (min-width: 300px) and (max-width: 400px) {
+        @media screen and (min-width: 300px) and (max-width: 500px) {
             height: 20vh;
             background-position: 0 -20px;
         }
@@ -148,7 +148,7 @@ onMounted(() => {
         background-position: 0 -60px;
 
         .text {
-            @media screen and (min-width: 300px) and (max-width: 400px) {
+            @media screen and (min-width: 300px) and (max-width: 500px) {
                 font-size: 20px;
                 left: 10px;
                 bottom: 30px;

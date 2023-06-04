@@ -42,6 +42,9 @@ export const getTagInfo = async (tag: string) => {
     }
 }
 
-export const getTagPost = (tag: string) => {
+export const getTagPost = async (tag: string) => {
+    if (!tagStore.checkTag(tag)) {
+        await getTagNum(tag)
+    }
     return tagStore.getTagPost(tag)
 }

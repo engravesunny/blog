@@ -90,7 +90,6 @@ const init = async () => {
 const handleLazy = (el: Element) => {
     const intersectionObserver = new IntersectionObserver((changes) => {
         changes.forEach((item, index) => {
-            console.log(1);
 
             if (item.intersectionRatio > 0) {
                 intersectionObserver.unobserve(item.target)

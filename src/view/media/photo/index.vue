@@ -132,7 +132,7 @@ watch(() => route, (val) => {
 }
 
 .slower {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -141,7 +141,7 @@ watch(() => route, (val) => {
 }
 
 .slower1 {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -149,7 +149,7 @@ watch(() => route, (val) => {
 }
 
 .slower-down {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -157,7 +157,7 @@ watch(() => route, (val) => {
 }
 
 .faster {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -165,7 +165,7 @@ watch(() => route, (val) => {
 }
 
 .faster1 {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -173,7 +173,7 @@ watch(() => route, (val) => {
 }
 
 .fastest {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -181,7 +181,7 @@ watch(() => route, (val) => {
 }
 
 .vertical {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         transform: rotate(0) !important;
     }
 
@@ -208,7 +208,7 @@ watch(() => route, (val) => {
 }
 
 .shell {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         display: none;
     }
 

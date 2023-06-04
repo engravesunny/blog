@@ -318,7 +318,7 @@ onBeforeUnmount(() => {
             justify-content: center;
 
             .name {
-                @media screen and (min-width: 300px) and (max-width: 400px) {
+                @media screen and (min-width: 300px) and (max-width: 500px) {
                     font-size: 18px;
                 }
 
@@ -482,7 +482,7 @@ onBeforeUnmount(() => {
                 transition: opacity 0.6s;
 
                 .tag {
-                    @media screen and (min-width: 300px) and (max-width: 400px) {
+                    @media screen and (min-width: 300px) and (max-width: 500px) {
                         transform: scale(0.5);
                         bottom: -8px;
                         right: -20px;

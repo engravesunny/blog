@@ -56,7 +56,7 @@ let nextToIt = (item) => {
     if (item.path) {
         if (item.path === '/music') {
             const a = document.createElement('a')
-            a.href = 'http://kecat.top/music'
+            a.href = 'https://kecat.top/music'
             document.body.appendChild(a)
             a.click()
         } else {

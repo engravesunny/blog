@@ -203,7 +203,7 @@ onMounted(() => {
 }
 
 .github {
-    @media screen and (min-width: 300px) and (max-width: 400px) {
+    @media screen and (min-width: 300px) and (max-width: 500px) {
         padding: 0px 0px;
     }
 
@@ -237,7 +237,7 @@ onMounted(() => {
             justify-content: space-between;
 
             .weeks {
-                @media screen and (min-width: 300px) and (max-width: 400px) {
+                @media screen and (min-width: 300px) and (max-width: 500px) {
                     font-size: 12px;
                 }
 
@@ -353,7 +353,7 @@ onMounted(() => {
                 align-items: center;
 
                 .from {
-                    @media screen and (min-width: 300px) and (max-width: 400px) {
+                    @media screen and (min-width: 300px) and (max-width: 500px) {
                         font-size: 12px;
                     }
 
