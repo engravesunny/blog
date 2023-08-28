@@ -23,7 +23,7 @@ import toPath from '../../../utils/toPath';
 import smallCard from '../../../components/smallCard.vue';
 import { getDirNames } from '../../../api/postApi';
 import tagList from '../../article/tag/components/tagList.vue';
-import { getTagInfo } from '../../../utils/getTagInfo';
+import { getTagCount } from '../../../utils/getTagInfo';
 
 
 let stripTranslateX = ref(300)
@@ -71,7 +71,7 @@ let getInfo = async () => {
 }
 
 const getTagInfos = async (tag) => {
-    const tagInfo = await getTagInfo(tag)
+    const tagInfo = await getTagCount(tag)
     tagFinalList.push({
         name: tagInfo.name,
         num: tagInfo.num

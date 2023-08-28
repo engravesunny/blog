@@ -42,7 +42,7 @@ import tagList from './components/tagList.vue'
 import { getDirNames } from '../../../api/postApi.js'
 import histogram from './components/histogram.vue';
 import router from '../../../router';
-import { getTagInfo, getTagPost } from '../../../utils/getTagInfo';
+import { getTagInfo, getTagPost, getTagCount } from '../../../utils/getTagInfo';
 
 const showTop = ref(true)
 
@@ -84,7 +84,7 @@ let back = (item) => {
 
 // 获取标签列表
 let getTags = async () => {
-    tagsList.splice(0, tagsList.length)
+    tagsList.length = 0;
     const { data: tags } = await getDirNames({
         dir_path: './posts/tag'
     })
@@ -94,7 +94,7 @@ let getTags = async () => {
 }
 // 获取标签数量
 let getTagNum = async (tag) => {
-    const tagInfo = await getTagInfo(tag)
+    const tagInfo = await getTagCount(tag)
     tagFinalList.push({
         name: tagInfo.name,
         num: tagInfo.num
@@ -155,7 +155,7 @@ onMounted(() => {
 }
 
 .container {
-    @media screen and (min-width:300px) and (max-width:400px) {
+    @media screen and (min-width:300px) and (max-width:500px) {
         margin-top: 5px;
     }
 
@@ -166,7 +166,7 @@ onMounted(() => {
     justify-content: center;
 
     .Page {
-        @media screen and (min-width:300px) and (max-width:400px) {
+        @media screen and (min-width:300px) and (max-width:500px) {
             padding: 0;
         }
 
@@ -182,7 +182,7 @@ onMounted(() => {
         flex-direction: column;
 
         .top {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 width: 100%;
                 padding: 20px 0px;
             }
@@ -196,7 +196,7 @@ onMounted(() => {
             box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
 
             .title {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     font-size: 0.5rem;
                 }
 
@@ -218,7 +218,7 @@ onMounted(() => {
         .tagList {
             width: 100%;
 
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 padding: 0;
             }
 
@@ -231,7 +231,7 @@ onMounted(() => {
             width: 100%;
 
             .over {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     margin-left: 20px;
                     margin-top: 10px;
                     width: 300px;
@@ -243,7 +243,7 @@ onMounted(() => {
                 height: 120px;
 
                 .title {
-                    @media screen and (min-width:300px) and (max-width:400px) {
+                    @media screen and (min-width:300px) and (max-width:500px) {
                         font-size: 0.4rem;
                         width: 300px;
                     }

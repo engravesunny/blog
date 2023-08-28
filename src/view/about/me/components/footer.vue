@@ -169,7 +169,7 @@ onBeforeUnmount(() => {
         transform: scale(1.1);
     }
 
-    @media screen and (min-width:300px) and (max-width:400px) {
+    @media screen and (min-width:300px) and (max-width:500px) {
         padding: 10px;
     }
 
@@ -179,7 +179,7 @@ onBeforeUnmount(() => {
     padding: 20px;
 
     .btn {
-        @media screen and (min-width:300px) and (max-width:400px) {
+        @media screen and (min-width:300px) and (max-width:500px) {
             padding: 3px 7px;
             bottom: 2px;
             right: 2px;
@@ -202,7 +202,7 @@ onBeforeUnmount(() => {
         transform: scale(0.9);
 
         a {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 font-size: 12px;
             }
 
@@ -213,7 +213,7 @@ onBeforeUnmount(() => {
         }
 
         .icon {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 font-size: 12px;
             }
 
@@ -245,7 +245,7 @@ onBeforeUnmount(() => {
 
             .head-left-bottom,
             .head-left-top {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     min-height: 100px;
                 }
 

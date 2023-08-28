@@ -115,7 +115,7 @@ onMounted(() => {
 }
 
 .me_page {
-    @media screen and (min-width:300px) and (max-width:400px) {
+    @media screen and (min-width:300px) and (max-width:500px) {
         min-width: unset;
     }
 

@@ -24,7 +24,7 @@
 
 <style lang="less" scoped>
 .footBar_container {
-    @media screen and (min-width:300px) and (max-width:400px) {
+    @media screen and (min-width:300px) and (max-width:500px) {
         height: 120px;
     }
 
@@ -36,7 +36,7 @@
     flex-direction: column;
 
     .top {
-        @media screen and (min-width:300px) and (max-width:400px) {
+        @media screen and (min-width:300px) and (max-width:500px) {
             height: 60px;
         }
 
@@ -45,7 +45,7 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 
         .left {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 line-height: 60px;
             }
 
@@ -57,7 +57,7 @@
             line-height: 150px;
 
             .title {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     font-size: 14px;
                 }
 
@@ -75,25 +75,25 @@
             align-items: center;
 
             .kecat {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     display: none;
                 }
             }
 
             .qq {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     font-size: 16px;
                 }
             }
 
             .email {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     display: none;
                 }
             }
 
             .item {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     font-size: 16px;
                 }
 

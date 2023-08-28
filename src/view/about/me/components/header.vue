@@ -283,7 +283,7 @@ onBeforeUnmount(() => {
 }
 
 .header {
-    @media screen and (min-width:300px) and (max-width:400px) {
+    @media screen and (min-width:300px) and (max-width:500px) {
         padding: 10px;
     }
 
@@ -342,7 +342,7 @@ onBeforeUnmount(() => {
     }
 
     .main_card {
-        @media screen and (min-width:300px) and (max-width:400px) {
+        @media screen and (min-width:300px) and (max-width:500px) {
             padding: 10px 5px;
             margin-top: 10px;
         }
@@ -355,7 +355,7 @@ onBeforeUnmount(() => {
         display: flex;
 
         .introduce {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 width: 100%;
             }
 
@@ -368,7 +368,7 @@ onBeforeUnmount(() => {
             }
 
             .windows {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     display: none;
                 }
             }
@@ -376,7 +376,7 @@ onBeforeUnmount(() => {
             .mobile {
                 display: none;
 
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     display: inline-block;
                     font-size: 14px;
                 }
@@ -384,7 +384,7 @@ onBeforeUnmount(() => {
         }
 
         .emoji {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 display: none;
             }
 
@@ -397,7 +397,7 @@ onBeforeUnmount(() => {
     }
 
     .bottom {
-        @media screen and (min-width:300px) and (max-width:400px) {
+        @media screen and (min-width:300px) and (max-width:500px) {
             margin-top: 10px;
 
         }
@@ -410,7 +410,7 @@ onBeforeUnmount(() => {
         justify-content: space-between;
 
         .right {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 height: 48%;
             }
 
@@ -425,7 +425,7 @@ onBeforeUnmount(() => {
             overflow: hidden;
 
             .btn {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     width: 30px;
                     height: 30px;
                     display: flex;
@@ -448,14 +448,14 @@ onBeforeUnmount(() => {
                 transition: unset;
 
                 .icon {
-                    @media screen and (min-width:300px) and (max-width:400px) {
+                    @media screen and (min-width:300px) and (max-width:500px) {
                         font-size: 12px;
                     }
                 }
             }
 
             .btn:active {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     transform: scale(0.5);
                 }
 
@@ -464,7 +464,7 @@ onBeforeUnmount(() => {
             }
 
             .motto {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     font-size: 22px;
                     padding: 5px;
                 }
@@ -548,7 +548,7 @@ onBeforeUnmount(() => {
                 .mobile {
                     display: none;
 
-                    @media screen and (min-width:300px) and (max-width:400px) {
+                    @media screen and (min-width:300px) and (max-width:500px) {
                         display: flex;
                         flex-direction: column;
                         font-size: 25px;
@@ -556,7 +556,7 @@ onBeforeUnmount(() => {
                 }
 
                 .text {
-                    @media screen and (min-width:300px) and (max-width:400px) {
+                    @media screen and (min-width:300px) and (max-width:500px) {
                         display: none;
                     }
                 }
@@ -564,7 +564,7 @@ onBeforeUnmount(() => {
             }
 
             .edu {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     width: 169%;
                 }
 
@@ -586,7 +586,7 @@ onBeforeUnmount(() => {
                     flex-direction: column;
 
                     .small {
-                        @media screen and (min-width:300px) and (max-width:400px) {
+                        @media screen and (min-width:300px) and (max-width:500px) {
                             font-size: 12px;
                         }
 
@@ -596,7 +596,7 @@ onBeforeUnmount(() => {
                     }
 
                     .big {
-                        @media screen and (min-width:300px) and (max-width:400px) {
+                        @media screen and (min-width:300px) and (max-width:500px) {
                             font-size: 16px;
                         }
 

@@ -1,7 +1,7 @@
 <template>
     <div class="smallArCard_container box_border" @click="toArticle">
         <div class="left">
-            <img loading="lazy" :src="`${baseURL}/image/postImg/${Math.floor(Math.random() * 23)}.webp`" alt="">
+            <img loading="lazy" :src="`${postImgUrl}/${postImage}`" alt="">
         </div>
         <div class="right">
             <div class="top">
@@ -19,10 +19,10 @@
 <script setup lang="ts">
 
 import { getPostInfo } from '../utils/getPostInfo'
-import { baseURL } from '../constant';
+import { postImgUrl } from '../constant';
 const router = useRouter()
 let dateInfo = ref('')
-
+let postImage = ref('')
 let tagInfo = reactive<string[]>([])
 
 const props = defineProps({
@@ -44,6 +44,7 @@ let toArticle = () => {
 watch(() => props, async (val) => {
     const info = await getPostInfo(val.postName)
     dateInfo.value = info.date
+    postImage.value = info.postImg
     info.tag.map(item => {
         tagInfo.push(item)
     })
@@ -80,6 +81,7 @@ watch(() => props, async (val) => {
             border-radius: 5px;
             height: 100%;
             transition: height 0.5s;
+            will-change: scroll-position contents;
         }
 
         img:hover {

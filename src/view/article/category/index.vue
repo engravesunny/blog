@@ -132,7 +132,7 @@ watch(() => route, (val) => {
 
 <style lang="less" scoped>
 .categoryPage_container {
-    @media screen and (min-width:300px) and (max-width:400px) {
+    @media screen and (min-width:300px) and (max-width:500px) {
         margin-top: 0;
     }
 
@@ -143,7 +143,7 @@ watch(() => route, (val) => {
     justify-content: center;
 
     .categoryPage {
-        @media screen and (min-width:300px) and (max-width:400px) {
+        @media screen and (min-width:300px) and (max-width:500px) {
             padding: 0;
         }
 
@@ -168,7 +168,7 @@ watch(() => route, (val) => {
             box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
 
             .title {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     font-size: 0.5rem;
                 }
 
@@ -187,7 +187,7 @@ watch(() => route, (val) => {
         .radar {
             border-radius: 10px;
 
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 width: 375px;
             }
 
@@ -203,7 +203,7 @@ watch(() => route, (val) => {
             width: 100%;
 
             .over {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     width: 300px;
                 }
 
@@ -213,7 +213,7 @@ watch(() => route, (val) => {
                 height: 120px;
 
                 .title {
-                    @media screen and (min-width:300px) and (max-width:400px) {
+                    @media screen and (min-width:300px) and (max-width:500px) {
                         font-size: 0.4rem;
                         width: 300px;
                     }

@@ -63,6 +63,8 @@ let nextToIt = (item) => {
             router.push(item.path)
         }
 
+    } else if (item.url) {
+        window.location.replace(item.url)
     } else {
         return
     }
@@ -151,22 +153,28 @@ let controls = reactive(
             name: '实验室',
             children: [
                 {
-                    name: '网盘plus'
+                    name: '网盘plus',
+                    url: 'https://kecat.top/cloudDisk'
                 },
                 {
-                    name: '后台管理项目'
+                    name: '后台管理项目',
+                    url:'http://kecat.top:1314'
                 },
                 {
-                    name: "手势识别demo"
+                    name: "手势识别demo",
+                    url:'http://kecat.top:1234'
                 },
                 {
-                    name: "考勤记录项目"
+                    name: "考勤记录项目",
+                    url:'http://kecat.top:8080/'
                 },
                 {
-                    name: '进制转换demo'
+                    name: '进制转换demo',
+                    url:"https://kecat.top/bin2dec"
                 },
                 {
-                    name: "border-radius-preview"
+                    name: "border-radius-preview",
+                    url:"http://kecat.top/border-radius-preview"
                 }
             ]
         },

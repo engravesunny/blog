@@ -270,7 +270,7 @@ onMounted(async () => {
         }
 
         .word {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 padding: 10px;
                 text-align: center;
                 margin-top: 10px;
@@ -286,7 +286,7 @@ onMounted(async () => {
             text-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
 
             .flash {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     top: 24px;
                 }
 
@@ -342,7 +342,7 @@ onMounted(async () => {
         box-shadow: none;
 
         .main_position {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 width: 100vw;
                 align-items: center;
                 justify-content: center;
@@ -356,7 +356,7 @@ onMounted(async () => {
                 width: 75%;
                 display: flex;
 
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     align-items: center;
                     justify-content: center;
                 }
@@ -368,7 +368,7 @@ onMounted(async () => {
                 box-shadow: none;
 
                 .card {
-                    @media screen and (min-width:300px) and (max-width:400px) {
+                    @media screen and (min-width:300px) and (max-width:500px) {
                         padding: 0;
                         margin: 7px 0;
                     }

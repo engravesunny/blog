@@ -88,7 +88,7 @@ watch(() => props, (val) => {
 
 <style>
 .radar-echart {
-  @media screen and (min-width:300px) and (max-width:400px) {
+  @media screen and (min-width:300px) and (max-width:500px) {
     width: 370px;
   }
 

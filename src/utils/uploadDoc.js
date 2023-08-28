@@ -73,7 +73,7 @@ const uploadDoc = async (file, dir_path, categoryName, tagName, albumName) => {
 
         // 4)上传文件到目标目录
         const { data: post_tar } = await uploads({
-            dir_path: `../../serve/blogServe/public/blog/post/`,
+            dir_path: `../../serve/blogServe/public/post/`,
             file
         })
         if (post_tar.code === 0) {

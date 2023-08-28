@@ -138,14 +138,14 @@ watch(() => route, (val) => {
         width: 100%;
 
         .top {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 height: 80px;
             }
 
             width: 100%;
 
             .bottom {
-                @media screen and (min-width:300px) and (max-width:400px) {
+                @media screen and (min-width:300px) and (max-width:500px) {
                     padding: 0 10px;
                 }
 
@@ -155,7 +155,7 @@ watch(() => route, (val) => {
                 padding: 0 20px;
 
                 .date {
-                    @media screen and (min-width:300px) and (max-width:400px) {
+                    @media screen and (min-width:300px) and (max-width:500px) {
                         font-size: 12px;
                     }
 
@@ -170,7 +170,7 @@ watch(() => route, (val) => {
                     justify-content: flex-end;
 
                     .tag {
-                        @media screen and (min-width:300px) and (max-width:400px) {
+                        @media screen and (min-width:300px) and (max-width:500px) {
                             font-size: 12px;
                         }
 
@@ -209,7 +209,7 @@ watch(() => route, (val) => {
 }
 
 .article_container {
-    @media screen and (min-width:300px) and (max-width:400px) {
+    @media screen and (min-width:300px) and (max-width:500px) {
         margin-top: 5px;
     }
 
@@ -223,7 +223,7 @@ watch(() => route, (val) => {
 
 
     .article {
-        @media screen and (min-width:300px) and (max-width:400px) {
+        @media screen and (min-width:300px) and (max-width:500px) {
             padding: 5px;
             border-radius: 10px;
         }
@@ -232,12 +232,13 @@ watch(() => route, (val) => {
         border-radius: 25px;
         width: 50%;
         min-width: 375px;
-        padding: 40px;
-        background: rgba(123, 123, 123, 0.5);
-        box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
+        padding: 15px 10px;
+        background: rgba(255, 255, 255, 0.5);
+        border: 4px solid #fff;
+        transition: all 0.5s;
 
         .markdown-body {
-            @media screen and (min-width:300px) and (max-width:400px) {
+            @media screen and (min-width:300px) and (max-width:500px) {
                 padding: 20px 10px;
             }
 
@@ -248,6 +249,11 @@ watch(() => route, (val) => {
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.9);
         }
+        &:hover{
+            border: 4px solid rgb(6, 147, 255);
+            background-color: #fff;
+        }
     }
+    
 }
 </style>

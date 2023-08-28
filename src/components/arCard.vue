@@ -90,7 +90,6 @@ const init = async () => {
 const handleLazy = (el: Element) => {
     const intersectionObserver = new IntersectionObserver((changes) => {
         changes.forEach((item, index) => {
-
             if (item.intersectionRatio > 0) {
                 intersectionObserver.unobserve(item.target)
                 handleLoad()
@@ -112,7 +111,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .animate_zoomIn {
-    animation: zoomIn;
+    animation: fadeInUp;
     animation-duration: 1s;
 }
 
@@ -144,6 +143,7 @@ onMounted(() => {
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s;
+            will-change:scroll-position;
         }
 
         img:hover {
