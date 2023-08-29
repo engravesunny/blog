@@ -21,9 +21,9 @@
 <script setup>
 import toPath from '../../../utils/toPath';
 import smallCard from '../../../components/smallCard.vue';
-import { getDirNames } from '../../../api/postApi';
 import tagList from '../../article/tag/components/tagList.vue';
-import { getTagCount } from '../../../utils/getTagInfo';
+import { getAllTagInfo } from '../../../utils/getTagInfo';
+import { getCategoryList, toStoreCategoryInfo } from '../../../utils/getCategoryInfo';
 
 
 let stripTranslateX = ref(300)
@@ -56,31 +56,22 @@ let getInfo = async () => {
     categoryList.length = 0
     tagLists.length = 0
     tagFinalList.length = 0
-    const { data: category } = await getDirNames({
-        dir_path: './posts/category'
-    })
-    category.data.dir_names.forEach(item => {
-        categoryList.push(item)
-    });
-    const { data: tags } = await getDirNames({
-        dir_path: './posts/tag'
-    })
-    tags.data.dir_names.forEach(item => {
-        tagLists.push(item)
+    toStoreCategoryInfo()
+    const list = getCategoryList()
+    list.forEach(item => {
+        categoryList.push(item.name)
     });
 }
 
-const getTagInfos = async (tag) => {
-    const tagInfo = await getTagCount(tag)
-    tagFinalList.push({
-        name: tagInfo.name,
-        num: tagInfo.num
+const getTagInfos = () => {
+    const tagInfos = getAllTagInfo()
+    tagInfos.forEach(tagInfo => {
+        tagFinalList.push({
+            name: tagInfo.name,
+            num: tagInfo.num
+        })
     })
-    if (tagFinalList.length === tagLists.length) {
-        tagLoading.value = false
-    } else {
-        tagLoading.value = true
-    }
+    tagLoading.value = false  
 }
 
 onMounted(() => {
@@ -88,11 +79,8 @@ onMounted(() => {
 })
 
 watch(showWhat, (val) => {
-    if (val === 'tag') {
-        tagFinalList.length = 0
-        tagLists.map(item => {
-            getTagInfos(item)
-        })
+    if(val === 'tag') {
+        getTagInfos()
     }
 })
 

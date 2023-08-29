@@ -1,6 +1,11 @@
 import { getDirNames } from "../api/postApi"
 import { archive } from "../store/archive";
-const archiveStore = archive()
+import { post } from "../store/post"
+import { ArchiveSingle } from "@/types";
+import pinia from '@/store/index'
+import { ArchiveMonthSingle } from '../types/index';
+const archiveStore = archive(pinia)
+const postStore = post(pinia)
 
 let getDatePost = async (date: string) => {
     const { data: postListInfo } = await getDirNames({
@@ -29,4 +34,63 @@ export const getArchivePosts = async (year: string, month: string) => {
         })
         return postList
     }
+}
+
+
+export const getArchiveInfos = () => {
+    const posts = postStore.$state.postInfo
+    posts.sort((a,b) => {
+        const timea = new Date(a.date).getTime()
+        const timeb = new Date(b.date).getTime()
+        return timea - timeb;
+    });
+    console.log(posts);
+    const archiveInfo: ArchiveSingle[] = []
+    let tempYear = posts[0].date.split('-')[0];
+    let tempMonth = posts[0].date.split('-')[1];
+    let tempPostList:string[] = [];
+    const archiveMonthList : ArchiveMonthSingle[] = []
+    posts.forEach(postItem => {
+        const year = postItem.date.split('-')[0];
+        const month = postItem.date.split('-')[1];
+        const postName = postItem.name;
+        
+        if(tempYear === year){
+            if(tempMonth === month) {
+                tempPostList.push(postName)
+            } else {
+                console.log(tempMonth);
+                archiveMonthList.push({
+                    month:tempMonth,
+                    posts:[...tempPostList]
+                })
+                tempMonth = month;
+                tempPostList.length = 0;
+                tempPostList.push(postName);
+            }
+        } else {
+            archiveMonthList.push({
+                month:tempMonth,
+                posts:[...tempPostList]
+            })
+            archiveInfo.push({
+                year:tempYear,
+                monthInfos:[...archiveMonthList]
+            })
+            archiveMonthList.length = 0;
+            tempYear = year;
+            tempMonth = month;
+            tempPostList.length = 0;
+            tempPostList.push(postName);
+        }
+    })
+    archiveMonthList.push({
+        month:tempMonth,
+        posts:[...tempPostList]
+    })
+    archiveInfo.push({
+        year:tempYear,
+        monthInfos:[...archiveMonthList]
+    })
+    archiveStore.setState(archiveInfo)
 }

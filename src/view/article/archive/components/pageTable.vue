@@ -1,5 +1,3 @@
-import { onMounted } from 'vue';
-import PubSub from 'pubsub-js';
 <template>
     <div class="pageTable">
         <div v-if="curPage > 0" class="left iconfont" @click="toPage(curPage - 1)">&#xe658;</div>
@@ -12,7 +10,8 @@ import PubSub from 'pubsub-js';
 </template>
 
 <script setup>
-
+import { onMounted } from 'vue';
+import PubSub from 'pubsub-js';
 const props = defineProps({
     pageSize: {
         type: Number,

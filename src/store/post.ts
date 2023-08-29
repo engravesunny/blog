@@ -34,7 +34,8 @@ export const post = defineStore('post', {
                 category: '',
                 tag: [],
                 date: '',
-                name: ''
+                name: '',
+                postImg:''
             }
             this.postInfo.map(item => {
                 if (item.name === name) {

@@ -10,24 +10,15 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'comment-blog',
+<script setup lang="ts">
+import { data } from '@/utils/POSTOBJ'
 
-    data() {
-        return {
-            
-        };
-    },
+const handleClick = async () => {
+    // const { data} = await getPOSTJSON()
+    // console.log(data);
+    console.log(JSON.stringify(data));
+}
 
-    mounted() {
-        
-    },
-
-    methods: {
-        
-    },
-};
 </script>
 
 <style lang="scss" scoped>

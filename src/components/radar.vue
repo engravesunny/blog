@@ -64,7 +64,7 @@ watch(() => props, (val) => {
   val?.categoryList?.forEach(item => {
     radarList.push({
       name: item,
-      max: 50
+      max: 100
     })
   });
   val?.categoryLength?.forEach(item => {

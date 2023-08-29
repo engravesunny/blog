@@ -23,7 +23,7 @@ import getFileIcon from '../../../../../utils/icon'
 let isOpen = reactive([])
 
 let nextTo = (item) => {
-    if (item.path) {
+    if (item.path || item.url) {
         PubSub.publish('nextTo', item)
         PubSub.publish('closeMenuSideBar')
     }

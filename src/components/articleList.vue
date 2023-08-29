@@ -27,7 +27,7 @@ let liWidth = ref(45)
     width: 100%;
     min-height: 400px;
 
-    @media screen and (min-width:300px) and (max-width:500px) {
+    @media screen and (min-width:300px) and (max-width:600px) {
         padding: 0;
     }
 

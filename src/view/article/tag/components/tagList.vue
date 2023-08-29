@@ -16,8 +16,6 @@
 
 <script setup>
 import toPath from '../../../../utils/toPath.js';
-import { getDirNames } from '../../../../api/postApi.js'
-const router = useRouter()
 const route = useRoute()
 
 const props = defineProps({

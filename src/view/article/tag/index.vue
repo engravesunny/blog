@@ -1,6 +1,6 @@
 <template>
     <div class="container unselectable">
-        <div class="Page" :style="{ width: `${defaultWidth}%` }">
+        <div class="Page">
             <div class="top box_border" v-if="showTop">
                 <!-- 分类标题 -->
                 <div class="title">
@@ -39,21 +39,17 @@
 import articleList from '../../../components/articleList.vue';
 import smallCard from '../../../components/smallCard.vue'
 import tagList from './components/tagList.vue'
-import { getDirNames } from '../../../api/postApi.js'
 import histogram from './components/histogram.vue';
 import router from '../../../router';
-import { getTagInfo, getTagPost, getTagCount } from '../../../utils/getTagInfo';
+import { getTagPost, getAllTagInfo } from '../../../utils/getTagInfo';
 
 const showTop = ref(true)
 
 let title = ref('')
 const route = useRoute()
-let showRightNav = ref(true)
+let showRightNav = ref(false)
 let loading = ref(true)
-let defaultWidth = ref(55)
 let isShowArList = ref(false)
-// 标签列表
-let tagsList = reactive([])
 // 最终标签列表
 let tagFinalList = reactive([])
 // 具体标签文章列表
@@ -73,7 +69,6 @@ let toTag = async (item) => {
 }
 
 let back = (item) => {
-
     if (!item) {
         router.push('/tag')
         title.value = ''
@@ -82,28 +77,17 @@ let back = (item) => {
     isShowArList.value = item
 }
 
-// 获取标签列表
-let getTags = async () => {
-    tagsList.length = 0;
-    const { data: tags } = await getDirNames({
-        dir_path: './posts/tag'
+const getTagInfo = () => {
+    loading.value = true
+    const list = getAllTagInfo()
+    tagFinalList.length = 0;
+    list.forEach(item => {
+        tagFinalList.push({
+            name:item.name,
+            num: item.num
+        })
     })
-    tags.data.dir_names.forEach(element => {
-        tagsList.push(element)
-    });
-}
-// 获取标签数量
-let getTagNum = async (tag) => {
-    const tagInfo = await getTagCount(tag)
-    tagFinalList.push({
-        name: tagInfo.name,
-        num: tagInfo.num
-    })
-    if (tagsList.length === tagFinalList.length) {
-        loading.value = false
-    } else {
-        loading.value = true
-    }
+    loading.value = false
 }
 
 const props = defineProps(['scroller'])
@@ -111,35 +95,25 @@ const props = defineProps(['scroller'])
 watch(() => route, async (val) => {
     if (val.query.name) {
         await toTag(val.query.name)
-    } else {
-
     }
-
 }, {
     deep: true,
     immediate: true
 })
 
 const init = async () => {
-    await getTags()
-    await tagsList.forEach((item, index) => {
-        getTagNum(item)
-    });
+    getTagInfo()
     if (window.innerWidth < 1000) {
-        defaultWidth.value = 80
         showRightNav.value = false
+    } else {
+        showRightNav.value = true
     }
     PubSub.subscribe('closeSide', () => {
-        defaultWidth.value = 80
         showRightNav.value = false
     })
     PubSub.subscribe('openSide', () => {
-        defaultWidth.value = 55
         showRightNav.value = true
     })
-    if (document.body.clientWidth < 500) {
-        defaultWidth.value = 100;
-    }
 }
 
 onMounted(() => {
@@ -166,8 +140,15 @@ onMounted(() => {
     justify-content: center;
 
     .Page {
-        @media screen and (min-width:300px) and (max-width:500px) {
+        @media screen and (min-width:300px) and (max-width:600px) {
             padding: 0;
+            width: 100%;
+        }
+        @media screen and (min-width:600px) and (max-width:1250px) {
+            width: 80%;
+        }
+        @media screen and (min-width:1250px) {
+            width: 55%;
         }
 
         padding: 20px;
@@ -186,7 +167,6 @@ onMounted(() => {
                 width: 100%;
                 padding: 20px 0px;
             }
-
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
@@ -196,7 +176,7 @@ onMounted(() => {
             box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
 
             .title {
-                @media screen and (min-width:300px) and (max-width:500px) {
+                @media screen and (min-width:300px) and (max-width:600px) {
                     font-size: 0.5rem;
                 }
 
@@ -218,7 +198,7 @@ onMounted(() => {
         .tagList {
             width: 100%;
 
-            @media screen and (min-width:300px) and (max-width:500px) {
+            @media screen and (min-width:300px) and (max-width:600px) {
                 padding: 0;
             }
 
@@ -231,7 +211,7 @@ onMounted(() => {
             width: 100%;
 
             .over {
-                @media screen and (min-width:300px) and (max-width:500px) {
+                @media screen and (min-width:300px) and (max-width:600px) {
                     margin-left: 20px;
                     margin-top: 10px;
                     width: 300px;
@@ -243,7 +223,7 @@ onMounted(() => {
                 height: 120px;
 
                 .title {
-                    @media screen and (min-width:300px) and (max-width:500px) {
+                    @media screen and (min-width:300px) and (max-width:600px) {
                         font-size: 0.4rem;
                         width: 300px;
                     }

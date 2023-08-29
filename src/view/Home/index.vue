@@ -54,7 +54,6 @@ import friendMe from './components/friendMe.vue';
 import articleDisplay from './components/article.vue';
 import latestAr from './components/latestAr.vue';
 import getWord from '@/api/randomWord.js'
-import { getDirNames } from '../../api/postApi';
 import { getLatestPostInfo } from '../../utils/latestPosts';
 // 每日一言后闪烁条
 let isShowFlash = ref(true)
@@ -270,7 +269,7 @@ onMounted(async () => {
         }
 
         .word {
-            @media screen and (min-width:300px) and (max-width:500px) {
+            @media screen and (min-width:300px) and (max-width:600px) {
                 padding: 10px;
                 text-align: center;
                 margin-top: 10px;
@@ -286,7 +285,7 @@ onMounted(async () => {
             text-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
 
             .flash {
-                @media screen and (min-width:300px) and (max-width:500px) {
+                @media screen and (min-width:300px) and (max-width:600px) {
                     top: 24px;
                 }
 
@@ -342,7 +341,7 @@ onMounted(async () => {
         box-shadow: none;
 
         .main_position {
-            @media screen and (min-width:300px) and (max-width:500px) {
+            @media screen and (min-width:300px) and (max-width:600px) {
                 width: 100vw;
                 align-items: center;
                 justify-content: center;
@@ -356,7 +355,7 @@ onMounted(async () => {
                 width: 75%;
                 display: flex;
 
-                @media screen and (min-width:300px) and (max-width:500px) {
+                @media screen and (min-width:300px) and (max-width:600px) {
                     align-items: center;
                     justify-content: center;
                 }
@@ -368,7 +367,7 @@ onMounted(async () => {
                 box-shadow: none;
 
                 .card {
-                    @media screen and (min-width:300px) and (max-width:500px) {
+                    @media screen and (min-width:300px) and (max-width:600px) {
                         padding: 0;
                         margin: 7px 0;
                     }

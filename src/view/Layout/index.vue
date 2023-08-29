@@ -100,7 +100,7 @@ onMounted(() => {
 }
 
 .toTop {
-    @media screen and (min-width:300px) and (max-width:500px) {
+    @media screen and (min-width:300px) and (max-width:600px) {
         font-size: 20px;
         padding: 7px;
         border-radius: 5px;

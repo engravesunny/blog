@@ -1,7 +1,8 @@
 <template>
     <div ref="dom" @click="toArticle" class="card_container">
         <div class="top">
-            <img ref="imgDom" :src="`${baseURL}/image/loading.gif`" :data-src="`${postImgUrl}/${postImg}`" alt="postImg">
+            <h1>{{ postName }}</h1>
+            <!-- <img ref="imgDom" :src="`${baseURL}/image/loading.gif`" :data-src="`${postImgUrl}/${postImg}`" alt="postImg"> -->
         </div>
         <div class="bottom">
             <div class="bTop">
@@ -68,9 +69,9 @@ let toArticle = () => {
 
 const handleLoad = () => {
     (dom.value as Element).classList.add('animate_zoomIn');
-    if (postImg.value) {
-        (imgDom.value as HTMLImageElement).src = (imgDom.value as HTMLImageElement).dataset.src as string
-    }
+    // if (postImg.value && imgDom.value) {
+    //     (imgDom.value as HTMLImageElement).src = (imgDom.value as HTMLImageElement).dataset.src as string
+    // }
 }
 
 const init = async () => {
@@ -82,17 +83,17 @@ const init = async () => {
     })
     dateInfo.value = info.date
     postImg.value = info.postImg
-    if ((imgDom.value as HTMLImageElement).src.includes('loading')) {
-        (imgDom.value as HTMLImageElement).src = postImgUrl + '/' + postImg.value
-    }
+    // if ((imgDom.value as HTMLImageElement).src.includes('loading')) {
+    //     (imgDom.value as HTMLImageElement).src = postImgUrl + '/' + postImg.value
+    // }
 }
 
 const handleLazy = (el: Element) => {
     const intersectionObserver = new IntersectionObserver((changes) => {
         changes.forEach((item, index) => {
-            if (item.intersectionRatio > 0) {
-                intersectionObserver.unobserve(item.target)
+            if (item.isIntersecting) {
                 handleLoad()
+                intersectionObserver.unobserve(item.target)
             }
         })
     })
@@ -146,9 +147,9 @@ onMounted(() => {
             will-change:scroll-position;
         }
 
-        img:hover {
-            transform: scale(1.2);
-        }
+        // img:hover {
+        //     transform: scale(1.2);
+        // }
 
         .loadingImg {
             width: 100%;

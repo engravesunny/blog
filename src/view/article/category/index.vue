@@ -1,7 +1,7 @@
 <template>
     <div class="categoryPage_container unselectable">
-        <div class="categoryPage" :style="{ width: `${defaultWidth}%` }">
-            <div class="top box_border">
+        <div class="categoryPage">
+            <div v-if="!isShowArList" class="top box_border">
                 <!-- 分类标题 -->
                 <div class="title">
                     <h1>Post Categories</h1>
@@ -37,7 +37,8 @@ import radar from '../../../components/radar.vue'
 import rightNav from '../../../components/rightNav.vue';
 import articleList from '../../../components/articleList.vue';
 import smallCard from '../../../components/smallCard.vue'
-import { getDirNames } from '../../../api/postApi.js'
+import { getCategoryPost, getCategoryList } from '@/utils/getCategoryInfo'
+
 
 const route = useRoute()
 let title = ref('')
@@ -59,62 +60,42 @@ let categoryArList = reactive([])
 let toCategory = async (item) => {
     title.value = item
     categoryArList.splice(0, categoryArList.length)
-    const { data } = await getDirNames({
-        dir_path: "./posts/category/" + item
+    const postInfos = getCategoryPost(item)
+    postInfos.forEach(item => {
+        categoryArList.push(item.name)
     })
-    data?.data?.dir_names?.forEach(element => {
-        categoryArList.push(element)
-    });
     showArList(true)
 }
-
 // 获取类别列表
 let getCategory = async () => {
     categoryList.splice(0, categoryList.length)
-    const { data } = await getDirNames({
-        dir_path: "./posts/category"
-    })
-    data?.data?.dir_names?.forEach(element => {
-        categoryList.push(element)
+    const infos = getCategoryList()
+    infos.forEach(element => {
+        categoryList.push(element.name)
     });
 }
-
 let categoryInfo = reactive([])
-
 let getLength = () => {
     categoryInfo.splice(0, categoryInfo.length)
-    categoryList.forEach(async item => {
-        const { data: len } = await getDirNames({
-            dir_path: './posts/category/' + item
-        })
-        categoryInfo.push({
-            name: item,
-            value: len.data.dir_names.length
-        })
+    const infos = getCategoryList()
+    infos.forEach(item => {
+        categoryInfo.push(item)
     })
 }
 
 let showRightNav = ref(true)
 
-let defaultWidth = ref(55)
-
 onMounted(async () => {
 
     if (document.body.clientWidth < 1000) {
-        defaultWidth.value = 80
         showRightNav.value = false
     }
     PubSub.subscribe('closeSide', () => {
-        defaultWidth.value = 80
         showRightNav.value = false
     })
     PubSub.subscribe('openSide', () => {
-        defaultWidth.value = 55
         showRightNav.value = true
     })
-    if (document.body.clientWidth < 500) {
-        defaultWidth.value = 100;
-    }
     await getCategory()
     await getLength()
 })
@@ -143,8 +124,15 @@ watch(() => route, (val) => {
     justify-content: center;
 
     .categoryPage {
-        @media screen and (min-width:300px) and (max-width:500px) {
+        @media screen and (min-width:300px) and (max-width:600px) {
             padding: 0;
+            width: 100%;
+        }
+        @media screen and (min-width:600px) and (max-width:1250px) {
+            width: 80%;
+        }
+        @media screen and (min-width:1250px) {
+            width: 55%;
         }
 
         padding: 20px;
@@ -168,7 +156,7 @@ watch(() => route, (val) => {
             box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
 
             .title {
-                @media screen and (min-width:300px) and (max-width:500px) {
+                @media screen and (min-width:300px) and (max-width:600px) {
                     font-size: 0.5rem;
                 }
 
@@ -203,7 +191,7 @@ watch(() => route, (val) => {
             width: 100%;
 
             .over {
-                @media screen and (min-width:300px) and (max-width:500px) {
+                @media screen and (min-width:300px) and (max-width:600px) {
                     width: 300px;
                 }
 
@@ -213,7 +201,7 @@ watch(() => route, (val) => {
                 height: 120px;
 
                 .title {
-                    @media screen and (min-width:300px) and (max-width:500px) {
+                    @media screen and (min-width:300px) and (max-width:600px) {
                         font-size: 0.4rem;
                         width: 300px;
                     }
@@ -239,7 +227,6 @@ watch(() => route, (val) => {
             }
 
             .article_list {
-                margin-top: 20px;
                 width: 100%;
                 background-color: rgba(255, 255, 255, 0.5);
                 border-radius: 10px;

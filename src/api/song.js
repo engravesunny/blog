@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const getSongRequest = axios.create({
-    baseURL: '/song'
+    baseURL: 'https://kecat.top:3000/'
 })
 
 export const getSong = params => getSongRequest({

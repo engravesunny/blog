@@ -193,7 +193,7 @@ watch(() => route, (val) => {
     height: 100%;
 
     .page-title {
-        @media screen and (min-width:300px) and (max-width:500px) {
+        @media screen and (min-width:300px) and (max-width:600px) {
             padding: 5px 10px;
             left: 10px;
         }

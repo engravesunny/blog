@@ -1,14 +1,31 @@
-import { ElMessage } from "element-plus";
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
+import { RouteRecordRaw } from 'vue-router';
+import { getArchiveInfos } from "@/utils/getArchiveInfo"; 
+import { toStoreCategoryInfo } from "@/utils/getCategoryInfo";
+import { getPOSTJSON } from '@/api/getPostJson.js';
+import { post } from '@/store/post'
+import { tag } from '@/store/tag'
+import { PostSingle, TagSingle } from "@/types";
+import pinia from "@/store";
+const postStore = post(pinia);
+const tagStore = tag(pinia);
 
-import PubSub from "pubsub-js";
-
-const routes = [
+const routes:Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'layout',
         redirect: '/home',
         component: () => import('@/view/Layout/index.vue'),
+        beforeEnter: async () => {
+            const res = await getPOSTJSON();
+            const postInfo = res.data.postInfo as PostSingle[];
+            const tagInfo = res.data.tagInfo as TagSingle[];
+            postInfo.forEach(post => {
+                postStore.addPost(post);
+            })
+            tagStore.setState(tagInfo);
+            console.log(res.data);
+        },
         children: [
             {
                 path: "/home",
@@ -22,11 +39,17 @@ const routes = [
                 path: '/category',
                 name: 'category',
                 component: () => import('@/view/article/category/index.vue'),
+                beforeEnter: () => {
+                    toStoreCategoryInfo()
+                }
             },
             {
                 path: '/archive',
                 name: 'archive',
                 component: () => import('@/view/article/archive/index.vue'),
+                beforeEnter: () => {
+                    getArchiveInfos()
+                }
             },
             {
                 path: '/tag',
@@ -83,7 +106,7 @@ const routes = [
     {
         path: '/admin',
         name: "admin",
-        component: () => import('../BackgroundManagement/index.vue')
+        component: () => import('@/BackgroundManagement/index.vue')
     }
 ];
 
@@ -92,10 +115,9 @@ const router = createRouter({
     routes
 });
 
-// const routeNeedToken = ["/myLike","/suggestSong","/songList"]
 
 router.beforeEach((to, from, next) => {
-    PubSub.publish('scrollToFast', 0)
+    window.scrollTo(0, 0);
     next()
 })
 

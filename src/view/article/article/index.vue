@@ -138,14 +138,14 @@ watch(() => route, (val) => {
         width: 100%;
 
         .top {
-            @media screen and (min-width:300px) and (max-width:500px) {
+            @media screen and (min-width:300px) and (max-width:600px) {
                 height: 80px;
             }
 
             width: 100%;
 
             .bottom {
-                @media screen and (min-width:300px) and (max-width:500px) {
+                @media screen and (min-width:300px) and (max-width:600px) {
                     padding: 0 10px;
                 }
 
@@ -155,7 +155,7 @@ watch(() => route, (val) => {
                 padding: 0 20px;
 
                 .date {
-                    @media screen and (min-width:300px) and (max-width:500px) {
+                    @media screen and (min-width:300px) and (max-width:600px) {
                         font-size: 12px;
                     }
 
@@ -170,7 +170,7 @@ watch(() => route, (val) => {
                     justify-content: flex-end;
 
                     .tag {
-                        @media screen and (min-width:300px) and (max-width:500px) {
+                        @media screen and (min-width:300px) and (max-width:600px) {
                             font-size: 12px;
                         }
 
@@ -209,7 +209,7 @@ watch(() => route, (val) => {
 }
 
 .article_container {
-    @media screen and (min-width:300px) and (max-width:500px) {
+    (min-width:300px) and (max-width:600px) {
         margin-top: 5px;
     }
 
@@ -223,7 +223,7 @@ watch(() => route, (val) => {
 
 
     .article {
-        @media screen and (min-width:300px) and (max-width:500px) {
+        (min-width:300px) and (max-width:600px) {
             padding: 5px;
             border-radius: 10px;
         }
@@ -238,7 +238,7 @@ watch(() => route, (val) => {
         transition: all 0.5s;
 
         .markdown-body {
-            @media screen and (min-width:300px) and (max-width:500px) {
+            (min-width:300px) and (max-width:600px) {
                 padding: 20px 10px;
             }
 
