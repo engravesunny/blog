@@ -1,8 +1,14 @@
 <template>
     <div ref="dom" @click="toArticle" class="card_container">
         <div class="top">
-            <h1>{{ postName }}</h1>
-            <!-- <img ref="imgDom" :src="`${baseURL}/image/loading.gif`" :data-src="`${postImgUrl}/${postImg}`" alt="postImg"> -->
+            <!-- <h1>{{ postName }}</h1> -->
+            <!-- <img src="https://www.kecat.top/10.webp" alt="111"> -->
+            <!-- <img ref="imgDom" :src="`${baseURL}/image/loading.gif`" alt="postImg"> -->
+            <!-- <img ref="imgDom" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN/image/loading.gif" alt="postImg"> -->
+            <!-- <picture ref="imgDom" :src="`${baseURL}/image/loading.gif`" :data-src="`${postImgUrl}/${postImg}`" alt="postImg" ></picture> -->
+            <svg width="100%" height="100%">
+                <image ref="imgDom" xlink:href="https://www.kecat.top/10.webp" width="100%" height="100%"  />
+            </svg>
         </div>
         <div class="bottom">
             <div class="bTop">
@@ -26,6 +32,7 @@
 import { postImgUrl, baseURL } from '../constant'
 import toPath from '../utils/toPath';
 import { getPostInfo } from '../utils/getPostInfo';
+import PubSub from 'pubsub-js';
 
 const router = useRouter()
 const props = defineProps({
@@ -56,6 +63,7 @@ let toTag = (item: string) => {
     toPath('/tag', item)
 }
 let toArticle = () => {
+    PubSub.publish('toTop');
     router.push({
         path: '/article',
         query: {
@@ -70,7 +78,7 @@ let toArticle = () => {
 const handleLoad = () => {
     (dom.value as Element).classList.add('animate_zoomIn');
     // if (postImg.value && imgDom.value) {
-    //     (imgDom.value as HTMLImageElement).src = (imgDom.value as HTMLImageElement).dataset.src as string
+    //     (imgDom.value as HTMLImageElement).src = postImgUrl + '/' + postImg.value
     // }
 }
 
@@ -81,17 +89,27 @@ const init = async () => {
     info.tag.map(item => {
         tags.push(item)
     })
+
+
     dateInfo.value = info.date
     postImg.value = info.postImg
-    // if ((imgDom.value as HTMLImageElement).src.includes('loading')) {
-    //     (imgDom.value as HTMLImageElement).src = postImgUrl + '/' + postImg.value
-    // }
+
+
+    const image = imgDom.value as HTMLOrSVGImageElement
+    const postSrc = postImgUrl + '/' + postImg.value
+    image.setAttribute("xlink:href", postSrc)
+
+
+    if ((imgDom.value as HTMLImageElement).src?.includes('loading')) {
+        (imgDom.value as HTMLImageElement).src = postImgUrl + '/' + postImg.value
+    }
 }
 
 const handleLazy = (el: Element) => {
     const intersectionObserver = new IntersectionObserver((changes) => {
         changes.forEach((item, index) => {
             if (item.isIntersecting) {
+                console.log(1);
                 handleLoad()
                 intersectionObserver.unobserve(item.target)
             }
@@ -150,12 +168,19 @@ onMounted(() => {
         // img:hover {
         //     transform: scale(1.2);
         // }
-
-        .loadingImg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        svg {
+            transform: scale(1.5);
+            transform-origin: center;
+            transition: all .5s;
         }
+        svg:hover{
+            transform: scale(1.3);
+        }
+        // .loadingImg {
+        //     width: 100%;
+        //     height: 100%;
+        //     object-fit: cover;
+        // }
     }
 
     .bottom {

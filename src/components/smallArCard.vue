@@ -1,7 +1,10 @@
 <template>
     <div class="smallArCard_container box_border" @click="toArticle">
         <div class="left">
-            <img loading="lazy" :src="`${postImgUrl}/${postImage}`" alt="">
+            <!-- <img loading="lazy" :src="`${postImgUrl}/${postImage}`" alt=""> -->
+            <svg>
+                <image ref="imgDom" :xlink:href="`${postImgUrl}/${postImage}`" width="100%" height="100%"  />
+            </svg>
         </div>
         <div class="right">
             <div class="top">
@@ -67,25 +70,34 @@ watch(() => props, async (val) => {
 
     .left {
         position: relative;
-        width: 30%;
+        width: 50%;
         height: 80px;
         padding: 10px;
         text-align: center;
         overflow: hidden;
+        border-radius: 10px;
 
-        img {
+        // img {
+        //     position: absolute;
+        //     top: 50%;
+        //     left: 50%;
+        //     transform: translate(-50%, -50%);
+        //     border-radius: 5px;
+        //     height: 100%;
+        //     transition: height 0.5s;
+        //     will-change: scroll-position contents;
+        // }
+        svg{
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 5px;
+            transform: translate(-50%, -50%) scale(1.3);
+            width: 100%;
             height: 100%;
-            transition: height 0.5s;
-            will-change: scroll-position contents;
+            transition: all .5s;
         }
-
-        img:hover {
-            height: 120%;
+        svg:hover{
+            transform: translate(-50%, -50%) scale(1.4);
         }
     }
 

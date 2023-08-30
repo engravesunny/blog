@@ -56,12 +56,10 @@ let tagFinalList = reactive([])
 let tagArList = reactive([])
 // 展示具体标签文章列表
 let toTag = async (item) => {
-    console.log('test');
     showTop.value = false
     title.value = item
     tagArList.length = 0
     const postList = await getTagPost(item)
-    console.log(postList);
     postList.forEach(item => {
         tagArList.push(item.name)
     })

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const getPostRequest = axios.create({
-    baseURL: 'https://kecat.top/' //不跨域
-    // baseURL: '/post' // 跨域开发用
+    // baseURL: 'https://kecat.top/' //不跨域
+    baseURL: '/post' // 跨域开发用
 })
 
 export const getPOSTJSON = () => getPostRequest({

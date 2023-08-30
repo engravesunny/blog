@@ -187,7 +187,6 @@ const comMonthMap = (data: Date[]) => {
         }
         tempColCount++;
     })
-    console.log(monthMap);
 
 }
 

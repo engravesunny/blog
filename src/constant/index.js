@@ -3,7 +3,7 @@ export const baseURL_PC = 'https://cdn.statically.io/gh/engravesunny/CDN/main'
 export const imgBaseURL = 'https://kecat.top/images/'
 export const username = 'engravesunny'
 export const postImgUrl_PC = 'https://cdn.statically.io/gh/engravesunny/CDN/main/image/postImg'
-export const postImgUrl = 'https://cdn.jsdelivr.net/gh/engravesunny/CDN/image/postImg'
+export const postImgUrl = 'https://www.kecat.top'
 
 const maskId = "K3xkYhOJwAanmd6k"
 const accessKey = "pHbhn8iryYNdInZnez9lgc1zlKYby2U7"

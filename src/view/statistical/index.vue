@@ -101,7 +101,6 @@ const computedCommit = (data) => {
     const weekDaysCount = 7
     const lastWeek = weeks[weekLength - 1]
     const secondLastWeek = weeks[weekLength - 2]
-    console.log('last', lastWeek);
     weekCount += lastWeek.contributionDays.reduceRight((weekCount, item) => {
         if (tempWeekCount === weekDaysCount - 1) {
             tempWeekCount++;
@@ -138,13 +137,11 @@ const getData = async () => {
     loadingGithub.value = true
     const { data: token } = await getGithubToken()
     const { data: resData } = await getContribution(token)
-    console.log(resData);
     const weeks = resData?.user.contributionsCollection.contributionCalendar.weeks
     const colors = resData?.user.contributionsCollection.contributionCalendar.colors
     githubData.length = 0
     colorData.length = 0
     colorData.push('rgb(235, 237, 240)')
-    console.log('正在赋值');
     // 计算各时间段数据
     computedCommit(resData?.user.contributionsCollection.contributionCalendar)
     // 装入各个时间段提交信息
@@ -156,7 +153,6 @@ const getData = async () => {
     colors.map(item => {
         colorData.push(item)
     })
-    console.log('赋值完成', githubData);
     loadingGithub.value = false
 }
 

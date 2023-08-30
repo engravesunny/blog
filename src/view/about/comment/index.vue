@@ -15,7 +15,6 @@ import { data } from '@/utils/POSTOBJ'
 
 const handleClick = async () => {
     // const { data} = await getPOSTJSON()
-    // console.log(data);
     console.log(JSON.stringify(data));
 }
 

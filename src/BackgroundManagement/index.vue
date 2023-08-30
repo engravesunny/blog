@@ -80,7 +80,6 @@ let contextMenuDoc = async (item) => {
     const { data: data1 } = await del({
         file_path: dir_path.value + (item.name ? item.name : item)
     })
-    console.log(data1);
     if (data1.code === 0) {
         ElMessage({
             type: 'success',
@@ -156,7 +155,6 @@ let btnOk = async () => {
     const res = await createDir({
         dir_path: dir_path.value + createDirName.value
     })
-    console.log(res);
     // 更新文件列表
     getDirPath_Doc(dir_path.value)
     btnCancle()
@@ -194,7 +192,6 @@ let dirName = computed(() => {
 // 获取或更新获取当前文件夹文件
 let getDirPath_Doc = async (dir_path = './') => {
     docList.splice(0, docList.length)
-    console.log(docList);
     let { data: data1 } = await getDirNames({
         dir_path
     })
@@ -207,7 +204,6 @@ let getDirPath_Doc = async (dir_path = './') => {
     data2?.data?.files?.forEach(element => {
         docList.push(element)
     })
-    console.log(docList);
 }
 
 // 点击文件图标

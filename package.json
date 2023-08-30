@@ -25,6 +25,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/pubsub-js": "^1.8.3",
     "@types/vue": "^2.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/compiler-sfc": "^3.2.47",

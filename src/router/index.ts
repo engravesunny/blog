@@ -24,7 +24,6 @@ const routes:Array<RouteRecordRaw> = [
                 postStore.addPost(post);
             })
             tagStore.setState(tagInfo);
-            console.log(res.data);
         },
         children: [
             {

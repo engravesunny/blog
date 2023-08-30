@@ -26,7 +26,6 @@ export const toStoreCategoryInfo = () => {
             num:item.length
         })
     })
-    console.log(categoryStore.$state);
 }
 
 export const getCategoryPost = (name:string) => {

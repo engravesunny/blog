@@ -44,7 +44,6 @@ export const getArchiveInfos = () => {
         const timeb = new Date(b.date).getTime()
         return timea - timeb;
     });
-    console.log(posts);
     const archiveInfo: ArchiveSingle[] = []
     let tempYear = posts[0].date.split('-')[0];
     let tempMonth = posts[0].date.split('-')[1];
@@ -59,7 +58,6 @@ export const getArchiveInfos = () => {
             if(tempMonth === month) {
                 tempPostList.push(postName)
             } else {
-                console.log(tempMonth);
                 archiveMonthList.push({
                     month:tempMonth,
                     posts:[...tempPostList]
