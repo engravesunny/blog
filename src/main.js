@@ -11,6 +11,7 @@ import 'amfe-flexible'
 
 const app = createApp(App)
 
+
 app.use(router)
 app.use(pinia)
 

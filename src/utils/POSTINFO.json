@@ -1,7 +1,7 @@
 {
   "postInfo": [
     {
-      "postImg": "100.webp",
+      "postImg": "101.webp",
       "category": "笔记",
       "tag": ["js基础", "js"],
       "date": "2023-08-27 17:52:45",
@@ -113,7 +113,7 @@
       "name": "js中的bind、call、apply"
     },
     {
-      "postImg": "87.webp",
+      "postImg": "100.webp",
       "category": "笔记",
       "tag": ["js", "js基础"],
       "date": "2023-08-27 17:49:26",

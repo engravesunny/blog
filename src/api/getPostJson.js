@@ -1,12 +1,16 @@
 import axios from "axios";
 
 const getPostRequest = axios.create({
-    // baseURL: 'https://kecat.top/' //不跨域
-    baseURL: '/post' // 跨域开发用
+    baseURL: import.meta.env.VITE_BASE_URL
 })
 
 export const getPOSTJSON = () => getPostRequest({
     method: 'GET',
     url: '/JSON/POSTINFO.json',
 })
+export const getDATAJSON = () => getPostRequest({
+    method: 'GET',
+    url: '/JSON/DATAINFO.json',
+})
+
 export default getPOSTJSON

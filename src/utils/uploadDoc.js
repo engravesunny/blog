@@ -2,18 +2,16 @@ import { ElMessage } from "element-plus"
 import { createDir, uploads } from '../api/postApi.js'
 import removeFileExtension from "./fileTrueName.js"
 import formatDate from "./dateFormat.js"
+import { updateJSON } from './updateJSON.js'
 
-const uploadDoc = async (file, dir_path, categoryName, tagName, albumName) => {
+const uploadDoc = async (file, dir_path, categoryName, tagName, albumName, postImg) => {
     const nowTime = file.lastModified
     const file_name = file.name
     // 上传文章
     if (dir_path.indexOf('/posts') > -1) {
         // 上传文章
-        if (categoryName === '' || tagName === '') {
-            ElMessage({
-                type: 'error',
-                message: "不能没有分类或标签"
-            })
+        if (categoryName === '' || tagName === '' || postImg === '') {
+            ElMessage.error('请填写完整')
             return false
         }
         // 1.创建虚拟文章目录
@@ -51,6 +49,19 @@ const uploadDoc = async (file, dir_path, categoryName, tagName, albumName) => {
             ElMessage({
                 type: 'error',
                 message: '文章虚拟目录标签创建失败'
+            })
+        }
+
+        // 2⑴ 文章图片
+        const { data: postImgResCode } = await createDir({
+            dir_path: `./posts/postVirtual/${removeFileExtension(file_name)}/${postImg}.webp`
+        })
+        if (postImgResCode.code === 0) {
+            ElMessage.success('文章对应图片创建成功')
+        } else {
+            ElMessage({
+                type: 'error',
+                message: '文章对应图片创建失败'
             })
         }
 
@@ -142,6 +153,15 @@ const uploadDoc = async (file, dir_path, categoryName, tagName, albumName) => {
                 message: '时间创建失败'
             })
         }
+
+        // 5.更新json文件
+        const isSuccess = await updateJSON(categoryName, tagNames, postImg, Date.now(), file_name)
+        if (isSuccess) {
+            ElMessage.success('JSON文件更新成功')
+        } else {
+            ElMessage.error("JSON文件更新失败")
+        }
+
     }
     // 上传图片
     else if (dir_path.indexOf('/images') > -1) {

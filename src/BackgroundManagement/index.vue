@@ -49,6 +49,9 @@
                     <div v-if="dirName === 'post'" class="tag">
                         <el-input v-model="tagName" placeholder="标签 不同标签空格分开"></el-input>
                     </div>
+                    <div v-if="dirName === 'post'" class="tag">
+                        <el-input v-model="postImage" placeholder="文章封面"></el-input>
+                    </div>
                     <div v-if="dirName === 'images'" class="image">
                         <el-input v-model="albumName" placeholder="相册名"></el-input>
                     </div>
@@ -115,6 +118,9 @@ let isShowUploadDetailBox = ref(false)
 let categoryName = ref('')
 let tagName = ref('')
 
+// 封面名
+let postImage = ref('')
+
 // 相册名
 let albumName = ref('')
 
@@ -122,7 +128,7 @@ let albumName = ref('')
 let btnOkToUpload = async (file) => {
 
     // 开始上传
-    await uploadUtils(file, dir_path.value, categoryName.value, tagName.value, albumName.value)
+    await uploadUtils(file, dir_path.value, categoryName.value, tagName.value, albumName.value, postImage.value)
 
     // 上传完成收尾工作
     btnCancleToUpload()
