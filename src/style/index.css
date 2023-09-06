@@ -33,19 +33,24 @@ select {
 
 html,
 body {
+  min-width: calc(100%-8px);
   min-height: 100%;
 
 }
 
 body {
   font-size: 14px;
-
+  overflow: auto;
+  overflow-x: hidden;
   color: #333;
-  background-color: rgb(247, 158, 195);
-
-  background-image: url(https://www.kecat.top/post/33.webp);
+  /* background-color: rgb(247, 158, 195); */
+  /* background: linear-gradient(55deg, #0095c2 21%, #64e1C8f9 100%); */
+  background: rgba(0, 0, 0, 0);
+  /* background-image: url(https://www.kecat.top/post/33.webp);
   background-size: cover;
-  background-position: center 10;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center 10; */
 }
 
 ul,
@@ -212,4 +217,54 @@ img {
 
 .article_list_display .date_list .top_title {
   font-family: 'W03' !important;
+}
+
+#web-bg {
+  position: fixed;
+  z-index: -999;
+  width: 100%;
+  height: 100%;
+  background: -webkit-linear-gradient(35deg, #0095c2 21%, #64e1C8f9 100%);
+  background: -moz-linear-gradient(35deg, #0095c2 21%, #64e1C8f9 100%);
+  background: -o-linear-gradient(35deg, #0095c2 21%, #64e1C8f9 100%);
+  background: -ms-linear-gradient(35deg, #0095c2 21%, #64e1C8f9 100%);
+  background: linear-gradient(55deg, #0095c2 21%, #64e1C8f9 100%);
+  background-attachment: local;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#svg-bg {
+  background-image: url(https://www.kecat.top/other/bg.svg);
+  -webkit-background-size: initial;
+  -moz-background-size: initial;
+  background-size: initial;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  opacity: .2;
+  background-position: center;
+  z-index: -998;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #43b4ffc0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(73, 177, 245, .2);
+  border-radius: 2em;
 }

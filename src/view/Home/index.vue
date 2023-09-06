@@ -18,10 +18,7 @@
                     <div class="leftTitle">
                         <textBox :author="textBoxContent.author" :text="textBoxContent.text"></textBox>
                     </div>
-
-                    <topLeft></topLeft>
-
-                    <div class="leftMain"></div>
+                    <left-list></left-list>
                 </div>
                 <div v-if="showRightSideBar" class="right" body-style="padding:0;">
 
@@ -47,7 +44,7 @@
 </template>
 
 <script setup>
-import topLeft from './components/TopLeft.vue'
+import leftList from './components/leftList.vue'
 import textBox from './components/textBox.vue'
 import wave from '../../components/waves.vue'
 import figlet from 'figlet'
@@ -344,7 +341,7 @@ onMounted(async () => {
         filter: blur(3px);
         animation: animate_blur;
         animation-duration: 0.5s;
-        background-image: url(https://www.kecat.top/post/55.webp);
+        background-image: url(https://www.kecat.top/post/55min.webp);
         background-size: cover;
         background-position: center 10;
         background-attachment: fixed;
@@ -388,13 +385,6 @@ onMounted(async () => {
                     padding: 5px 10px;
                     margin-bottom: 10px;
                     border-radius: 10px;
-                }
-
-
-                .leftMain {
-                    width: 100%;
-                    height: 1000px;
-                    background-color: var(--background-transparent);
                 }
             }
 

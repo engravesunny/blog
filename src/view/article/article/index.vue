@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="header" :style="{ backgroundImage: `url(${postImgUrl}/${postImg})` }">
+        <div class="header" :style="{ backgroundImage: `url(${postImgUrl}/${postImg.split('.')[0] + 'min.webp'})` }">
             <div class="site-info">
                 <h1>{{ postName }}</h1>
                 <div class="top">
@@ -23,7 +23,6 @@
 
             </article>
             <rightNav v-if="showRightNav"></rightNav>
-            <!-- <placeOrder v-if="showRightNav"></placeOrder> -->
         </div>
     </div>
 </template>
@@ -229,12 +228,8 @@ watch(() => route, (val) => {
         }
 
         position: relative;
-        border-radius: 25px;
         width: 50%;
         min-width: 375px;
-        padding: 15px 10px;
-        background: rgba(255, 255, 255, 0.5);
-        border: 4px solid #fff;
         transition: all 0.5s;
 
         .markdown-body {
@@ -249,11 +244,7 @@ watch(() => route, (val) => {
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.9);
         }
-        &:hover{
-            border: 4px solid rgb(6, 147, 255);
-            background-color: #fff;
-        }
     }
-    
+
 }
 </style>

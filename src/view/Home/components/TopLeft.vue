@@ -2,16 +2,17 @@
     <div class="hidden" style="overflow: hidden;">
         <div ref="scrollArea" class="leftTop">
             <div class="front">
-                <div class="box-top">
+                <div class="box-top" @click="toArchive">
                     归档
                     <span class="iconfont">{{ getIcon("归档") }}</span>
                 </div>
-                <div class="box-bottom">
+                <div class="box-bottom" @click="toArchive">
                     2023
                     <span class="iconfont">{{ getIcon("网站统计") }}</span>
                 </div>
             </div>
-            <miniCard v-for="i of 6">{{ i }}</miniCard>
+            <miniCard @click="toArticle(item)" v-for="item of postList" :post-img="item.postImg" :post-name="item.name">
+            </miniCard>
         </div>
     </div>
 </template>
@@ -20,7 +21,45 @@
 import miniCard from '@/components/miniCard.vue'
 import getIcon from '@/utils/icon'
 import { onMounted } from 'vue';
+import { post } from '../../../store/post';
+import { PostSingle } from '../../../types/index';
+const router = useRouter();
 
+const postStore = post();
+const postInfo = postStore.$state.postInfo;
+const postList = computed(() => {
+
+    const randomList: number[] = [];
+    let randomNum: number = Math.floor(Math.random() * postInfo.length);
+    for (let i = 0; i < 6; i++) {
+        while (randomList.includes(randomNum)) {
+            randomNum = Math.floor(Math.random() * postInfo.length);
+        }
+        randomList.push(randomNum);
+    }
+    return randomList.map(index => {
+        return postInfo[index];
+    })
+})
+
+let toArticle = (item: PostSingle) => {
+    PubSub.publish('toTop');
+    router.push({
+        path: '/article',
+        query: {
+            postName: item.name,
+            date: item.date,
+            tag: item.tag,
+            category: item.category
+        }
+    })
+}
+
+const toArchive = () => {
+    router.push({
+        path: '/archive'
+    })
+}
 const scrollArea = ref<HTMLElement>()
 
 const listenScroll = () => {
@@ -28,7 +67,7 @@ const listenScroll = () => {
     scrollDom.addEventListener("mousewheel", (e) => {
         e.preventDefault();
         const event = e as WheelEvent;
-        const detail = event.detail || event.deltaY;
+        const detail = event.detail || event.deltaY || event.deltaX;
 
         const moveForwardStep = 1;
         const moveBackStep = -1;
@@ -65,7 +104,11 @@ onMounted(() => {
         overflow-x: auto;
 
         .front {
-            width: 140px;
+            @media screen and (max-width: 600px) {
+                width: 140px;
+            }
+
+            width: 200px;
             height: 166px;
             flex-shrink: 0;
             display: grid;

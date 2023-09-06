@@ -2,7 +2,7 @@
     <div class="mid_card" ref="dom">
         <div class="left" @click="toArticle()">
             <img v-if="!loading" ref="imgDom" :src="`${baseURL}/image/loading.gif`"
-                :data-src="`${postImgUrl}/${postInfo.postImg}`" alt="postImg" />
+                :data-src="`${postImgUrl}/${postInfo.postImg.split('.')[0] + 'min.webp'}`" alt="postImg" />
         </div>
         <div class="main">
             <div class="top" @click="toArticle">

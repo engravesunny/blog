@@ -1,22 +1,17 @@
 <template>
     <div class="miniCard">
         <div class="top">
-            <img :src="`${postImgUrl}/${postInfo.postImg}`" alt="">
+            <img :src="`${postImgUrl}/${postImg?.split('.')[0] + 'min.webp'}`" alt="postInfo">
         </div>
-        <div class="bottom">{{ postInfo.name }}</div>
+        <div class="bottom">{{ postName }}</div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { postImgUrl } from '@/constant';
-defineProps({
-    postInfo: {
-        type: Object,
-        default: {
-            name: "postpostpostpostpostpostpostpostpostpostpostpostpostpostpostpostpostpost",
-            postImg: "31.webp"
-        }
-    }
+const props = defineProps({
+    postName: String,
+    postImg: String
 })
 </script>
 
@@ -33,14 +28,26 @@ defineProps({
     flex-direction: column;
     overflow: hidden;
     background: linear-gradient(to right, #72e8ff, #a9e3f8);
+    cursor: pointer;
+
+    &:hover {
+        .top {
+            img {
+                transform: scale(1.1);
+            }
+        }
+    }
 
     .top {
         width: 100%;
         height: 70%;
+        overflow: hidden;
 
         img {
             width: 100%;
             height: 100%;
+            object-fit: cover;
+            transition: all .5s;
         }
     }
 

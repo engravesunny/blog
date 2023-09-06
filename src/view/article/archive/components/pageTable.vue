@@ -64,9 +64,8 @@ onMounted(() => {
 
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .pageTable {
-    min-height: 100px;
     width: 100%;
     display: flex;
     justify-content: center;

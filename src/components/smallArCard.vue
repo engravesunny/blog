@@ -3,7 +3,8 @@
         <div class="left">
             <!-- <img loading="lazy" :src="`${postImgUrl}/${postImage}`" alt=""> -->
             <svg>
-                <image ref="imgDom" :xlink:href="`${postImgUrl}/${postImage}`" width="100%" height="100%" />
+                <image ref="imgDom" :xlink:href="`${postImgUrl}/${postImage.split('.')[0] + 'min.webp'}`" width="100%"
+                    height="100%" />
             </svg>
         </div>
         <div class="right">

@@ -70,7 +70,7 @@ let toArticle = () => {
 
 const handleLoad = () => {
     const image = imgDom.value as HTMLImageElement
-    const postSrc = postImgUrl + '/' + postImg.value
+    const postSrc = postImgUrl + '/' + postImg.value.split('.')[0] + 'min.webp';
     image.setAttribute("src", postSrc)
 }
 

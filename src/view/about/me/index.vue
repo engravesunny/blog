@@ -142,7 +142,7 @@ onMounted(() => {
         position: relative;
         width: 100%;
         height: 40vh;
-        background-image: url(https://www.kecat.top/post/1.webp);
+        background-image: url(https://www.kecat.top/post/1min.webp);
         background-size: cover;
         background-repeat: no-repeat;
         background-position: 0 -60px;

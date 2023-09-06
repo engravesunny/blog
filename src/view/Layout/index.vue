@@ -1,12 +1,12 @@
 <template>
-    <el-scrollbar v-if="route.path !== '/photo'" ref="scroller" height="100vh" @scroll="topFlodFn">
+    <div v-if="route.path !== '/photo'" height="100vh">
         <div class="layout_container">
             <!-- 顶部 -->
             <NavBar :color="color" :is-floded="isFloded" :is-opacity="isOpacity"></NavBar>
             <!-- 顶部 -->
 
             <!-- 内容区域 -->
-            <router-view :scroller="scroller"></router-view>
+            <router-view ref="scroller"></router-view>
             <!-- 内容区域 -->
 
             <!-- 底部 -->
@@ -15,14 +15,14 @@
         </div>
         <div v-if="showToTop" @click="toTop" class="toTop iconfont unselectable">&#xe610;</div>
 
-    </el-scrollbar>
+    </div>
     <div v-else class="layout_container photo-overflow">
         <!-- 顶部 -->
         <NavBar :is-floded="isFloded" :is-opacity="isOpacity"></NavBar>
         <!-- 顶部 -->
 
         <!-- 内容区域 -->
-        <router-view :scroller="scroller"></router-view>
+        <router-view></router-view>
         <!-- 内容区域 -->
 
         <!-- 底部 -->
@@ -52,22 +52,23 @@ let timer = null
 let topFlodFn = (e) => {
     if (!timer) {
         timer = setTimeout(() => {
-            if (e.scrollTop <= 100) {
+            const el = document.documentElement
+            if (el.scrollTop <= 100) {
                 isOpacity.value = 0
                 color.value = '#fff'
             } else {
                 isOpacity.value = 9
                 color.value = '#333'
             }
-            if (e.scrollTop > curScrollY.value) {
+            if (el.scrollTop > curScrollY.value) {
                 // 向下滚动，隐藏导航栏
                 isFloded.value = 100
-                curScrollY.value = e.scrollTop
+                curScrollY.value = el.scrollTop
                 showToTop.value = false
             } else {
                 // 向上滑，显示导航栏
                 isFloded.value = 0
-                curScrollY.value = e.scrollTop
+                curScrollY.value = el.scrollTop
                 showToTop.value = true
             }
             timer = null;
@@ -76,13 +77,14 @@ let topFlodFn = (e) => {
 }
 
 let toTop = () => {
-    scroller.value.setScrollTop(0)
+    window.scrollTo(0, 0)
 }
 
 onMounted(() => {
     PubSub.subscribe('toTop', () => {
         toTop()
     })
+    document.addEventListener('mousewheel', topFlodFn);
 })
 
 </script>
