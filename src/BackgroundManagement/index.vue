@@ -3,17 +3,17 @@
         <div v-if="!isShowManagePage" class="login_container">
             <div class="login_box">
                 <div class="host">
-                    <input type="text" placeholder="用户名" v-model="loginHost">
+                    <el-input type="text" placeholder="用户名" v-model="loginHost" />
                 </div>
                 <div class="password">
-                    <input type="password" placeholder="密码" v-model="loginPassword">
+                    <el-input type="password" placeholder="密码" v-model="loginPassword" />
                 </div>
                 <div class="btn">
                     <button @click="login">登录</button>
                 </div>
             </div>
         </div>
-        <el-scrollbar height="100vh">
+        <el-scrollbar v-if="isShowManagePage" height="100vh">
             <div class="managePage" @contextmenu.prevent="contextMenuBg($event)"
                 v-if="isShowManagePage && loginHost === 'kiana' && loginPassword === '11151207'">
                 <div class="docCard" @contextmenu.stop="" @contextmenu.prevent="contextMenuDoc(item)"

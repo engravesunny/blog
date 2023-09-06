@@ -65,13 +65,14 @@ let getInfo = async () => {
 
 const getTagInfos = () => {
     const tagInfos = getAllTagInfo()
+    tagFinalList.length = 0;
     tagInfos.forEach(tagInfo => {
         tagFinalList.push({
             name: tagInfo.name,
             num: tagInfo.num
         })
     })
-    tagLoading.value = false  
+    tagLoading.value = false
 }
 
 onMounted(() => {
@@ -79,7 +80,7 @@ onMounted(() => {
 })
 
 watch(showWhat, (val) => {
-    if(val === 'tag') {
+    if (val === 'tag') {
         getTagInfos()
     }
 })

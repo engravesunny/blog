@@ -1,8 +1,7 @@
 <template>
     <div class="left" :class="{ box_border: route.path !== '/home' }">
         <div class="avatar">
-            <img @click="toMe" class="animateImg" src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/avatar.jpg"
-                alt="">
+            <img @click="toMe" class="animateImg" src="https://www.kecat.top/other/logo.png" alt="">
         </div>
         <div class="nav">
             <div class="article">
@@ -19,7 +18,7 @@
             </div>
         </div>
         <div class="btn">
-            <a href="https://github.com/engravesunny?tab=repositories" target="_blank">
+            <a href="https://github.com/engravesunny" target="_blank">
                 <el-button type="primary" class="button">
                     GITHUB
                 </el-button>
@@ -30,39 +29,22 @@
 
 <script setup>
 import 'animate.css'
-import { getDirNames } from '../api/postApi.js'
-import { useRoute } from 'vue-router';
+import { post } from '@/store/post'
+import { category } from '@/store/category'
+import { tag } from '@/store/tag';
 const route = useRoute()
 const router = useRouter()
-let arNum = ref(0)
-let caNum = ref(0)
-let tagNum = ref(0)
+const postStore = post();
+const postInfo = postStore.$state;
+const categoryInfo = category().$state;
+const tagInfo = tag().$state;
+
+let arNum = ref(postInfo.postInfo.length)
+let caNum = ref(categoryInfo.categoryInfo.length)
+let tagNum = ref(tagInfo.tagInfo.length)
 const toMe = () => {
     router.push('/me')
 }
-onMounted(async () => {
-    if (!localStorage.getItem('ABOUT_ME')) {
-        const { data: ar } = await getDirNames({
-            dir_path: './posts/postVirtual'
-        })
-        arNum.value = ar.data.dir_names.length
-        const { data: ca } = await getDirNames({
-            dir_path: './posts/category'
-        })
-        caNum.value = ca.data.dir_names.length
-        const { data: tag } = await getDirNames({
-            dir_path: './posts/tag'
-        })
-        tagNum.value = tag.data.dir_names.length
-        localStorage.setItem('ABOUT_ME', JSON.stringify({ arNum: arNum.value, caNum: caNum.value, tagNum: tagNum.value }))
-    } else {
-        const about_me = JSON.parse(localStorage.getItem('ABOUT_ME'))
-        arNum.value = about_me.arNum
-        caNum.value = about_me.caNum
-        tagNum.value = about_me.tagNum
-    }
-
-})
 </script>
 
 <style lang="less" scoped>
@@ -87,8 +69,8 @@ onMounted(async () => {
 
         // background-color: skyblue;
         img {
-            width: 100px;
-            height: 100px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             cursor: pointer;
         }

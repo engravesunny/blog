@@ -24,7 +24,7 @@
     width: 100%;
     position: absolute;
     left: 0;
-    bottom: -11px;
+    bottom: -10px;
     z-index: 5;
 
     .waves-svg {

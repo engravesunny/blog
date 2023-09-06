@@ -1,13 +1,14 @@
 :root {
   --box-shadow: 1px 1px 10px 3px rgba(0, 0, 0, 0.3);
   --box-shadow-s: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
-  --box-border: 4px solid rgb(255, 255, 255);
-  --box-border-active: 4px solid rgb(6, 147, 255);
-  --background-transparent: rgba(255, 255, 255, 0.7);
+  --box-border: 2px solid rgba(0, 255, 255, .6);
+  --box-border-active: 2px solid rgb(6, 147, 255);
+  --background-transparent: rgba(255, 255, 255, 0.67);
   --background-eight: rgba(255, 255, 255, 0.8);
   --background-nine: rgba(255, 255, 255, 0.9);
   --background-hover: rgba(255, 255, 255, 1);
   --dark-gray: #a0a0a0;
   --border-left: 3px solid rgb(6, 147, 255);
   --theme-color: rgb(6, 147, 255);
+  --minicard-border: 2px solid #e8edf1db;
 }

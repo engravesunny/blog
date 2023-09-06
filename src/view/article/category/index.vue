@@ -39,7 +39,6 @@ import articleList from '../../../components/articleList.vue';
 import smallCard from '../../../components/smallCard.vue'
 import { getCategoryPost, getCategoryList } from '@/utils/getCategoryInfo'
 
-
 const route = useRoute()
 let title = ref('')
 // 类别列表
@@ -97,7 +96,7 @@ onMounted(async () => {
         showRightNav.value = true
     })
     await getCategory()
-    await getLength()
+    getLength()
 })
 
 watch(() => route, (val) => {
@@ -128,21 +127,19 @@ watch(() => route, (val) => {
             padding: 0;
             width: 100%;
         }
+
         @media screen and (min-width:600px) and (max-width:1250px) {
             width: 80%;
         }
+
         @media screen and (min-width:1250px) {
             width: 55%;
         }
 
-        padding: 20px;
+        padding:0 20px;
         position: relative;
-        border-radius: 10px;
-        border: 1px solid #fff;
         width: 60%;
         min-width: 375px;
-        background: rgba(255, 255, 255, 0.5);
-        box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
 

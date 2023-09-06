@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container unselectable">
-            <div class="Page" :style="{ width: `${defaultWidth}%` }">
+            <div class="Page">
                 <div class="top box_border">
                     <!-- 分类标题 -->
                     <div class="title">
@@ -24,8 +24,7 @@
                             <div class="date_title" v-if="item.posts.length">
                                 <h1>{{ item.date }}</h1>
                             </div>
-                            <div class="card" :style="{ width: `${postCardWidth}%` }" v-for="(post, index) in item.posts"
-                                :key="post">
+                            <div class="card" v-for="(post, index) in item.posts" :key="post">
                                 <midCard @loadFinish="loaded" :postName="post" :index="index"></midCard>
                             </div>
                             <div class="bottom_place" v-if="item.posts.length"></div>
@@ -37,22 +36,21 @@
                 </div>
             </div>
             <rightNav v-if="showRightNav"></rightNav>
-            <!-- <placeOrder v-if="showRightNav"><aceOrder> -->
         </div>
     </div>
 </template>
   
-<script setup>
+<script setup lang="ts">
 import pageTable from './components/pageTable.vue'
 import midCard from "../../../components/midCard.vue";
 import archiveEcahrts from "./components/archiveEcahrts.vue";
 import rightNav from "../../../components/rightNav.vue";
-import { getDirNames } from "../../../api/postApi";
 import { getArchivePosts } from "../../../utils/getArchiveInfo";
-
-let showRightNav = ref(true);
-let defaultWidth = ref(55);
-const postCardWidth = ref(70);
+import { post } from '@/store/post';
+import { archive } from '@/store/archive';
+const postStore = post();
+const archiveStore = archive();
+let showRightNav = ref(false);
 
 // 加载中标志
 const archiveLoading = ref(true);
@@ -68,69 +66,75 @@ const loaded = () => {
 }
 
 // 各月份发布文章统计 {date：日期，value：发布数目}
-const dateList = reactive([]);
-const dateInfo = reactive([]);
-const getDateList = async () => {
-    dateList.splice(0, dateList.length);
-    const { data: dateListInfo } = await getDirNames({
-        dir_path: "./posts/date",
-    });
-    dateListInfo.data.dir_names.forEach((item) => {
-        dateList.push(item);
-    });
-};
-const getArchivePost = async (date) => {
+const dateList = reactive<string[]>([]);
+
+function initDateList() {
+    const archiveInfo = archiveStore.$state;
+    archiveInfo.archiveInfo.forEach(item => {
+        let year = item.year;
+        item.monthInfos.forEach(monItem => {
+            let month = monItem.month
+            dateList.push(year + '-' + month);
+        })
+    })
+}
+initDateList();
+
+interface DateInfo {
+    date: string
+    value: number
+}
+
+const dateInfo = reactive<DateInfo[]>([]);
+const getArchivePost = (date: string) => {
     const year = date.split("-")[0];
     const month = date.split("-")[1];
-    const posts = await getArchivePosts(year, month);
+    const posts = getArchivePosts(year, month) as string[];
     return {
         date: date,
         value: posts.length,
     };
 };
-const loadingArchiveInfo = async () => {
+const loadingArchiveInfo = () => {
     const promises = dateList.map((item) => getArchivePost(item));
-    for await (let res of promises) {
+    for (let res of promises) {
         dateInfo.push(res);
     }
     archiveLoading.value = false;
 };
 
 // 获取文章数量（number）
-const postNum = ref(0)
-const getPostNum = async () => {
-    const { data: arList } = await getDirNames({
-        dir_path: "./posts/postVirtual"
-    })
-    postNum.value = arList.data.dir_names.length
-}
+const postNum = ref(postStore.$state.postInfo.length);
 
 // 文章信息{date：日期，posts:文章列表}
-const postInfo = reactive([]);
-const getPostInfo = async (date) => {
+interface PostInfo {
+    date: string;
+    posts: string[];
+}
+
+const postInfo = reactive<PostInfo[]>([]);
+const getPostInfo = (date: string) => {
     const year = date.split("-")[0];
     const month = date.split("-")[1];
-    const posts = await getArchivePosts(year, month);
+    const posts = getArchivePosts(year, month);
     return {
         date: year + "." + month,
-        posts: posts,
+        posts: posts?.reverse(),
     };
 };
-const loadingPostInfo = async () => {
-    const promises = dateList.map((item) => getPostInfo(item));
-    for await (let res of promises) {
+const loadingPostInfo = () => {
+    const promises = dateList.map((item) => getPostInfo(item) as PostInfo);
+    for (let res of promises) {
         postInfo.unshift(res);
     }
 };
-
-
 
 // 分页信息
 const changing = ref(false)
 const curPage = ref(0)
 const pageSize = 10
 const pagePost = computed(() => {
-    let res = []
+    let res = [] as any[]
     let temp = 0
     postInfo.map((item, index) => {
         if (temp < pageSize * (curPage.value + 1)) {
@@ -149,7 +153,7 @@ const pagePost = computed(() => {
     return res
 })
 // 转到分页函数
-const toPage = (pageNum) => {
+const toPage = (pageNum: number) => {
     loadedNum.value = 0
     changing.value = true
     archiveLoading.value = true
@@ -163,38 +167,27 @@ const toPage = (pageNum) => {
 }
 
 // 初始化函数
-const init = async () => {
-    await getDateList();
-    await loadingArchiveInfo();
-    await loadingPostInfo();
+const init = () => {
+    loadingArchiveInfo();
+    loadingPostInfo();
 };
 
 // 初始化
 onBeforeMount(async () => {
-    await getPostNum()
-    await init();
+    init();
 });
 
 onMounted(() => {
 
-    if (document.body.clientWidth < 1200) {
-        defaultWidth.value = 95;
-        postCardWidth.value = 100;
-        showRightNav.value = false;
+    if (document.body.clientWidth >= 1200) {
+        showRightNav.value = true;
     }
     PubSub.subscribe("closeSide", () => {
-        defaultWidth.value = 95;
-        postCardWidth.value = 100;
         showRightNav.value = false;
     });
     PubSub.subscribe("openSide", () => {
-        defaultWidth.value = 55;
-        postCardWidth.value = 70;
         showRightNav.value = true;
     });
-    if (document.body.clientWidth < 500) {
-        defaultWidth.value = 100;
-    }
 });
 
 
@@ -213,8 +206,17 @@ onMounted(() => {
     justify-content: center;
 
     .Page {
-        @media screen and (min-width: 300px) and (max-width: 500px) {
-            padding: 0px;
+        @media screen and (min-width:300px) and (max-width:600px) {
+            padding: 0;
+            width: 100%;
+        }
+
+        @media screen and (min-width:600px) and (max-width:1250px) {
+            width: 80%;
+        }
+
+        @media screen and (min-width:1250px) {
+            width: 55%;
         }
 
         position: relative;
@@ -334,7 +336,7 @@ onMounted(() => {
                         height: 11px;
                         position: absolute;
                         left: -7px;
-                        top: 4px;
+                        top: 11px;
                         background-color: #fff;
                         border-radius: 50%;
                     }
@@ -342,15 +344,21 @@ onMounted(() => {
                     .date_title::after {
                         content: "";
                         border: var(--box-border-active);
-                        width: 11px;
-                        height: 11px;
+                        width: 10px;
+                        height: 10px;
                         position: absolute;
                         border-radius: 50%;
-                        left: -11px;
-                        top: 0px;
+                        left: -8px;
+                        top: 10px;
                     }
 
                     .card {
+                        width: 100%;
+
+                        @media screen (max-width:1200px) {
+                            width: 70%;
+                        }
+
                         position: relative;
                         margin: 20px 0;
                         padding-left: 10px;
@@ -363,7 +371,7 @@ onMounted(() => {
                         height: 5px;
                         position: absolute;
                         border-radius: 50%;
-                        left: -8px;
+                        left: -5px;
                         top: 50%;
                         background-color: #fff;
                         transform: translateY(-100%);

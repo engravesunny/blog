@@ -110,8 +110,7 @@ watch(() => route, (val) => {
     .left {
         width: 90%;
         border-radius: 10px;
-        margin: 10px auto;
-        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .icons {

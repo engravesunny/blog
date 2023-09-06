@@ -18,7 +18,7 @@ import aboutMe from '../../../components/aboutMe.vue';
 <style lang="less" scoped>
 .personAbout:hover {
     background: var(--background-hover);
-    border: var(--box-border-active);
+    // border: var(--box-border-active);
 }
 
 .personAbout {
@@ -26,9 +26,9 @@ import aboutMe from '../../../components/aboutMe.vue';
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 10px;
     background: var(--background-transparent);
     border: var(--box-border);
     transition: all 0.5s;

@@ -3,7 +3,7 @@
         <div class="left">
             <!-- <img loading="lazy" :src="`${postImgUrl}/${postImage}`" alt=""> -->
             <svg>
-                <image ref="imgDom" :xlink:href="`${postImgUrl}/${postImage}`" width="100%" height="100%"  />
+                <image ref="imgDom" :xlink:href="`${postImgUrl}/${postImage}`" width="100%" height="100%" />
             </svg>
         </div>
         <div class="right">
@@ -35,6 +35,7 @@ const props = defineProps({
     }
 })
 let toArticle = () => {
+    PubSub.publish('toTop');
     router.push({
         path: '/article',
         query: {
@@ -87,7 +88,7 @@ watch(() => props, async (val) => {
         //     transition: height 0.5s;
         //     will-change: scroll-position contents;
         // }
-        svg{
+        svg {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -96,7 +97,8 @@ watch(() => props, async (val) => {
             height: 100%;
             transition: all .5s;
         }
-        svg:hover{
+
+        svg:hover {
             transform: translate(-50%, -50%) scale(1.4);
         }
     }

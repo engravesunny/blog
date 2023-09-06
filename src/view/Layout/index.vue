@@ -52,6 +52,13 @@ let timer = null
 let topFlodFn = (e) => {
     if (!timer) {
         timer = setTimeout(() => {
+            if (e.scrollTop <= 100) {
+                isOpacity.value = 0
+                color.value = '#fff'
+            } else {
+                isOpacity.value = 9
+                color.value = '#333'
+            }
             if (e.scrollTop > curScrollY.value) {
                 // 向下滚动，隐藏导航栏
                 isFloded.value = 100
@@ -65,13 +72,6 @@ let topFlodFn = (e) => {
             }
             timer = null;
         }, 100);
-    }
-    if (e.scrollTop === 0) {
-        isOpacity.value = 0
-        color.value = '#fff'
-    } else {
-        isOpacity.value = 9
-        color.value = '#333'
     }
 }
 

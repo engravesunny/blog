@@ -81,7 +81,7 @@ const getTagInfo = () => {
     tagFinalList.length = 0;
     list.forEach(item => {
         tagFinalList.push({
-            name:item.name,
+            name: item.name,
             num: item.num
         })
     })
@@ -142,21 +142,19 @@ onMounted(() => {
             padding: 0;
             width: 100%;
         }
+
         @media screen and (min-width:600px) and (max-width:1250px) {
             width: 80%;
         }
+
         @media screen and (min-width:1250px) {
             width: 55%;
         }
 
-        padding: 20px;
+        padding: 0 20px;
         position: relative;
-        border-radius: 10px;
-        border: 1px solid #fff;
         width: 55%;
         min-width: 375px;
-        background: rgba(255, 255, 255, 0.5);
-        box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
 
@@ -165,6 +163,7 @@ onMounted(() => {
                 width: 100%;
                 padding: 20px 0px;
             }
+
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
@@ -253,5 +252,4 @@ onMounted(() => {
             }
         }
     }
-}
-</style>
+}</style>

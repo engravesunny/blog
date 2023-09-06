@@ -1,7 +1,7 @@
 <template>
     <div class="home_container unselectable">
         <!-- 顶部标题壁纸展示 -->
-        <div class="top">
+        <div class="top" ref="topDom">
             <div class="title" style="z-index:1" @click="test">KeCatCat</div>
             <div class="word" style="z-index:1">
                 {{ text }} <span v-if="isShowFlash" class="flash animate_flash_fast"></span>
@@ -12,13 +12,16 @@
             <wave></wave>
         </div>
         <!-- 顶部标题壁纸展示 -->
-
-        <el-card class="main_container">
+        <el-card class="main_container" :body-style="{ padding: '10px 0' }">
             <div class="main_position">
                 <div class="left" :style="{ width: `${leftSize}%` }">
-                    <div v-for="item in leftArList" :key="item" class="card" :style="{ width: `${arCardSize}%` }">
-                        <arCard :postName="item"></arCard>
+                    <div class="leftTitle">
+                        <textBox :author="textBoxContent.author" :text="textBoxContent.text"></textBox>
                     </div>
+
+                    <topLeft></topLeft>
+
+                    <div class="leftMain"></div>
                 </div>
                 <div v-if="showRightSideBar" class="right" body-style="padding:0;">
 
@@ -44,11 +47,12 @@
 </template>
 
 <script setup>
+import topLeft from './components/TopLeft.vue'
+import textBox from './components/textBox.vue'
 import wave from '../../components/waves.vue'
 import figlet from 'figlet'
 import standard from 'figlet/importable-fonts/Standard.js'
 import PubSub from 'pubsub-js'
-import arCard from '../../components/arCard.vue';
 import personnalAbout from './components/personnalAbout.vue';
 import friendMe from './components/friendMe.vue';
 import articleDisplay from './components/article.vue';
@@ -70,6 +74,9 @@ let showRightSideBar = ref(true)
 let leftSize = ref(75)
 // 首页文章卡片所占比例
 let arCardSize = ref(33)
+
+// topDom
+const topDom = ref(null);
 
 // 展示首页视频
 let isShowVideo = ref(false)
@@ -129,10 +136,18 @@ const scrollToFast = (toThere) => {
 // 每日一言文字
 let word = ref('')
 let text = ref('')
+let textBoxContent = ref({
+    text: '',
+    author: ''
+})
 // 获取每日一言
 const getwords = async () => {
     const { data } = await getWord()
     word.value = data.hitokoto + ' ' + '——' + data.from
+    textBoxContent.value = {
+        text: data.hitokoto,
+        author: data.from
+    }
 }
 
 let getPosts = async () => {
@@ -147,12 +162,11 @@ let getPosts = async () => {
         rightArList.push(latestPostInfo[i])
     }
 }
-
 // 页面大小改变函数
 const changeSizes = (size) => {
     if (size <= 1500) {
         arCardSize.value = 48
-        if (size <= 1300) {
+        if (size <= 1100) {
             showRightSideBar.value = false
             leftSize.value = 99
             if (size <= 840) {
@@ -170,14 +184,8 @@ const changeSizes = (size) => {
         arCardSize.value = 33
     }
 }
-
-
-// 配色
-
-
-
-
-onMounted(async () => {
+// figlet初始化
+const figLetInit = () => {
     figlet.parseFont("Standard", standard);
 
     figlet.text(
@@ -189,8 +197,11 @@ onMounted(async () => {
             console.log('\x1b[35;40m%s\x1b[0m', data);
         }
     );
-    await getwords()
-    let i = 0
+}
+// 每日一言初始化
+const topWordInit = async () => {
+    await getwords();
+    let i = 0;
     const timer = setInterval(() => {
         i++;
         text.value = word.value.slice(0, i)
@@ -199,6 +210,9 @@ onMounted(async () => {
             clearInterval(timer)
         }
     }, 200);
+}
+// 窗口监听
+const listenWindowChange = () => {
     let mountedSize = document.body.clientWidth
     changeSizes(mountedSize)
     // 网页大小改变时监听
@@ -211,7 +225,13 @@ onMounted(async () => {
     PubSub.subscribe('scrollToFast', (a, to) => {
         scrollToFast(to);
     })
-    getPosts()
+}
+
+onMounted(async () => {
+    figLetInit();
+    await topWordInit();
+    listenWindowChange();
+    await getPosts();
 })
 
 </script>
@@ -257,7 +277,6 @@ onMounted(async () => {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.3) 97%, rgba(0, 0, 0, 0.4) 100%);
 
         .title {
             text-shadow: 1px 1px 3px rgb(255 255 255 / 30%);
@@ -302,7 +321,7 @@ onMounted(async () => {
 
         .btn {
             position: absolute;
-            bottom: 50px;
+            bottom: 55px;
 
             .iconfont {
                 color: #fff;
@@ -325,7 +344,7 @@ onMounted(async () => {
         filter: blur(3px);
         animation: animate_blur;
         animation-duration: 0.5s;
-        background-image: url(https://www.kecat.top/55.webp);
+        background-image: url(https://www.kecat.top/post/55.webp);
         background-size: cover;
         background-position: center 10;
         background-attachment: fixed;
@@ -341,39 +360,41 @@ onMounted(async () => {
         box-shadow: none;
 
         .main_position {
-            @media screen and (min-width:300px) and (max-width:600px) {
+            @media screen and (min-width:300px) and (max-width:1000px) {
                 width: 100vw;
                 align-items: center;
                 justify-content: center;
             }
 
-            width: 80vw;
+            width: 90vw;
             display: flex;
             align-items: flex-start;
 
             .left {
-                width: 75%;
-                display: flex;
 
                 @media screen and (min-width:300px) and (max-width:600px) {
-                    align-items: center;
-                    justify-content: center;
+                    padding: 0;
                 }
 
-                align-items: flex-start;
-                flex-wrap: wrap;
-                background: rgba(0, 0, 0, 0);
-                border: none;
-                box-shadow: none;
+                width: 75%;
+                display: flex;
+                flex-direction: column;
+                padding: 0 20px;
 
-                .card {
-                    @media screen and (min-width:300px) and (max-width:600px) {
-                        padding: 0;
-                        margin: 7px 0;
-                    }
 
-                    box-sizing: border-box;
-                    padding: 0 10px 20px 10px;
+                .leftTitle {
+                    width: 100%;
+                    background-color: var(--background-transparent);
+                    padding: 5px 10px;
+                    margin-bottom: 10px;
+                    border-radius: 10px;
+                }
+
+
+                .leftMain {
+                    width: 100%;
+                    height: 1000px;
+                    background-color: var(--background-transparent);
                 }
             }
 

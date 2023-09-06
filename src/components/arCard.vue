@@ -1,14 +1,7 @@
 <template>
     <div ref="dom" @click="toArticle" class="card_container">
         <div class="top">
-            <!-- <h1>{{ postName }}</h1> -->
-            <!-- <img src="https://www.kecat.top/10.webp" alt="111"> -->
-            <!-- <img ref="imgDom" :src="`${baseURL}/image/loading.gif`" alt="postImg"> -->
-            <!-- <img ref="imgDom" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN/image/loading.gif" alt="postImg"> -->
-            <!-- <picture ref="imgDom" :src="`${baseURL}/image/loading.gif`" :data-src="`${postImgUrl}/${postImg}`" alt="postImg" ></picture> -->
-            <svg width="100%" height="100%">
-                <image ref="imgDom" xlink:href="https://www.kecat.top/10.webp" width="100%" height="100%"  />
-            </svg>
+            <img ref="imgDom" src="https://www.kecat.top/other/loading.gif" width="100%" height="100%" />
         </div>
         <div class="bottom">
             <div class="bTop">
@@ -76,40 +69,25 @@ let toArticle = () => {
 }
 
 const handleLoad = () => {
-    (dom.value as Element).classList.add('animate_zoomIn');
-    // if (postImg.value && imgDom.value) {
-    //     (imgDom.value as HTMLImageElement).src = postImgUrl + '/' + postImg.value
-    // }
+    const image = imgDom.value as HTMLImageElement
+    const postSrc = postImgUrl + '/' + postImg.value
+    image.setAttribute("src", postSrc)
 }
 
 const init = async () => {
     const info = await getPostInfo(props.postName)
-
     category.value = info.category
     info.tag.map(item => {
         tags.push(item)
     })
-
-
     dateInfo.value = info.date
     postImg.value = info.postImg
-
-
-    const image = imgDom.value as HTMLOrSVGImageElement
-    const postSrc = postImgUrl + '/' + postImg.value
-    image.setAttribute("xlink:href", postSrc)
-
-
-    if ((imgDom.value as HTMLImageElement).src?.includes('loading')) {
-        (imgDom.value as HTMLImageElement).src = postImgUrl + '/' + postImg.value
-    }
 }
 
 const handleLazy = (el: Element) => {
     const intersectionObserver = new IntersectionObserver((changes) => {
         changes.forEach((item, index) => {
             if (item.isIntersecting) {
-                console.log(1);
                 handleLoad()
                 intersectionObserver.unobserve(item.target)
             }
@@ -129,11 +107,6 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
-.animate_zoomIn {
-    animation: fadeInUp;
-    animation-duration: 1s;
-}
-
 .card_container {
     width: 100%;
     min-width: 290px;
@@ -141,9 +114,9 @@ onMounted(() => {
     border-radius: 15px;
     box-sizing: border-box;
     background: var(--background-transparent);
-    border: var(--box-border);
     transition: all 0.5s;
     cursor: pointer;
+    border: var(--box-border);
 
     .top {
         position: relative;
@@ -158,29 +131,20 @@ onMounted(() => {
         align-items: center;
 
         img {
+            height: 180px;
             width: 100%;
-            height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
-            will-change:scroll-position;
-        }
-
-        // img:hover {
-        //     transform: scale(1.2);
-        // }
-        svg {
             transform: scale(1.5);
             transform-origin: center;
             transition: all .5s;
+            will-change: contents;
         }
-        svg:hover{
+    }
+
+    &:hover {
+        img {
             transform: scale(1.3);
         }
-        // .loadingImg {
-        //     width: 100%;
-        //     height: 100%;
-        //     object-fit: cover;
-        // }
     }
 
     .bottom {

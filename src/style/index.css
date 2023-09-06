@@ -34,6 +34,7 @@ select {
 html,
 body {
   min-height: 100%;
+
 }
 
 body {
@@ -42,7 +43,7 @@ body {
   color: #333;
   background-color: rgb(247, 158, 195);
 
-  background-image: url(https://www.kecat.top/33.webp);
+  background-image: url(https://www.kecat.top/post/33.webp);
   background-size: cover;
   background-position: center 10;
 }

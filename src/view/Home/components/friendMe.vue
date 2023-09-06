@@ -1,7 +1,7 @@
 <template>
     <div class="friendMe">
         <div class="img1">
-            <img loading="lazy" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/emo2.gif" alt="">
+            <!-- <img loading="lazy" src="https://cdn.jsdelivr.net/gh/engravesunny/CDN@v1.0.1/image/emo2.gif" alt=""> -->
         </div>
         <div class="right">
             <iconsFriend></iconsFriend>

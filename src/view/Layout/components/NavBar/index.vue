@@ -8,7 +8,7 @@
         <!-- logo -->
         <div class="logo">
             <div class="logo_img">
-                <img src="../../../../assets/img/logo.webp" alt="">
+                <img src="https://www.kecat.top/other/logo.png" alt="">
             </div>
             <div class="logo_name">刻猫猫的笔记本</div>
         </div>
@@ -158,23 +158,23 @@ let controls = reactive(
                 },
                 {
                     name: '后台管理项目',
-                    url:'http://kecat.top:1314'
+                    url: 'http://kecat.top:1314'
                 },
                 {
                     name: "手势识别demo",
-                    url:'http://kecat.top:1234'
+                    url: 'http://kecat.top:1234'
                 },
                 {
                     name: "考勤记录项目",
-                    url:'http://kecat.top:8080/'
+                    url: 'http://kecat.top:8080/'
                 },
                 {
                     name: '进制转换demo',
-                    url:"https://kecat.top/bin2dec"
+                    url: "https://kecat.top/bin2dec"
                 },
                 {
                     name: "border-radius-preview",
-                    url:"http://kecat.top/border-radius-preview"
+                    url: "http://kecat.top/border-radius-preview"
                 }
             ]
         },
@@ -204,10 +204,8 @@ let windowSizeChange = (size) => {
     if (size < 1500) {
         if (size < 1250) {
             if (size < 1000) {
-                PubSub.publish('articleListSizeChange', size)
                 showHam.value = true
             } else {
-                PubSub.publish('articleListSizeChange', size)
                 showHam.value = false
                 isOpenMenu.value = 0
                 isShowMark.value = false
