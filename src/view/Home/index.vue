@@ -91,12 +91,12 @@ const props = defineProps({
 
 // 首页上方向下箭头功能
 const explore = () => {
-    const scrollTop = parseFloat(props.scroller.$el.children[2].children[0].style.transform.split('(')[1]);
+    const scrollTop = parseFloat(document.documentElement.scrollTop);
     const to = window.innerHeight
     let move = (scrollTop / 100) * innerHeight
     const increment = to / 100
     const timer = setInterval(() => {
-        props.scroller.setScrollTop(move)
+        document.documentElement.scrollTop = move;
         move += increment
         if (move >= to) {
             clearInterval(timer)

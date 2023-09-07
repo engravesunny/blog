@@ -1,19 +1,17 @@
 <template>
     <div class="rightNav">
-        <el-scrollbar height="100vh">
-            <articleDir :articleDir="headings" v-if="showArticleDir"></articleDir>
-            <aboutMe></aboutMe>
-            <div class="icons box_border">
-                <iconsFriend></iconsFriend>
-            </div>
-            <latestAr :arList="rightArList"></latestAr>
-            <div class="articleDir box_border">
-                <div class="title">公告</div>
-                <div class="dir">
+        <articleDir :articleDir="headings" v-if="showArticleDir"></articleDir>
+        <aboutMe></aboutMe>
+        <div class="icons box_border">
+            <iconsFriend></iconsFriend>
+        </div>
+        <latestAr :arList="rightArList"></latestAr>
+        <div class="articleDir box_border">
+            <div class="title">公告</div>
+            <div class="dir">
 
-                </div>
             </div>
-        </el-scrollbar>
+        </div>
     </div>
 </template>
 
@@ -99,13 +97,19 @@ watch(() => route, (val) => {
 
 <style lang="less" scoped>
 .rightNav {
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+
+    margin-left: 20px;
     position: sticky;
     top: 75px;
     right: 9vw;
     width: 23vw;
     height: 85vh;
-    border-radius: 25px;
+    border-radius: 10px;
     z-index: 1;
+    overflow-y: auto;
 
     .left {
         width: 90%;
@@ -127,7 +131,7 @@ watch(() => route, (val) => {
     }
 
     .articleDir {
-        margin: 10px 0;
+        margin-bottom: 10px;
         width: 90%;
         padding: 20px;
         border-radius: 10px;

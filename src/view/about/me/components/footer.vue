@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="head-right animate_right">
-                    <img src="http://kecat.top/images/may/47.webp" alt="86-不存在的战区">
+                    <img src="https://www.kecat.top/other/86海报.webp" alt="86-不存在的战区">
                     <div class="btn">
                         <a href="https://omofun.in/vod/detail/2021520175.html" target="_blank">
                             <span class="iconfont icon">&#xe603;</span>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="foot-right animate_right">
-                    <img src="http://kecat.top/images/may/48.webp" alt="三体">
+                    <img src="https://www.kecat.top/other/三体海报.jpg" alt="三体">
                     <div class="btn">
                         <a href="https://movie.douban.com/subject/26647087/" target="_blank">
                             <span class="iconfont icon">&#xe656;</span>

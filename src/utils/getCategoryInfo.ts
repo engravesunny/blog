@@ -29,7 +29,6 @@ export const toStoreCategoryInfo = () => {
 }
 
 export const getCategoryPost = (name:string) => {
-    console.log(categoryStore.$state);
     let res = categoryStore.getCategoryPost(name) as PostSingle[]
     return res;
 }

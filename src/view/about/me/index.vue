@@ -103,7 +103,7 @@ const changeNav = (index) => {
 const showMobile = ref(false)
 
 onMounted(() => {
-    showMobile.value = window.innerWidth < 400
+    showMobile.value = window.innerWidth < 600
 })
 
 </script>
@@ -115,15 +115,14 @@ onMounted(() => {
 }
 
 .me_page {
-    @media screen and (min-width:300px) and (max-width:600px) {
-        min-width: unset;
+    @media screen and (min-width:200px) and (max-width:600px) {
+        min-width: 200px;
     }
 
     margin: 5px auto;
     max-width: 1000px;
     min-width: 1000px;
     width: 100vw;
-    height: calc(100vh - 70px);
     display: flex;
     flex-direction: column;
     align-items: center;

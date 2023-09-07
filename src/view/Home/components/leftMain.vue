@@ -17,7 +17,11 @@ import { PostSingle } from '../../../types/index';
 const postStore = post();
 
 const curPage = ref(0);
-const totalList = postStore.$state.postInfo
+const totalList = postStore.$state.postInfo.sort((a: any, b: any) => {
+    const timea = new Date(a.date).getTime();
+    const timeb = new Date(b.date).getTime();
+    return timeb - timea;
+});
 const pageSize = 7;
 const curList = computed(() => {
     return totalList.slice(curPage.value * pageSize, curPage.value * pageSize + pageSize) as PostSingle[];
@@ -26,7 +30,6 @@ const curList = computed(() => {
 const toPage = (page: number) => {
     curPage.value = page;
     const height = window.innerHeight;
-    console.log(height);
     setTimeout(() => {
         window.scrollTo(0, height)
     })

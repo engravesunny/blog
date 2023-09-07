@@ -7,8 +7,7 @@
             <div class="top animate_down">
                 <div class="left">
                     <div class="avatar">
-                        <img class="animateImg" src="https://gcore.jsdelivr.net/gh/engravesunny/CDN/image/avatar.jpg"
-                            alt="">
+                        <img class="animateImg" src="https://www.kecat.top/other/logo.png" alt="">
                     </div>
                 </div>
                 <div class="right">
@@ -201,7 +200,7 @@ const play = () => {
         }
     } else {
         const audio = document.createElement('audio')
-        audio.src = 'http://kecat.top/audio/%E5%88%BB%E6%99%B4%E8%AF%AD%E9%9F%B3_%E7%9F%AD.mp3'
+        audio.src = 'https://kecat.top/audio/%E5%88%BB%E6%99%B4%E8%AF%AD%E9%9F%B3_%E7%9F%AD.mp3'
         audio.volume = 0.4
         audio.style = 'display:none;'
         audio.loop = false
@@ -288,7 +287,6 @@ onBeforeUnmount(() => {
     }
 
     width: 100%;
-    height: 80%;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -304,7 +302,6 @@ onBeforeUnmount(() => {
             .avatar {
                 img {
                     width: 100%;
-                    max-width: 100px;
                     border-radius: 50%;
                     vertical-align: middle;
                 }
@@ -336,7 +333,7 @@ onBeforeUnmount(() => {
             }
 
             .adress {
-                font-size: 14px;
+                font-size: 15px;
             }
         }
     }
@@ -410,17 +407,13 @@ onBeforeUnmount(() => {
         justify-content: space-between;
 
         .right {
-            @media screen and (min-width:300px) and (max-width:600px) {
-                height: 48%;
-            }
 
             position: relative;
-
             width: 39%;
             height: 100%;
             box-shadow: var(--box-shadow-s);
             border-radius: 10px;
-            background-image: url(http://kecat.top/images/may/49.webp);
+            background-image: url(https://kecat.top/images/may/49.webp);
             background-size: cover;
             overflow: hidden;
 
@@ -465,12 +458,11 @@ onBeforeUnmount(() => {
 
             .motto {
                 @media screen and (min-width:300px) and (max-width:600px) {
-                    font-size: 22px;
+                    font-size: 18px;
                     padding: 5px;
                 }
 
                 position: relative;
-                height: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;

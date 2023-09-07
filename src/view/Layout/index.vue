@@ -52,6 +52,7 @@ let timer = null
 let topFlodFn = (e) => {
     if (!timer) {
         timer = setTimeout(() => {
+
             const el = document.documentElement
             if (el.scrollTop <= 100) {
                 isOpacity.value = 0
@@ -76,6 +77,27 @@ let topFlodFn = (e) => {
     }
 }
 
+const touchY = ref(0)
+let topFlodFnTouch = (e) => {
+    if (!timer) {
+        timer = setTimeout(() => {
+            const event = e
+            let curY = event?.changedTouches[0].pageY;
+
+            if (curY < touchY.value) {
+                // 向下滚动，隐藏导航栏
+                isFloded.value = 100
+                touchY.value = curY;
+            } else {
+                // 向上滑，显示导航栏
+                isFloded.value = 0
+                touchY.value = curY;
+            }
+            timer = null;
+        }, 100);
+    }
+}
+
 let toTop = () => {
     window.scrollTo(0, 0)
 }
@@ -84,7 +106,10 @@ onMounted(() => {
     PubSub.subscribe('toTop', () => {
         toTop()
     })
-    document.addEventListener('mousewheel', topFlodFn);
+    document.addEventListener('scroll', topFlodFn);
+    if (window.innerWidth < 500) {
+        document.addEventListener('touchmove', topFlodFnTouch)
+    }
 })
 
 </script>
