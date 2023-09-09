@@ -34,18 +34,18 @@ let toThisPosition = (child) => {
     active.value = child.title
 }
 
-let changeActive = (top) => {
-    for (let i = 0; i < props.articleDir[0].children.length; i++) {
-        if (top > props.articleDir[0].children[props.articleDir[0].children.length - 1].top) {
-            active.value = props.articleDir[0].children[props.articleDir[0].children.length - 1].title
-            break;
-        }
-        if (top > props.articleDir[0].children[i].top && top < props.articleDir[0].children[i + 1].top) {
-            active.value = props.articleDir[0].children[i].title
-            break;
-        }
-    }
-}
+// let changeActive = (top) => {
+//     for (let i = 0; i < props.articleDir[0].children.length; i++) {
+//         if (top > props.articleDir[0].children[props.articleDir[0].children.length - 1].top) {
+//             active.value = props.articleDir[0].children[props.articleDir[0].children.length - 1].title
+//             break;
+//         }
+//         if (top > props.articleDir[0].children[i].top && top < props.articleDir[0].children[i + 1].top) {
+//             active.value = props.articleDir[0].children[i].title
+//             break;
+//         }
+//     }
+// }
 
 
 onMounted(() => {

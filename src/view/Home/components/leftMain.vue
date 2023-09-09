@@ -29,10 +29,6 @@ const curList = computed(() => {
 
 const toPage = (page: number) => {
     curPage.value = page;
-    const height = window.innerHeight;
-    setTimeout(() => {
-        window.scrollTo(0, height)
-    })
 }
 
 </script>

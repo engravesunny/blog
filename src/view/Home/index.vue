@@ -1,7 +1,7 @@
 <template>
     <div class="home_container unselectable">
         <!-- 顶部标题壁纸展示 -->
-        <div class="top" ref="topDom">
+        <!-- <div class="top" ref="topDom">
             <div class="title" style="z-index:1" @click="test">KeCatCat</div>
             <div class="word" style="z-index:1">
                 {{ text }} <span v-if="isShowFlash" class="flash animate_flash_fast"></span>
@@ -10,9 +10,9 @@
                 <div class="iconfont animate_flash" @click="explore">&#xe60c;</div>
             </div>
             <wave></wave>
-        </div>
+        </div> -->
         <!-- 顶部标题壁纸展示 -->
-        <el-card class="main_container" :body-style="{ padding: '10px 0' }">
+        <el-card class="main_container" :body-style="{ padding: '70px 0' }">
             <div class="main_position">
                 <div class="left" :style="{ width: `${leftSize}%` }">
                     <div class="leftTitle">

@@ -1,8 +1,10 @@
 <template>
     <section class="bigCard" ref="dom">
         <div class="card-item-img" @click="toArticle" :class="{ right: right, left: !right }">
-            <img ref="imgDom" src="https://www.kecat.top/other/loading.gif"
-                :data-src="`${postImgUrl}/${postImg.split('.')[0] + 'min.webp'}`" alt="">
+            <div class="post-img loading" ref="loadingDom">
+                <img ref="imgDom" @load="onloaded" :data-src="`${postImgUrl}/${postImg.split('.')[0] + 'min.webp'}`"
+                    :alt="postImg">
+            </div>
         </div>
         <div class="card-item-info">
             <div class="post-title" @click="toArticle">{{ title }}</div>
@@ -43,10 +45,16 @@ let toArticle = () => {
     })
 }
 
+const loadingDom = ref<HTMLElement>();
 const dom = ref<HTMLElement>();
 const imgDom = ref<HTMLImageElement>()
 const handleLoad = () => {
     (imgDom.value as HTMLImageElement).src = (imgDom.value as HTMLImageElement).dataset.src as string
+}
+
+const onloaded = () => {
+    (loadingDom.value as HTMLElement).classList.remove("loading");
+    (imgDom.value as HTMLImageElement).style.opacity = '1';
     (imgDom.value as HTMLImageElement).classList.add('animate_show')
 }
 
@@ -124,9 +132,35 @@ const props = defineProps({
         cursor: pointer;
         width: 44%;
         height: 200px;
+        overflow: hidden;
+
+
+        @keyframes imgLoading {
+            0% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0 50%;
+            }
+        }
+
+        .loading {
+            background: linear-gradient(-45deg, #dedfe0 25%, #FFFFFF 45%, #dedfe0 65%);
+            background-size: 400% 100%;
+            animation: imgLoading 1s ease-in-out infinite;
+        }
+
+        .post-img {
+            border-radius: 12px;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+
+        }
 
         img {
-            border-radius: 12px;
+            opacity: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
