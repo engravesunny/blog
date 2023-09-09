@@ -30,7 +30,7 @@ const props = defineProps({
 })
 
 let toThisPosition = (child) => {
-    PubSub.publish('scrollTo', child.top);
+    PubSub.publish('scrollToFast', child.top + 350);
     active.value = child.title
 }
 

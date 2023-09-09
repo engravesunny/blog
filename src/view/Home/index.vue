@@ -106,18 +106,18 @@ const explore = () => {
 
 // 滚动指定距离有过程
 const scrollTo = (toThere) => {
-    const scrollTop = parseFloat(props.scroller.$el.children[2].children[0].style.transform.split('(')[1]);
+    const scrollTop = parseFloat(document.documentElement.scrollTop);
     let move = (scrollTop / 100) * window.innerHeight
     const increment = Math.abs(toThere - move) / 25
     const timer = setInterval(() => {
         if (move < toThere) {
-            props.scroller.setScrollTop(move)
+            document.documentElement.scrollTop = move;
             move += increment
             if (move >= toThere) {
                 clearInterval(timer)
             }
         } else {
-            props.scroller.setScrollTop(move)
+            document.documentElement.scrollTop = move;
             move -= increment
             if (move <= toThere) {
                 clearInterval(timer)
@@ -128,7 +128,7 @@ const scrollTo = (toThere) => {
 
 // 滚动到指定位置无过程
 const scrollToFast = (toThere) => {
-    props.scroller.setScrollTop(toThere)
+    document.documentElement.scrollTop = toThere;
 }
 // 每日一言文字
 let word = ref('')
