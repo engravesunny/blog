@@ -10,11 +10,14 @@
             <div class="post-title" @click="toArticle">{{ title }}</div>
             <div class="date"><span class="iconfont" style="color: blue;">&#xe663;</span>{{ date }}</div>
             <div class="info">
-                <span class="iconfont" style="color: green">&#xe811;</span>
-                <span class="category" @click="toCategory">{{ category }}</span>
+                <span class="category" @click="toCategory"><span class="iconfont" style="color: red;">&#xe811;</span>{{
+                    category
+                }}</span>
                 <span class="iconfont" style="color: red;">&#xe62f;</span>
-                <span class="tag" v-for="tag in tags" :key="tag" @click="toTag(tag)">
-                    {{ tag }}
+                <span class="tags">
+                    <span class="tag" v-for="tag in tags" :key="tag" @click="toTag(tag)">
+                        {{ tag }}
+                    </span>
                 </span>
             </div>
         </div>
@@ -117,6 +120,7 @@ const props = defineProps({
     font-size: 14.5px;
     font-weight: 700;
     background: rgba(255, 255, 255, .67);
+
     will-change: transform;
 
     .left {
@@ -156,7 +160,6 @@ const props = defineProps({
             overflow: hidden;
             width: 100%;
             height: 100%;
-
         }
 
         img {
@@ -218,6 +221,16 @@ const props = defineProps({
             line-height: 1.5em;
             font-size: 14px;
             color: #858585;
+        }
+
+        .info {
+            @media screen and (max-width:500px) {
+                max-width: 200px;
+            }
+
+            .tags {
+                word-wrap: break-word;
+            }
         }
 
         .tag:not(:last-child) {
