@@ -2,6 +2,8 @@
     <photo @click="open(index)" v-for="(item, index) in photos" :key="item" :src="`${imgBaseURL}${ablum}/${item}`" />
 </template>
 
+// TODO I want to do a 功能, let the images cloud preview, and after click could display the 真正的 image;
+
 <script setup>
 import photo from './photo.vue';
 import { imgBaseURL } from '../../../../constant';

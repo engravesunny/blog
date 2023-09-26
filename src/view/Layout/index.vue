@@ -29,7 +29,6 @@
         <FootBar></FootBar>
         <!-- 底部 -->
     </div>
-    <!-- <div v-if="showToTop" @click="toTop" class="toTop iconfont unselectable">&#xe610;</div> -->
 </template>
 
 <script setup>
@@ -85,11 +84,11 @@ let topFlodFnTouch = (e) => {
             let curY = event?.changedTouches[0].pageY;
 
             if (curY < touchY.value) {
-                // 向下滚动，隐藏导航栏
+                // 向上滚动，隐藏导航栏
                 isFloded.value = 100
                 touchY.value = curY;
             } else {
-                // 向上滑，显示导航栏
+                // 向下滚动，显示导航栏
                 isFloded.value = 0
                 touchY.value = curY;
             }
@@ -98,9 +97,7 @@ let topFlodFnTouch = (e) => {
     }
 }
 
-let toTop = () => {
-    window.scrollTo(0, 0)
-}
+// TODO : should have a method to let page scroll to top;
 
 onMounted(() => {
     PubSub.subscribe('toTop', () => {

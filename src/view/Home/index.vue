@@ -46,7 +46,6 @@
 <script setup>
 import leftList from './components/leftList.vue'
 import textBox from './components/textBox.vue'
-import wave from '../../components/waves.vue'
 import figlet from 'figlet'
 import standard from 'figlet/importable-fonts/Standard.js'
 import PubSub from 'pubsub-js'
@@ -66,7 +65,7 @@ let leftArList = reactive([])
 let rightArList = reactive([])
 
 // 是否显示右侧栏
-let showRightSideBar = ref(true)
+let showRightSideBar = ref(false)
 // 首页左侧文章卡片区域所占比例
 let leftSize = ref(75)
 // 首页文章卡片所占比例

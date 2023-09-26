@@ -6,9 +6,15 @@
                 <li class="dir_title" v-for="item in articleDir" :key="item.top">
                     {{ item.title }}
                     <div v-if="item.children.length" class="children">
-                        <div @click="toThisPosition(child)" v-for="(child, cindex) in item.children" :key="child.top"
+                        <!-- <div @click="toThisPosition(child)" v-for="(child, cindex) in item.children" :key="child.top"
                             class="child shenglue2" :class="{ actives: active === child.title }">
                             {{ (cindex + 1) + '.' + child.title }}
+                        </div> -->
+
+                        <!-- 使用a标签进行锚点定位 -->
+                        <div v-for="(child, cindex) in item.children" @click="handleLocate" :key="child.top"
+                            class="child shenglue2" :class="{ actives: active === child.title }">
+                            <a :href="'#' + child.link">{{ (cindex + 1) + '.' + child.title }}</a>
                         </div>
                     </div>
                 </li>
@@ -18,8 +24,7 @@
 </template>
 
 <script setup>
-import PubSub from 'pubsub-js'
-
+// TODO there should have a method to let <a /> be actived, when the article title is inserting in the page.
 let active = ref('')
 
 const props = defineProps({
@@ -28,47 +33,10 @@ const props = defineProps({
         default: []
     }
 })
-
-let toThisPosition = (child) => {
-    PubSub.publish('scrollToFast', child.top + 350);
-    active.value = child.title
-}
-
-// let changeActive = (top) => {
-//     for (let i = 0; i < props.articleDir[0].children.length; i++) {
-//         if (top > props.articleDir[0].children[props.articleDir[0].children.length - 1].top) {
-//             active.value = props.articleDir[0].children[props.articleDir[0].children.length - 1].title
-//             break;
-//         }
-//         if (top > props.articleDir[0].children[i].top && top < props.articleDir[0].children[i + 1].top) {
-//             active.value = props.articleDir[0].children[i].title
-//             break;
-//         }
-//     }
-// }
-
-
-onMounted(() => {
-    let scroller = document.querySelector('.el-scrollbar__thumb')
-})
-
-
-watch(() => props, (val) => {
-
-}, {
-    deep: true,
-    immediate: true
-})
 </script>
 
 <style lang="less" scoped>
 .articleDir {
-    .actives {
-        box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.3);
-        transform: translate(0, -1px);
-        background-color: #2d2d2d;
-        color: #fff !important;
-    }
 
     width: 100%;
     background-color: rgba(255, 255, 255, 0.8);
@@ -103,7 +71,11 @@ watch(() => props, (val) => {
                     font-size: 16px;
                     color: #000;
                     cursor: pointer;
-                    transition: all 0.1s;
+                    transition: all 0.2s;
+
+                    a {
+                        transition: all 0.2s;
+                    }
                 }
 
                 .child:hover {
@@ -111,7 +83,12 @@ watch(() => props, (val) => {
                     transform: translate(0, -1px);
                     background-color: #2d2d2d;
                     color: #fff;
+
+                    a {
+                        color: #fff;
+                    }
                 }
+
             }
         }
 

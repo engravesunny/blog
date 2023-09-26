@@ -20,7 +20,6 @@ import articleDir from './articleDir.vue';
 import latestAr from '@/view/Home/components/latestAr.vue';
 import aboutMe from './aboutMe.vue'
 import iconsFriend from './iconsFriend.vue';
-import { getDirNames } from '@/api/postApi.js'
 import { getLatestPostInfo } from '../utils/latestPosts';
 const route = useRoute()
 let showArticleDir = ref(false)
@@ -36,7 +35,7 @@ let getPosts = async () => {
 let headings = reactive([])
 
 let updateArticleDir = () => {
-    headings.splice(0, headings.length)
+    headings.length = 0;
     const headingTags = document.querySelectorAll("h1, h2");
 
     // 初始化最后一级标题的变量
@@ -49,6 +48,11 @@ let updateArticleDir = () => {
         // 根据标题的级别确定标题的深度
         const level = parseInt(headingTag.tagName.replace("H", ""));
         const title = headingTag.textContent;
+        let link = headingTag.getAttribute('id');
+        if (!link) {
+            headingTag.setAttribute('id', 42 * Math.random() * Math.random())
+            link = headingTag.getAttribute('id');
+        }
 
         // 生成目录结构，包括标题内容和链接
         const heading = {
@@ -56,6 +60,7 @@ let updateArticleDir = () => {
             title,
             level,
             top,
+            link,
             children: []
         }
         // 如果标题的级别比前一个标题的级别高，则将前一个标题的 children 更新为当前标题

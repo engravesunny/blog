@@ -56,8 +56,9 @@ let nextToIt = (item) => {
     if (item.path) {
         if (item.path === '/music') {
             const a = document.createElement('a')
-            a.href = 'https://kecat.top/music'
+            a.href = 'http://kecat.top:3333'
             document.body.appendChild(a)
+            a.setAttribute('target', '_blank');
             a.click()
         } else {
             router.push(item.path)

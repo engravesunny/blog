@@ -1,7 +1,7 @@
 <template>
     <div class="miniCard">
         <div class="top">
-            <img :src="`${postImgUrl}/${postImg?.split('.')[0] + 'min.webp'}`" alt="postInfo">
+            <img :src="`${postImgUrl}/${postImg?.split('.')[0] + 'min.webp' + '?params=200y200'}`" alt="postInfo">
         </div>
         <div class="bottom">{{ postName }}</div>
     </div>

@@ -18,7 +18,7 @@
         </div>
         <div class="article_container line-numbers match-braces">
 
-            <article ref="article" :style="{ width: `${defaultWidth}%` }" class="article">
+            <article ref="article" class="article">
                 <div v-loading="loading" class="markdown-body" v-html="html"></div>
 
             </article>
@@ -28,6 +28,7 @@
 </template>
 
 <script setup>
+import _ from 'lodash'
 import { postImgUrl } from '../../../constant';
 import rightNav from '../../../components/rightNav.vue'
 import 'github-markdown-css'
@@ -48,6 +49,7 @@ let postName = ref('文章标题')
 let date = ref('')
 let tagList = reactive([])
 let postImg = ref('')
+let currnetQuery = ref('')
 
 const getPostImg = async () => {
     const res = await getPostInfo(postName)
@@ -57,59 +59,61 @@ const getPostImg = async () => {
 const route = useRoute()
 
 onMounted(() => {
-
-    if (document.body.clientWidth < 1000) {
-        defaultWidth.value = 80
+    if (document.body.clientWidth < 1250) {
         showRightNav.value = false
     }
     PubSub.subscribe('closeSide', () => {
-        defaultWidth.value = 80
         showRightNav.value = false
     })
-    if (document.body.clientWidth < 500) {
-        defaultWidth.value = 100;
-    }
     PubSub.subscribe('openSide', () => {
+        PubSub.publish('getHead')
         defaultWidth.value = 55
         showRightNav.value = true
     })
 })
 
-watch(() => route, (val) => {
-    if (val.path === '/article') {
-        loading.value = true
-        tagList.splice(0, tagList.length)
-        postName = val.query.postName
-        getPostImg()
-        date = val.query.date
-        if (val?.query?.tag?.forEach) {
-            val?.query?.tag?.forEach(item => {
-                tagList.push(item)
+const handleRouteChange = (val) => {
+    try {
+        if (val.path === '/article') {
+            currnetQuery.value = val.query;
+            loading.value = true
+            tagList.splice(0, tagList.length)
+            postName = val.query.postName
+            getPostImg()
+            date = val.query.date
+            if (val?.query?.tag?.forEach) {
+                val?.query?.tag?.forEach(item => {
+                    tagList.push(item)
+                })
+            } else {
+                tagList.push(val?.query?.tag)
+            }
+            getPost(encodeURIComponent(val.query.postName + '.md')).then(res => {
+                const converter = new showdown.Converter();
+                const htmlOutput = converter.makeHtml(res.data);
+                html.value = htmlOutput
+            }).then(() => {
+                const pres = document.querySelectorAll('pre')
+                pres.forEach(pre => {
+                    pre.setAttribute('data-prismjs-copy', '复制')
+                    pre.setAttribute('data-prismjs-copy-success', '复制成功!')
+                })
+                loading.value = false
+            }).then(() => {
+                Prism.highlightAll();
+                PubSub.publish('getHead')
+                loading.value = false
+            }).catch(error => {
+                loading.value = false
             })
-        } else {
-            tagList.push(val?.query?.tag)
         }
-        getPost(encodeURIComponent(val.query.postName + '.md')).then(res => {
-            const converter = new showdown.Converter();
-            const htmlOutput = converter.makeHtml(res.data);
-            html.value = htmlOutput
-        }).then(() => {
-            const pres = document.querySelectorAll('pre')
-            pres.forEach(pre => {
-                pre.setAttribute('data-prismjs-copy', '复制')
-                pre.setAttribute('data-prismjs-copy-success', '复制成功!')
-            })
-            loading.value = false
-        }).then(() => {
-            Prism.highlightAll();
-            PubSub.publish('getHead')
-            loading.value = false
-        }).catch(error => {
-            loading.value = false
-            console.log(error);
-
-        })
+    } catch (error) {
     }
+}
+
+watch(() => route, (val) => {
+    if (_.isEqual(val.query, currnetQuery.value)) return;
+    handleRouteChange(val);
 }, {
     deep: true,
     immediate: true
@@ -222,18 +226,24 @@ watch(() => route, (val) => {
 
 
     .article {
-        (min-width:300px) and (max-width:600px) {
+        width: 55%;
+
+        @media screen and (min-width:300px) and (max-width:600px) {
             padding: 5px;
             border-radius: 10px;
+            width: 100%;
+        }
+
+        @media screen and (min-width:600px) and (max-width:1250px) {
+            width: 80%;
         }
 
         position: relative;
-        width: 50%;
         min-width: 375px;
         transition: all 0.5s;
 
         .markdown-body {
-            (min-width:300px) and (max-width:600px) {
+            @media screen and (min-width:300px) and (max-width:600px) {
                 padding: 20px 10px;
             }
 

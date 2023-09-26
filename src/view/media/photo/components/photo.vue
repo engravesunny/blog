@@ -1,8 +1,8 @@
 <template>
     <div ref="img" class="image fade_in" style="display: flex;flex-direction: column;">
         <!-- 加载中提示 -->
-        <img v-if="loading" :src="`${baseURL}/image/loading.gif`">
-        <img v-show="!loading" :src="src" @load="onload">
+        <img v-if="loading" :src="`${baseURL}/image/loading.gif?params=140y140`">
+        <img v-show="!loading" :src="src + '?params=140y140'" @load="onload">
         <div v-if="title" class="title">
             {{ title }}
         </div>
