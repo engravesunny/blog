@@ -28,7 +28,21 @@
                     <div class="createDirList" @click="createDirList">
                         新建文件夹
                     </div>
+                    <div class="setTop" @click="hanldeSetTop">
+                        设置置顶
+                    </div>
                 </div>
+
+                <!-- 设置置顶弹出框 -->
+                <div v-if="isShowSetTopBox" class="createDirBox">
+                    <div class="title">设置文章置顶</div>
+                    <el-input v-model="createDirName" placeholder="输入文章名称" autofocus></el-input>
+                    <div class="btn">
+                        <el-button type="primary" @click="toSetTop">确认</el-button>
+                        <el-button @click="btnCancle">取消</el-button>
+                    </div>
+                </div>
+                <!-- 设置置顶弹出框 -->
 
                 <!-- 新建文件夹弹出框 -->
                 <div v-if="isShowCreateDirBox" class="createDirBox">
@@ -69,11 +83,24 @@
 <script setup>
 import { getFileIcon } from '../utils/file_icons.js'
 import { getDirNames, getAllFileInfo, del, createDir } from "@/api/postApi.js"
+import { setTopArticle } from "@/utils/setArticleTop";
 import uploadUtils from '../utils/uploadDoc';
 
 const route = useRoute()
 const router = useRouter()
 
+// 设置置顶
+const isShowSetTopBox = ref(false)
+const hanldeSetTop = () => {
+    isShowUploadBox.value = false
+    isShowSetTopBox.value = true;
+}
+const toSetTop = async () => {
+    const name = createDirName.value;
+    await setTopArticle(name);
+    createDirName.value = ''
+    isShowSetTopBox.value = false;
+}
 
 // 右键背景上传，右键文件删除
 
@@ -170,6 +197,7 @@ let btnOk = async () => {
 let btnCancle = () => {
     createDirName.value = ''
     isShowCreateDirBox.value = false
+    isShowSetTopBox.value = false
 }
 
 // 显示新建文件夹box

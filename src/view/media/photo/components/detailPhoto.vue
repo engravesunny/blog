@@ -3,6 +3,7 @@
 </template>
 
 // TODO I want to do a 功能, let the images cloud preview, and after click could display the 真正的 image;
+// TODO It can be apply by QiNiuCloud Server.
 
 <script setup>
 import photo from './photo.vue';

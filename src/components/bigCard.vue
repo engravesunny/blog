@@ -7,7 +7,11 @@
             </div>
         </div>
         <div class="card-item-info">
-            <div class="post-title" @click="toArticle">{{ title }}</div>
+            <div class="isTop" :style="{ right: right ? 'unset' : '7px', left: right ? '7px' : 'unset' }" v-if="isTop">置顶
+            </div>
+            <div class="post-title" @click="toArticle">
+                {{ title }}
+            </div>
             <div class="date"><span class="iconfont" style="color: blue;">&#xe663;</span>{{ date }}</div>
             <div class="info">
                 <span class="category" @click="toCategory"><span class="iconfont" style="color: red;">&#xe811;</span>{{
@@ -74,6 +78,7 @@ const handleLazy = () => {
 }
 
 onMounted(() => {
+    console.log(props.right);
     handleLazy();
 })
 
@@ -103,12 +108,27 @@ const props = defineProps({
     postImg: {
         type: String,
         default: "77.webp"
+    },
+    isTop: {
+        type: Boolean,
+        default: false
     }
 })
 
 </script>
 
 <style lang="less" scoped>
+.isTop {
+    position: absolute;
+    top: 7px;
+    padding: 5px 7px;
+    border-radius: 7px;
+    background-color: rgb(247, 88, 88);
+    font-size: 14px;
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
 .bigCard {
     border-radius: 18px;
     margin-top: 14px;
@@ -171,7 +191,9 @@ const props = defineProps({
     }
 
     .card-item-info {
+        position: relative;
         flex: 1;
+        height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -179,6 +201,7 @@ const props = defineProps({
         font-size: 25px;
 
         .post-title {
+
             @media screen and (max-width:600px) {
                 font-size: 20px;
             }
@@ -189,6 +212,8 @@ const props = defineProps({
             &:hover {
                 color: #49b1f5;
             }
+
+
         }
 
         .post-title,

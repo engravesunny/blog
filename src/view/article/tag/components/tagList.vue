@@ -89,6 +89,7 @@ watch(() => route, (val) => {
     .tags_text {
         position: relative;
         cursor: pointer;
+        font-weight: 700;
     }
 
     .tags_text:hover {
