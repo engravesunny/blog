@@ -16,18 +16,23 @@
 
         <!-- 操作按钮 -->
         <div class="controls">
-            <div v-if="!showHam" @mouseenter="showDownSelect(item)" @mouseleave="closeDownSelect(item)" ref="btn"
-                class="btn" v-for="item in controls" :key="item.path" @click="nextToIt(item)">
-                <span class="iconfont">{{ getFileIcon(item.name) }}</span>
-                {{ item.name }}
-                <span v-if="item.children" class="iconfont">&#xe60c;</span>
-                <downSelect v-if="alive.name === item.name" :chirlden="item.children"></downSelect>
+            <!-- 搜索框 -->
+            <div class="input-box btn" @click="showSearchBox">
+                <span class="iconfont">&#xe752; <span v-if="!showHam">搜索</span></span>
             </div>
-            <div class="input_box">
+            <!-- 搜索框 -->
+            <template v-if="!showHam">
+                <div @mouseenter="showDownSelect(item)" @mouseleave="closeDownSelect(item)" ref="btn" class="btn"
+                    v-for="item in controls" :key="item.path" @click="nextToIt(item)">
+                    <span class="iconfont">{{ getFileIcon(item.name) }}</span>
+                    {{ item.name }}
+                    <span v-if="item.children" class="iconfont">&#xe60c;</span>
+                    <downSelect v-if="alive.name === item.name" :chirlden="item.children"></downSelect>
+                </div>
+            </template>
 
-            </div>
             <!-- 面包菜单 -->
-            <div v-if="showHam" @click="openMenu" class="btn ham_box iconfont">&#xe606;</div>
+            <div v-if="showHam" @click.prevent="openMenu" class="btn ham_box iconfont">&#xe606;</div>
             <!-- 面包菜单 -->
             <!-- 菜单侧边栏 -->
             <div class="mark" @click="openMenu" :style="{ background: `rgba(0,0,0,${mark})`, width: `${markw}vw` }"></div>
@@ -37,7 +42,6 @@
             <!-- 菜单侧边栏 -->
         </div>
         <!-- 操作按钮 -->
-
     </div>
 </template>
 
@@ -47,6 +51,10 @@ import { reactive } from 'vue';
 import downSelect from './components/downSelect.vue';
 import menuSidebar from './components/menuSidebar.vue';
 import PubSub from 'pubsub-js'
+
+let showSearchBox = () => {
+    PubSub.publish('showSearchBox')
+}
 
 const router = useRouter()
 
@@ -310,6 +318,10 @@ onMounted(() => {
     transition: all 0.5s;
 
     .logo {
+        @media screen and (max-width:500px) {
+            width: 220px;
+        }
+
         float: left;
         width: 250px;
         height: 100%;
@@ -318,13 +330,24 @@ onMounted(() => {
         align-items: center;
 
         .logo_img {
+
+
             img {
+                @media screen and (max-width:500px) {
+                    width: 60px;
+                    height: 60px;
+                }
+
                 width: 75px;
                 height: 75px;
             }
         }
 
         .logo_name {
+            @media screen and (max-width:500px) {
+                font-size: 20px;
+            }
+
             font-size: 25px;
             font-weight: 500;
             text-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
@@ -340,7 +363,20 @@ onMounted(() => {
         align-items: center;
 
         // background-color: #fff;
+        .input {
+            &-btn {
+                width: 10px;
+            }
+
+            &-inner {}
+        }
+
         .btn {
+            @media screen and (max-width:500px) {
+                width: 35px;
+                margin: 0;
+            }
+
             position: relative;
             margin: 0 5px;
             width: 90px;
@@ -356,6 +392,10 @@ onMounted(() => {
         }
 
         .btn:hover {
+            @media screen and (max-width:500px) {
+                background-color: unset;
+            }
+
             background-color: rgba(255, 255, 255, 0.5);
         }
 

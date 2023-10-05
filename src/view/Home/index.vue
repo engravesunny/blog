@@ -55,6 +55,8 @@ import articleDisplay from './components/article.vue';
 import latestAr from './components/latestAr.vue';
 import getWord from '@/api/randomWord.js'
 import { getLatestPostInfo } from '../../utils/latestPosts';
+
+
 // 每日一言后闪烁条
 let isShowFlash = ref(true)
 
@@ -222,6 +224,8 @@ const listenWindowChange = () => {
         scrollToFast(to);
     })
 }
+
+
 
 onMounted(async () => {
     figLetInit();

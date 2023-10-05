@@ -8,7 +8,9 @@
             <!-- 内容区域 -->
             <router-view ref="scroller"></router-view>
             <!-- 内容区域 -->
-
+            <!-- 搜索框 -->
+            <search-box :opacity="searchBoxOpacity" :scale="searchBoxScale"></search-box>
+            <!-- 搜索框 -->
             <!-- 底部 -->
             <FootBar></FootBar>
             <!-- 底部 -->
@@ -24,7 +26,9 @@
         <!-- 内容区域 -->
         <router-view></router-view>
         <!-- 内容区域 -->
-
+        <!-- 搜索框 -->
+        <search-box :opacity="searchBoxOpacity" :scale="searchBoxScale"></search-box>
+        <!-- 搜索框 -->
         <!-- 底部 -->
         <FootBar></FootBar>
         <!-- 底部 -->
@@ -32,10 +36,15 @@
 </template>
 
 <script setup>
+import searchBox from './components/searchBox/searchBox.vue';
 import NavBar from './components/NavBar/index.vue'
 import FootBar from './components/FootBar/index.vue'
 import { onMounted } from 'vue';
 import PubSub from 'pubsub-js';
+
+let searchBoxOpacity = ref(0)
+let searchBoxScale = ref(0)
+
 const route = useRoute()
 // 滚动条
 let scroller = ref(null)
@@ -99,6 +108,18 @@ let topFlodFnTouch = (e) => {
 
 // TODO : should have a method to let page scroll to top;
 
+// 搜索框事件
+const initSearchBox = () => {
+    PubSub.subscribe('showSearchBox', () => {
+        searchBoxScale.value = 1;
+        searchBoxOpacity.value = 1;
+    })
+    PubSub.subscribe('closeSearchBox', () => {
+        searchBoxScale.value = 0;
+        searchBoxOpacity.value = 0;
+    })
+}
+
 onMounted(() => {
     PubSub.subscribe('toTop', () => {
         toTop()
@@ -107,6 +128,7 @@ onMounted(() => {
     if (window.innerWidth < 500) {
         document.addEventListener('touchmove', topFlodFnTouch)
     }
+    initSearchBox();
 })
 
 </script>
