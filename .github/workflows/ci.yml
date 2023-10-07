@@ -45,11 +45,5 @@ jobs:
           yarn build
       # 把制品上传到部署机器
       - name: Upload to Deploy Server
-        uses: Hanlin-Dong/hexo-to-qiniu-action@v1
-        with:
-          bucket: kecatpostimage
-          access-key: ${{ secrets.QINIU_ACCESS_KEY }}
-          secret-key: ${{ secrets.QINIU_SECRET_KEY }}
-          base-folder: dist
-          domain: "https://www.kecat.top"
-          sub-domain: ""
+        run: |
+          node upload-qiniu prod

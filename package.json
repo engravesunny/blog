@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --mode development",
     "build": "vite build --mode production",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "upload": "node upload-qiniu",
+    "clear": "node clear-qiniu"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
@@ -23,7 +25,9 @@
     "pubsub-js": "^1.9.4",
     "showdown": "^2.1.0",
     "vue": "^3.2.45",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "moment": "^2.18.1",
+    "qiniu": "^7.0.5"
   },
   "devDependencies": {
     "@types/pubsub-js": "^1.8.3",
