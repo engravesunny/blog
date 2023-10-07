@@ -47,7 +47,7 @@ jobs:
         with:  
           username: 'root'   #ssh user name
           server: '47.93.87.206' #引用之前创建好的secret
-          ssh_private_key: ${{ secrets.DEPLOY_TOKEN }} #引用之前创建好的secret
+          # ssh_private_key: ${{ secrets.DEPLOY_TOKEN }} #引用之前创建好的secret
           local_path: 'dist/index.html'  # 对应我们项目build的文件夹路径
           remote_path: '/serve/blogServe/public'
           password: 'binyu1314..'
