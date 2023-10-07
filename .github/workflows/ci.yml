@@ -43,11 +43,10 @@ jobs:
           node upload-qiniu prod
       # html文件上传到服务器
       - name: Upload to Deploy Server
-        uses: easingthemes/ssh-deploy@v2.0.7
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}  
-          ARGS: '-avz --delete'
-          SOURCE: 'dist/index.html'
-          REMOTE_HOST: 47.93.87.206
-          REMOTE_USER: 'root'
-          TARGET: '/' # 服务器目标路径
+        uses: wlixcc/SFTP-Deploy-Action@v1.0 
+        with:  
+          username: 'root'   #ssh user name
+          server: '47.93.87.206' #引用之前创建好的secret
+          ssh_private_key: ${{ secrets.DEPLOY_TOKEN }} #引用之前创建好的secret
+          local_path: 'dist/index.html'  # 对应我们项目build的文件夹路径
+          remote_path: '/serve/blogServe/public'
