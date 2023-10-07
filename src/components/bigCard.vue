@@ -78,7 +78,6 @@ const handleLazy = () => {
 }
 
 onMounted(() => {
-    console.log(props.right);
     handleLazy();
 })
 

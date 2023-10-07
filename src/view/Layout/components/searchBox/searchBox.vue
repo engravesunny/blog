@@ -71,9 +71,6 @@ let postList = computed(() => {
     })
 })
 
-onMounted(() => {
-    console.log(props.scale);
-})
 watch(() => props.opacity, () => {
     if (isShowMask.value) {
         setTimeout(() => {
