@@ -43,7 +43,7 @@ jobs:
           node upload-qiniu prod
       # html文件上传到服务器
       - name: Upload to Deploy Server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0 
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:  
           username: 'root'   #ssh user name
           server: '47.93.87.206' #引用之前创建好的secret
@@ -51,4 +51,3 @@ jobs:
           local_path: 'dist/index.html'  # 对应我们项目build的文件夹路径
           remote_path: '/serve/blogServe/public'
           password: 'binyu1314..'
-          
