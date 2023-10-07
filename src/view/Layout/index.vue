@@ -120,6 +120,10 @@ const initSearchBox = () => {
     })
 }
 
+let toTop = () => {
+    window.scrollTo(0,0);
+}
+
 onMounted(() => {
     PubSub.subscribe('toTop', () => {
         toTop()
