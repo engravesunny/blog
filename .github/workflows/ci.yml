@@ -48,6 +48,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}  
           ARGS: '-avz --delete'
           SOURCE: './dist/index.html'
-          REMOTE_HOST: 47.93.87.206:22
-          REMOTE_USER: root
-          TARGET: /serve/blogServe/public # 服务器目标路径
+          REMOTE_HOST: 47.93.87.206
+          REMOTE_USER: 'root'
+          TARGET: '/serve/blogServe/public' # 服务器目标路径
