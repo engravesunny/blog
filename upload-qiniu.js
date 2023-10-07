@@ -1,9 +1,17 @@
-const qiniu = require("qiniu");
-const fs = require('fs')
-const moment = require('moment')
-const _array = require('lodash/array');
-const _difference = require('lodash/difference')
-const crypto = require('crypto');
+// const qiniu = require("qiniu");
+// const fs = require('fs')
+// const moment = require('moment')
+// const _array = require('lodash/array');
+// const _difference = require('lodash/difference')
+// const crypto = require('crypto');
+
+import qiniu from 'qiniu'
+import * as fs from 'fs'
+import moment from 'moment';
+import _array from 'lodash/array.js'
+import _difference from 'lodash/difference'
+import crypto from 'crypto'
+
 
 const qiniuConfig = require('./qiniu.config.js')
 //需要填写你的 Access Key 和 Secret Key

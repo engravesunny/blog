@@ -1,6 +1,6 @@
-const qiniu = require("qiniu");
-const _array = require('lodash/array');
-const qiniuConfig = require('./qiniu.config.js')
+import qiniu from 'qiniu'
+import _array from 'lodash/array';
+import qiniuConfig from './qiniu.config.js';
 
 let mac = new qiniu.auth.digest.Mac(qiniuConfig.accessKey, qiniuConfig.secretKey);
 let config = new qiniu.conf.Config();
@@ -11,8 +11,8 @@ let bucketManager = new qiniu.rs.BucketManager(mac, config);
 
 let argvArr = process.argv.slice(2)
 if (argvArr.length === 0) {
-	let env = Object.keys(qiniuConfig.envConfig).join(' or ');
-	console.log(`请在命令后添加 ${env}`)
+    let env = Object.keys(qiniuConfig.envConfig).join(' or ');
+    console.log(`请在命令后添加 ${env}`)
     process.exit()
 }
 let bucket = qiniuConfig.envConfig[argvArr[0]].bucket;
@@ -24,7 +24,7 @@ let getDeleteListPromise = (bucket, marker, preItems) => {
     //                marker    上一次列举返回的位置标记，作为本次列举的起点信息
     //            limit     每次返回的最大列举文件数量
     //            delimiter 指定目录分隔符
-    let opt = {prefix: ''};
+    let opt = { prefix: '' };
     marker && (opt.marker = marker);
     return new Promise((resolve, reject) => {
         bucketManager.listPrefix(bucket, opt, function (err, respBody, respInfo) {
@@ -54,9 +54,9 @@ let getDeleteListPromise = (bucket, marker, preItems) => {
 
 getDeleteListPromise(bucket, null, []).then((data) => {
     let needDeleteArr = _array.chunk(data, 1000);
-    if(data.length === 0){
+    if (data.length === 0) {
         console.log('没有文件需要删除')
-    }else{
+    } else {
         console.log('开始删除 %s 块共 %s 个文件', needDeleteArr.length, data.length)
         needDeleteArr.forEach((item, index) => {
             let allFileIsSuccess = true;
@@ -73,7 +73,7 @@ getDeleteListPromise(bucket, null, []).then((data) => {
                             }
                         });
                         if (allFileIsSuccess) {
-                            console.log('第 %s 块共 %s 个文件删除成功', index+1, item.length)
+                            console.log('第 %s 块共 %s 个文件删除成功', index + 1, item.length)
                         } else {
                             console.error('第 %s 块有文件删除失败', index + 1)
                         }

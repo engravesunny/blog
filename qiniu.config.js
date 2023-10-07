@@ -19,4 +19,4 @@ const qiniuConfig = {
 	}
 }
 
-module.exports = qiniuConfig;
+export default qiniuConfig;
