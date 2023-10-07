@@ -45,9 +45,9 @@ jobs:
       - name: Upload to Deploy Server
         uses: easingthemes/ssh-deploy@v2.0.7
         env:
-          SSH_PRIVATE_KEY: ${{ env.DEPLOY_TOKEN }}  
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}  
           ARGS: '-avz --delete'
           SOURCE: 'dist/index.html'
-          REMOTE_HOST: ${{ env.REMOTE_HOST }}
-          REMOTE_USER: ${{ env.REMOTE_USER }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: root
           TARGET: /serve/blogServe/public # 服务器目标路径
