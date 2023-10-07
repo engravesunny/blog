@@ -325,6 +325,7 @@ if (argvArr.length === 1 || (argvArr.length === 2 && argvArr[1] === 'debug')) {
 	//改变index.html中的文件引用
 	fs.readFile(originPath + '/' + originFile, fileEncodeType, (err, data) => {
 		if (err) throw err;
+		console.log(cdn);
 		data = data.replace(/((href=['"])|(src=['"]))(?!http:)(?!https:)[/]?([^/])/g, '$1' + cdn + '$4');
 		// console.log(data);
 		fs.writeFile(originPath + '/' + originFile, data, (err) => {
