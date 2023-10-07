@@ -1,5 +1,5 @@
 import qiniu from 'qiniu'
-import _array from 'lodash/array';
+import _array from 'lodash/array.js';
 import qiniuConfig from './qiniu.config.js';
 
 let mac = new qiniu.auth.digest.Mac(qiniuConfig.accessKey, qiniuConfig.secretKey);

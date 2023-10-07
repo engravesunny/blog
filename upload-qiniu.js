@@ -4,16 +4,16 @@
 // const _array = require('lodash/array');
 // const _difference = require('lodash/difference')
 // const crypto = require('crypto');
+// const qiniuConfig = require('./qiniu.config.js')
 
 import qiniu from 'qiniu'
 import * as fs from 'fs'
 import moment from 'moment';
 import _array from 'lodash/array.js'
-import _difference from 'lodash/difference'
+import _difference from 'lodash/difference.js'
 import crypto from 'crypto'
+import qiniuConfig from './qiniu.config.js';
 
-
-const qiniuConfig = require('./qiniu.config.js')
 //需要填写你的 Access Key 和 Secret Key
 let config = new qiniu.conf.Config();
 config.zone = qiniu.zone[qiniuConfig.zone];
@@ -278,8 +278,9 @@ let uploadFilesByArr = (arr) => {
 		//要上传文件的本地路径
 		let filePath = path;
 		//上传到七牛后保存的文件名
-		let key = path.replace('dist/', '');
-
+		const localFilePathHeaderName = qiniuConfig.originPath
+		const qiniuFileStorePath = qiniuConfig.storePath
+		let key = path.replace(localFilePathHeaderName + '/', qiniuFileStorePath + '/');
 		//生成上传 Token
 		let token = uptoken(bucket, key);
 
