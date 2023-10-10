@@ -33,6 +33,7 @@ select {
 
 html,
 body {
+  scroll-behavior: smooth;
   min-width: calc(100%-8px);
   min-height: 100%;
 

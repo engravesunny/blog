@@ -171,11 +171,6 @@ watch(() => route, (val) => {
 
         .radar {
             border-radius: 10px;
-
-            @media screen and (min-width:300px) and (max-width:500px) {
-                width: 375px;
-            }
-
             width: 100%;
             display: flex;
             padding: 50px;

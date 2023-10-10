@@ -264,6 +264,11 @@ let toArticle = (item: PostSingle) => {
 
 
 .search-result-item-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+
     span {
         line-height: 1.5em;
         font-size: 14px;

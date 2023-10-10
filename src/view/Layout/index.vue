@@ -24,7 +24,7 @@
         <!-- 顶部 -->
 
         <!-- 内容区域 -->
-        <router-view></router-view>
+        <router-view ref="scroller"></router-view>
         <!-- 内容区域 -->
         <!-- 搜索框 -->
         <search-box :opacity="searchBoxOpacity" :scale="searchBoxScale"></search-box>
@@ -32,10 +32,12 @@
         <!-- 底部 -->
         <FootBar></FootBar>
         <!-- 底部 -->
+        <div v-if="showToTop" @click="toTop" class="toTop iconfont unselectable">&#xe610;</div>
     </div>
 </template>
 
 <script setup>
+import { throttle } from 'lodash';
 import searchBox from './components/searchBox/searchBox.vue';
 import NavBar from './components/NavBar/index.vue'
 import FootBar from './components/FootBar/index.vue'
@@ -60,52 +62,55 @@ let timer = null
 let topFlodFn = (e) => {
     if (!timer) {
         timer = setTimeout(() => {
-
             const el = document.documentElement
             if (el.scrollTop <= 100) {
                 isOpacity.value = 0
+                showToTop.value = false
                 color.value = '#fff'
             } else {
                 isOpacity.value = 9
                 color.value = '#333'
             }
             if (el.scrollTop > curScrollY.value) {
-                // 向下滚动，隐藏导航栏
+                // 向上滑，隐藏导航栏
                 isFloded.value = 100
                 curScrollY.value = el.scrollTop
                 showToTop.value = false
             } else {
-                // 向上滑，显示导航栏
+                // 向下滑，显示导航栏
                 isFloded.value = 0
                 curScrollY.value = el.scrollTop
-                showToTop.value = true
+                if(el.scrollTop > 100) {
+                    showToTop.value = true
+                }
             }
             timer = null;
         }, 100);
     }
 }
-
-const touchY = ref(0)
 let topFlodFnTouch = (e) => {
-    if (!timer) {
-        timer = setTimeout(() => {
-            const event = e
-            let curY = event?.changedTouches[0].pageY;
+    let y = e.touches[0].pageY;
+    function listenTouchMove(e) {
+        const move = e.touches[0].pageY - y;
+        if(move > 0) {
+            // 向下滑，显示导航栏
+            isFloded.value = 0
+            showToTop.value = true
+            y = e.touches[0].pageY;
 
-            if (curY < touchY.value) {
-                // 向上滚动，隐藏导航栏
-                isFloded.value = 100
-                touchY.value = curY;
-            } else {
-                // 向下滚动，显示导航栏
-                isFloded.value = 0
-                touchY.value = curY;
-            }
-            timer = null;
-        }, 100);
+        } else if (move < 0) {
+            // 向上滑，隐藏导航栏
+            isFloded.value = 100
+            showToTop.value = false
+            y = e.touches[0].pageY;
+
+        } else {
+            return;
+        }
     }
+    const handleTouchMove = throttle(listenTouchMove, 200);
+    document.addEventListener('touchmove', handleTouchMove);
 }
-
 // TODO : should have a method to let page scroll to top;
 
 // 搜索框事件
@@ -122,17 +127,22 @@ const initSearchBox = () => {
 
 let toTop = () => {
     window.scrollTo(0,0);
+    document.body.scrollTo(0,0);
 }
-
-onMounted(() => {
+let handleScrollListener = throttle(topFlodFn, 100)
+const init = () => {
     PubSub.subscribe('toTop', () => {
         toTop()
     })
-    document.addEventListener('scroll', topFlodFn);
-    if (window.innerWidth < 500) {
-        document.addEventListener('touchmove', topFlodFnTouch)
+
+    document.addEventListener('scroll', handleScrollListener);
+    if (window.innerWidth < 600) {
+        document.addEventListener('touchstart', topFlodFnTouch)
     }
     initSearchBox();
+}
+onMounted(() => {
+    init();
 })
 
 </script>
