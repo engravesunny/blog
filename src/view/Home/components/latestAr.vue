@@ -4,7 +4,7 @@
         <div class="articles">
             <div class="card">
                 <div class="ar_item" v-for="item in arList" :key="item">
-                    <smallArCard :postName="item"></smallArCard>
+                    <smallArCard :postName="item.name"></smallArCard>
                 </div>
             </div>
         </div>

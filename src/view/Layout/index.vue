@@ -15,7 +15,7 @@
             <FootBar></FootBar>
             <!-- 底部 -->
         </div>
-        <div v-if="showToTop" @click="toTop" class="toTop iconfont unselectable">&#xe610;</div>
+        <div v-if="showToTop" @click="toTopSmooth" class="toTop iconfont unselectable">&#xe610;</div>
 
     </div>
     <div v-else class="layout_container photo-overflow">
@@ -32,7 +32,7 @@
         <!-- 底部 -->
         <FootBar></FootBar>
         <!-- 底部 -->
-        <div v-if="showToTop" @click="toTop" class="toTop iconfont unselectable">&#xe610;</div>
+        <div v-if="showToTop" @click="toTopSmooth" class="toTop iconfont unselectable">&#xe610;</div>
     </div>
 </template>
 
@@ -108,8 +108,13 @@ let topFlodFnTouch = (e) => {
             return;
         }
     }
+    function removeTouchListen() {
+        document.removeEventListener('touchmove', handleTouchMove);
+        document.removeEventListener('touchend', removeTouchListen);
+    }
     const handleTouchMove = throttle(listenTouchMove, 200);
     document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', removeTouchListen);
 }
 // TODO : should have a method to let page scroll to top;
 
@@ -125,25 +130,51 @@ const initSearchBox = () => {
     })
 }
 
-let toTop = () => {
-    window.scrollTo(0,0);
-    document.body.scrollTo(0,0);
+let toTopSmooth = () => {
+    window.scrollTo({
+        top:0,
+        behavior: 'smooth'
+    });
+    document.body.scrollTo({
+        top:0,
+        behavior: 'smooth'
+    });
 }
+
+let toTopFast = () => {
+    window.scrollTo({
+        top:0,
+    });
+    document.body.scrollTo({
+        top:0,
+    });
+}
+
 let handleScrollListener = throttle(topFlodFn, 100)
 const init = () => {
-    PubSub.subscribe('toTop', () => {
-        toTop()
-    })
-
+    PubSub.subscribe('toTopFast', toTopFast);
+    PubSub.subscribe('toTopSmooth', toTopSmooth);
     document.addEventListener('scroll', handleScrollListener);
     if (window.innerWidth < 600) {
         document.addEventListener('touchstart', topFlodFnTouch)
     }
     initSearchBox();
 }
+const unmounted = () => {
+    PubSub.unsubscribe('toTopFast', toTopFast);
+    PubSub.unsubscribe('toTopSmooth', toTopSmooth);
+    document.removeEventListener('scroll',handleScrollListener);
+    document.removeEventListener('touchstart',topFlodFnTouch);
+}
+
 onMounted(() => {
     init();
 })
+
+onUnmounted(() => {
+    unmounted();
+})
+
 
 </script>
 

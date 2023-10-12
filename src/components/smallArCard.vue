@@ -36,7 +36,7 @@ const props = defineProps({
     }
 })
 let toArticle = () => {
-    PubSub.publish('toTop');
+    PubSub.publish('toTopFast');
     router.push({
         path: '/article',
         query: {
@@ -47,7 +47,7 @@ let toArticle = () => {
     })
 }
 watch(() => props, async (val) => {
-    const info = await getPostInfo(val.postName)
+    const info =  getPostInfo(val.postName)
     dateInfo.value = info.date
     postImage.value = info.postImg
     info.tag.map(item => {

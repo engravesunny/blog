@@ -40,7 +40,7 @@ let toTag = (item: string) => {
     toPath('/tag', item)
 }
 let toArticle = () => {
-    PubSub.publish('toTop');
+    PubSub.publish('toTopFast');
     router.push({
         path: '/article',
         query: {

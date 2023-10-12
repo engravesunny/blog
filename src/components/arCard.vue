@@ -57,7 +57,7 @@ let toTag = (item: string) => {
     toPath('/tag', item)
 }
 let toArticle = () => {
-    PubSub.publish('toTop');
+    PubSub.publish('toTopSmooth');
     router.push({
         path: '/article',
         query: {
@@ -79,8 +79,8 @@ const onload = () => {
     loadingDom.value?.classList.remove("loading");
 }
 
-const init = async () => {
-    const info = await getPostInfo(props.postName)
+const init = () => {
+    const info = getPostInfo(props.postName)
     category.value = info.category
     info.tag.map(item => {
         tags.push(item)

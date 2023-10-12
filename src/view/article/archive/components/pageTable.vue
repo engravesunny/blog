@@ -53,7 +53,7 @@ const cubeList = computed(() => {
 const toPage = (pageNum) => {
     if (pageNum === '...') return
     else {
-        window.scrollTo(0, 0)
+        PubSub.publish('toTopFast')
         emits('toPage', pageNum)
     }
 }

@@ -11,11 +11,6 @@ import { prismjsPlugin } from 'vite-plugin-prismjs'
 import CompressionPlugin from 'vite-plugin-compression'
 const pathSrc = path.resolve(__dirname, 'src')
 
-
-
-
-
-
 export default defineConfig({
   base: './',
   server: {

@@ -20,16 +20,17 @@ import articleDir from './articleDir.vue';
 import latestAr from '@/view/Home/components/latestAr.vue';
 import aboutMe from './aboutMe.vue'
 import iconsFriend from './iconsFriend.vue';
-import { getLatestPostInfo } from '../utils/latestPosts';
+import { post } from '../store/post';
 const route = useRoute()
 let showArticleDir = ref(false)
 let rightArList = reactive([])
 let getPosts = async () => {
     // 获取文章
-    const latestPost = await getLatestPostInfo()
+    const latestPost = post().latestPostList;
     for (let i = 0; i < 5; i++) {
         rightArList.push(latestPost[i])
     }
+    console.log(rightArList);
 }
 
 let headings = reactive([])

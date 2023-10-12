@@ -26,6 +26,8 @@
 <script setup>
 // TODO there should have a method to let <a /> be actived, when the article title is inserting in the page.
 // TODO there should have a method which can let the article image can be clicked and open in screen.
+import { nextTick } from 'vue';
+
 let active = ref('')
 
 const props = defineProps({
@@ -34,6 +36,17 @@ const props = defineProps({
         default: []
     }
 })
+
+let timer = null;
+const handleLocate = () => {
+    timer = null;
+    document.documentElement.style.scrollBehavior = 'smooth';
+    timer = setTimeout(() => {
+        document.documentElement.style.scrollBehavior = 'unset';
+        timer = null;
+    }, 1000);
+}
+
 </script>
 
 <style lang="less" scoped>

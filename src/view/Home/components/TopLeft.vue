@@ -43,7 +43,7 @@ const postList = computed(() => {
 })
 
 let toArticle = (item: PostSingle) => {
-    PubSub.publish('toTop');
+    PubSub.publish('toTopFast');
     router.push({
         path: '/article',
         query: {

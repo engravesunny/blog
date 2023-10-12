@@ -15,7 +15,7 @@ import PubSub from 'pubsub-js';
 
 let nextTo = (item) => {
     PubSub.publish('nextTo', item)
-    PubSub.publish('toTop')
+    PubSub.publish('toTopFast')
 }
 
 const props = defineProps({

@@ -52,7 +52,7 @@ let postImg = ref('')
 let currnetQuery = ref('')
 
 const getPostImg = async () => {
-    const res = await getPostInfo(postName)
+    const res =  getPostInfo(postName)
     postImg.value = res.postImg
 }
 

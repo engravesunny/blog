@@ -54,7 +54,7 @@ import friendMe from './components/friendMe.vue';
 import articleDisplay from './components/article.vue';
 import latestAr from './components/latestAr.vue';
 import getWord from '@/api/randomWord.js'
-import { getLatestPostInfo } from '../../utils/latestPosts';
+import { post } from '../../store/post';
 
 
 // 每日一言后闪烁条
@@ -152,7 +152,7 @@ let getPosts = async () => {
     // 获取文章
     leftArList.splice(0, leftArList.length)
     rightArList.splice(0, rightArList.length)
-    const latestPostInfo = await getLatestPostInfo()
+    const latestPostInfo = post().latestPostList;
     latestPostInfo.map(item => {
         leftArList.push(item)
     })

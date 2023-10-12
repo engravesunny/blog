@@ -1,33 +1,30 @@
 import { defineStore } from "pinia";
 
-import { PostSingle } from "../types";
+import { PostSingle } from '../types/index';
 
 interface PostState {
-    postInfo: PostSingle[],
-    latestPosts: string[]
+    postInfo: PostSingle[]
 }
 
 export const post = defineStore('post', {
     state: (): PostState => ({
-        postInfo: [],
-        latestPosts: []
+        postInfo: []
     }),
+    getters:{
+        latestPostList() {
+            const postList:PostSingle[] = this.postInfo;
+            postList.sort((a:PostSingle, b:PostSingle) => {
+                return new Date(b.date).getTime() - new Date(a.date).getTime();
+            })
+            return postList.slice(0,5);
+        }
+    },
     actions: {
         addPost(info: PostSingle) {
-            this.postInfo.push(info)
-        },
-        setLatestPost(posts: string[]) {
-            this.latestPosts = posts
-        },
-        checkLatestPosts() {
-            return this.latestPosts.length !== 0
-        },
-        getLatestPost(): string[] {
-            return this.latestPosts
+            this.postInfo.push(info);
         },
         checkPost(name: string) {
-
-            return this.postInfo.some(item => item.name === name)
+            return this.postInfo.some((item:PostSingle) => item.name === name);
         },
         getPost(name: string): PostSingle {
             let temp: PostSingle = {
@@ -37,12 +34,12 @@ export const post = defineStore('post', {
                 name: '',
                 postImg:''
             }
-            this.postInfo.map(item => {
+            this.postInfo.map((item:PostSingle) => {
                 if (item.name === name) {
-                    temp = item
+                    temp = item;
                 }
             })
-            return temp
+            return temp;
         }
     }
 })

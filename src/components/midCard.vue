@@ -82,7 +82,7 @@ const postInfo = reactive({
 
 const init = async () => {
     loading.value = true
-    const info = await getPostInfo(props.postName);
+    const info =  getPostInfo(props.postName);
     emits('loadFinish')
     postInfo.category = info.category;
     postInfo.date = info.date.slice(0, 10);

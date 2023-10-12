@@ -64,10 +64,10 @@ let closeBtn = () => {
 
 let postList = computed(() => {
     return postStore.postInfo.filter(post => {
-        return post.name.includes(searchText.value) ||
-            post.category.includes(searchText.value) ||
-            post.tag.some(item => item.includes(searchText.value)) ||
-            post.date.includes(searchText.value)
+        return post.name.toUpperCase().includes(searchText.value.toUpperCase()) ||
+            post.category.toUpperCase().includes(searchText.value.toUpperCase()) ||
+            post.tag.some(item => item.toUpperCase().includes(searchText.value.toUpperCase())) ||
+            post.date.toUpperCase().includes(searchText.value.toUpperCase())
     })
 })
 
@@ -92,7 +92,7 @@ let toTag = (item: string) => {
 }
 let toArticle = (item: PostSingle) => {
     closeBtn();
-    PubSub.publish('toTop');
+    PubSub.publish('toTopFast');
     router.push({
         path: '/article',
         query: {
