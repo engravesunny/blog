@@ -100,9 +100,9 @@ const showDateInfo = ref(false)
 const infoBoxLeft = ref(0)
 const infoBoxTop = ref(0)
 
-const handleMouseInDay = (e, item) => {
-    infoBoxLeft.value = e.pageX
-    infoBoxTop.value = e.pageY
+const handleMouseInDay = (e:MouseEvent, item:any) => {
+    infoBoxLeft.value = e.clientX
+    infoBoxTop.value = e.clientY
     showDateInfo.value = true
     currentDay.value = item.date
     commitCount.value = item.contributionCount
@@ -112,14 +112,14 @@ const handleMouseOutDay = () => {
     showDateInfo.value = false
 }
 
-const handleMouseMoveMain = (e) => {
-    infoBoxLeft.value = e.pageX
-    infoBoxTop.value = e.pageY
+const handleMouseMoveMain = (e:MouseEvent) => {
+    infoBoxLeft.value = e.clientX
+    infoBoxTop.value = e.clientY
 }
 
 let timer: any;
 
-const throttle = (e) => {
+const throttle = (e:any) => {
     if (timer) {
         return
     } else {
