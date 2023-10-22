@@ -7,11 +7,12 @@
         <div class="bottom">
             <div class="bTop">
                 <div class="left">
-                    <div class="title shenglue">{{ postName }}</div>
+                    <div class="title shenglue" :title="postName">{{ postName }}</div>
                     <div class="publishTime iconfont">&#xe663;{{ dateInfo }}</div>
                 </div>
                 <div class="right">
-                    <div @click.stop="toCategory" class="category iconfont shenglue">&#xe811;{{ category }}</div>
+                    <div @click.stop="toCategory" class="category iconfont shenglue" :title="category">&#xe811;{{ category
+                    }}</div>
                 </div>
             </div>
             <div class="bBottom">

@@ -2,19 +2,21 @@
     <div class="footBar_container">
         <div class="top">
             <div class="left">
-                <div class="title shenglue">刻猫猫的笔记本</div>
+                <div class="title shenglue" title="刻猫猫的笔记本">刻猫猫的笔记本</div>
             </div>
             <div class="right">
-                <div class="item kecat  shenglue"><a target="_blank" href="http://kecat.top/">KECAT.TOP</a></div>
-                <div class="item qq shenglue"><a target="_blank"
+                <div class="item kecat  shenglue" title="https://kecat.top/"><a target="_blank"
+                        href="https://kecat.top/">KECAT.TOP</a></div>
+                <div class="item qq shenglue" title="3170557037"><a target="_blank"
                         href="http://wpa.qq.com/msgrd?v=3&uin=3170557037&site=qq&menu=yes">QQ:3170557037</a></div>
-                <div class="item email shenglue"><a href="https://outlook.live.com/">hutao-keqing@outlook.com</a></div>
+                <div class="item email shenglue" title="hutao-keqing@outlook.com"><a
+                        href="https://outlook.live.com/">hutao-keqing@outlook.com</a></div>
             </div>
         </div>
         <div class="bottom">
             <div class="mes1">Copyright © 2023 刻猫猫的笔记本</div>
             <div class="mes2">
-                <img src="../../../../assets/img/icp.webp" alt="">
+                <img src="../../../../assets/img/icp.webp" alt="icpImg">
                 <a href="https://beian.miit.gov.cn/" _blank>鲁ICP备2023003074号</a>
             </div>
         </div>

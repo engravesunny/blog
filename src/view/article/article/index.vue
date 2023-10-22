@@ -5,9 +5,9 @@
                 <h1>{{ postName }}</h1>
                 <div class="top">
                     <div class="bottom">
-                        <div class="date shenglue iconfont">&#xe663; {{ date }}</div>
+                        <div class="date shenglue iconfont" :title="data">&#xe663; {{ date }}</div>
                         <div class="tagList iconfont">
-                            <div class="tag shenglue iconfont" v-for="(item, index) in tagList" :key="item">
+                            <div class="tag shenglue iconfont" :title="item" v-for="(item, index) in tagList" :key="item">
                                 &#xe62f; {{ item }}
                             </div>
                         </div>
@@ -52,7 +52,7 @@ let postImg = ref('')
 let currnetQuery = ref('')
 
 const getPostImg = async () => {
-    const res =  getPostInfo(postName)
+    const res = getPostInfo(postName)
     postImg.value = res.postImg
 }
 

@@ -1,6 +1,6 @@
 <template>
     <div class="textBox">
-        <div class="text shenglue"><span class="iconfont">{{ getIcon('评论') }}</span>{{ text }}</div>
+        <div class="text shenglue" :title="text"><span class="iconfont">{{ getIcon('评论') }}</span>{{ text }}</div>
         <div class="author"> {{ "——" + author }}</div>
     </div>
 </template>

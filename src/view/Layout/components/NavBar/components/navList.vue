@@ -9,7 +9,8 @@
                         class="iconfont">&#xe60c;</span>
                 </div>
                 <ul class="vice_ul shenglue" v-if="item.children && isOpen.indexOf(item.name) > -1">
-                    <li class="vice_li iconfont" v-for="child in item.children" :key="child.name" @click="nextTo(child)">
+                    <li :title="child.name" class="vice_li iconfont" v-for="child in item.children" :key="child.name"
+                        @click="nextTo(child)">
                         {{ getFileIcon(child.name) + ' ' + child.name }}</li>
                 </ul>
             </li>
@@ -107,4 +108,5 @@ const porps = defineProps({
             }
         }
     }
-}</style>
+}
+</style>

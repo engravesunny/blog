@@ -1,8 +1,10 @@
 <template>
     <div class="article">
         <div class="title">
-            <div class="tag shenglue iconfont" :class="{ active: showWhat === 'tag' }" @click="showTag">&#xe62f; 文章标签</div>
-            <div class="category shenglue iconfont" :class="{ active: showWhat === 'category' }" @click="showCategory">
+            <div class="tag shenglue iconfont" title="文章标签" :class="{ active: showWhat === 'tag' }" @click="showTag">
+                &#xe62f; 文章标签</div>
+            <div class="category shenglue iconfont" title="文章分类" :class="{ active: showWhat === 'category' }"
+                @click="showCategory">
                 &#xe811;
                 文章分类</div>
             <div class="strip" :style="{ transform: `translate(${stripTranslateX}%)` }"></div>
