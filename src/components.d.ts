@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     ArticleDir: typeof import('./components/articleDir.vue')['default']
     ArticleList: typeof import('./components/articleList.vue')['default']
     BigCard: typeof import('./components/bigCard.vue')['default']
+    DiplayBorder: typeof import('./components/diplayBorder.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElInput: typeof import('element-plus/es')['ElInput']

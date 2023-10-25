@@ -3,9 +3,8 @@
     <div class="btn">
         <div class="email iconfont"><a href="https://outlook.live.com/" target="_blank"
                 class="iconfont email_text">&#xe908;</a></div>
-        <div class="qq iconfont"><a href="http://wpa.qq.com/msgrd?v=3&uin=3170557037&site=qq&menu=yes" target="_blank"
-                class="iconfont qq_text">&#xe882;</a></div>
-        <div class="wechat iconfont"><a href="" target="_blank" class="iconfont wechat_text">&#xe883;</a></div>
+        <div class="qq iconfont" @click="hanldeQQDisplay">&#xe882;</div>
+        <div class="wechat iconfont" @click="hanldeWCDisplay">&#xe883;</div>
         <div class="github iconfont"><a href="https://github.com/engravesunny?tab=repositories" target="_blank"
                 class="iconfont github_text">&#xe885;</a></div>
         <div class="netease-cloud-music iconfont"><a href="https://music.163.com/#/user/home?id=427854158" target="_blank"
@@ -14,10 +13,28 @@
                 class="iconfont bilibili_text">&#xe62c;</a></div>
     </div>
     <!-- github，qq，微信，邮箱等等 -->
+    <diplay-border @update-show-display="closeQQShowDisplay" :show-display="showQQDisplay">
+        <img src="https://www.kecat.top/post/20231025233624.png" alt="QQ图片"></diplay-border>
+    <diplay-border @update-show-display="closeWCShowDispaly" :show-display="showWCDisplay">
+        <img src="https://www.kecat.top/post/20231025233556.png" alt="微信图片"></diplay-border>
 </template>
 
-<script setup>
-
+<script setup lang="ts">
+import diplayBorder from './diplayBorder.vue';
+const showQQDisplay = ref(false);
+const showWCDisplay = ref(false);
+const closeQQShowDisplay = () => {
+    showQQDisplay.value = false
+}
+const closeWCShowDispaly = () => {
+    showWCDisplay.value = false
+}
+const hanldeQQDisplay = () => {
+    showQQDisplay.value = true
+}
+const hanldeWCDisplay = () => {
+    showWCDisplay.value = true
+}
 </script>
 
 <style lang="less" scoped>
@@ -92,11 +109,11 @@
         color: #f14767;
     }
 
-    .qq a {
+    .qq {
         color: #4cafe9;
     }
 
-    .wechat a {
+    .wechat {
         color: #4cbf00;
     }
 

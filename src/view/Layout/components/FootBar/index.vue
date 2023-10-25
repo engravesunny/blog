@@ -7,8 +7,7 @@
             <div class="right">
                 <div class="item kecat  shenglue" title="https://kecat.top/"><a target="_blank"
                         href="https://kecat.top/">KECAT.TOP</a></div>
-                <div class="item qq shenglue" title="3170557037"><a target="_blank"
-                        href="http://wpa.qq.com/msgrd?v=3&uin=3170557037&site=qq&menu=yes">QQ:3170557037</a></div>
+                <div class="item qq shenglue" @click="showDisplayBox" title="3170557037">QQ:3170557037</div>
                 <div class="item email shenglue" title="hutao-keqing@outlook.com"><a
                         href="https://outlook.live.com/">hutao-keqing@outlook.com</a></div>
             </div>
@@ -21,8 +20,21 @@
             </div>
         </div>
     </div>
+    <diplayBorder @update-show-display="closeDisplayBorder" :show-display="showDisplay">
+        <img src="https://www.kecat.top/post/20231025233624.png" alt="qq二维码">
+    </diplayBorder>
 </template>
 
+<script setup lang="ts">
+import diplayBorder from '@/components/diplayBorder.vue';
+const showDisplay = ref(false)
+const showDisplayBox = () => {
+    showDisplay.value = true;
+}
+const closeDisplayBorder = () => {
+    showDisplay.value = false;
+}
+</script>
 
 <style lang="less" scoped>
 .footBar_container {
@@ -86,6 +98,9 @@
                 @media screen and (min-width:300px) and (max-width:600px) {
                     font-size: 16px;
                 }
+
+                cursor: pointer;
+
             }
 
             .email {
