@@ -30,7 +30,6 @@ let getPosts = async () => {
     for (let i = 0; i < 5; i++) {
         rightArList.push(latestPost[i])
     }
-    console.log(rightArList);
 }
 
 let headings = reactive([])

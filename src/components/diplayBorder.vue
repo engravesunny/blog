@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @scroll.stop.prevent @click="handleClose" v-if="showDisplay">
+    <div class="container" @wheel.stop.prevent @click="handleClose" v-if="showDisplay">
         <div class="box">
             <slot></slot>
         </div>

@@ -25,8 +25,6 @@
 
 <script setup>
 // TODO there should have a method to let <a /> be actived, when the article title is inserting in the page.
-// TODO there should have a method which can let the article image can be clicked and open in screen.
-import { nextTick } from 'vue';
 
 let active = ref('')
 

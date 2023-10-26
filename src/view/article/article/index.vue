@@ -5,7 +5,7 @@
                 <h1>{{ postName }}</h1>
                 <div class="top">
                     <div class="bottom">
-                        <div class="date shenglue iconfont" :title="data">&#xe663; {{ date }}</div>
+                        <div class="date shenglue iconfont" :title="date">&#xe663; {{ date }}</div>
                         <div class="tagList iconfont">
                             <div class="tag shenglue iconfont" :title="item" v-for="(item, index) in tagList" :key="item">
                                 &#xe62f; {{ item }}
@@ -17,14 +17,14 @@
             <waves />
         </div>
         <div class="article_container line-numbers match-braces">
-
             <article ref="article" class="article">
                 <div v-loading="loading" class="markdown-body" v-html="html"></div>
-
             </article>
             <rightNav v-if="showRightNav"></rightNav>
         </div>
     </div>
+    <img-display @closeImgDisplay="hanldeCloseImgDisplay" v-if="showDisplayImg" :display-img-src="displayImgSrc"
+        :display-img-alt="displayImgAlt"></img-display>
 </template>
 
 <script setup>
@@ -36,6 +36,52 @@ import Prism from 'prismjs';
 import showdown from 'showdown';
 import getPost from '@/api/post'
 import { getPostInfo } from '../../../utils/getPostInfo';
+import imgDisplay from './components/imgDisplay.vue';
+
+// 点击图片展示
+// 展示图片的src
+const displayImgSrc = ref('');
+const displayImgAlt = ref('');
+const showDisplayImg = ref(false);
+// TODO there should have a method which can let the article image can be clicked and open in screen.
+// 给图片添加点击事件
+const addClickToImg = () => {
+    const article = document.querySelector('article');
+    const dfs = (nodes) => {
+        nodes.childNodes.forEach(node => {
+            if (node.childNodes.length > 0) {
+                dfs(node);
+            } else {
+                if (node.nodeName === 'IMG') {
+                    node.style.borderRadius = '5px';
+                    node.addEventListener('click', handleClickImg)
+                    function mouseEnter() {
+                        node.style.margin = '5px 0'
+                        node.style.transition = 'all 0.2s'
+                        node.style.boxShadow = 'rgba(17, 17, 26, 0.1) 0px 0px 16px';
+                    }
+                    function mouseLeave() {
+                        node.style.boxShadow = 'none';
+                        node.removeEventListener('mouseenter', mouseLeave);
+                    }
+                    node.addEventListener('mouseenter', mouseEnter)
+                    node.addEventListener('mouseleave', mouseLeave)
+
+                }
+            }
+        })
+    }
+    dfs(article);
+}
+const handleClickImg = (e) => {
+    let target = e.target;
+    displayImgAlt.value = target.alt;
+    displayImgSrc.value = target.src;
+    showDisplayImg.value = true;
+}
+const hanldeCloseImgDisplay = () => {
+    showDisplayImg.value = false;
+}
 
 let loading = ref(false)
 
@@ -99,6 +145,7 @@ const handleRouteChange = (val) => {
                     pre.setAttribute('data-prismjs-copy-success', '复制成功!')
                 })
                 loading.value = false
+                addClickToImg();
             }).then(() => {
                 Prism.highlightAll();
                 PubSub.publish('getHead')
