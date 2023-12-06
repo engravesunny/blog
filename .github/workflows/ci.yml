@@ -32,11 +32,11 @@ jobs:
       - name: Installing Dependencies
         # 如果缓存标志未选中，则执行该step，否则跳过该step
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: yarn install
+        run: pnpm install
       # 打包生成制品
       - name: Building
         run: |
-          yarn build
+          pnpm build
       # 打包好的静态文件上传到七牛云
       - name: Upload to QiNiu
         run: |
