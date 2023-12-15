@@ -3,7 +3,7 @@ on:
   # 代码push的时候触发
   push:
     # main分支的时候触发
-    branches: [main]
+    branches: [master]
 jobs:
   # 定义一个job，名字为CI
   CD:

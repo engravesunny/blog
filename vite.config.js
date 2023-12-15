@@ -5,8 +5,6 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Inspect from 'vite-plugin-inspect'
-import postcssPresetEnv from 'postcss-preset-env';
-import postCssPxToRem from 'postcss-pxtorem';
 import { prismjsPlugin } from 'vite-plugin-prismjs'
 import CompressionPlugin from 'vite-plugin-compression'
 const pathSrc = path.resolve(__dirname, 'src')
@@ -52,25 +50,6 @@ export default defineConfig({
     },
   },
   plugins: [
-    postcssPresetEnv({
-      stage: 3,
-      features: {
-        'custom-properties': {
-          preserve: false,
-        },
-      },
-    }),
-    postCssPxToRem({
-      propList: ['*'],
-      replace: true,
-      selectorBlackList: ['html'],
-      mediaQuery: true,
-      minPixelValue: 0,
-      rootValue: {
-        mobile: 37.5,
-        desktop: 160,
-      }
-    }),
     CompressionPlugin({
       algorithm: 'brotliCompress',
       ext: '.br',
