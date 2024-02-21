@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElUpload: typeof import('element-plus/es')['ElUpload']
+    FlowList: typeof import('./components/FlowList/index.vue')['default']
     IconsFriend: typeof import('./components/iconsFriend.vue')['default']
     LongArList: typeof import('./components/longArList.vue')['default']
     MidCard: typeof import('./components/midCard.vue')['default']

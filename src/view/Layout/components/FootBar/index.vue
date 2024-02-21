@@ -40,8 +40,11 @@ const closeDisplayBorder = () => {
 .footBar_container {
     @media screen and (min-width:300px) and (max-width:600px) {
         height: 120px;
+        top: calc(100vh - 120px);
     }
 
+    position: sticky;
+    top: calc(100vh - 252px);
     margin-top: 15px;
     width: 100%;
     height: 252px;

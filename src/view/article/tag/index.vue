@@ -174,7 +174,7 @@ onMounted(() => {
 
             .title {
                 @media screen and (min-width:300px) and (max-width:600px) {
-                    font-size: 0.5rem;
+                    font-size: 20px;
                 }
 
                 font-size: 25px;
@@ -221,7 +221,7 @@ onMounted(() => {
 
                 .title {
                     @media screen and (min-width:300px) and (max-width:600px) {
-                        font-size: 0.4rem;
+                        font-size: 20px;
                         width: 300px;
                     }
 
@@ -252,4 +252,5 @@ onMounted(() => {
             }
         }
     }
-}</style>
+}
+</style>
