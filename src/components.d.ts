@@ -3,7 +3,7 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
-export { }
+export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -13,9 +13,7 @@ declare module '@vue/runtime-core' {
     ArticleList: typeof import('./components/articleList.vue')['default']
     BigCard: typeof import('./components/bigCard.vue')['default']
     DiplayBorder: typeof import('./components/diplayBorder.vue')['default']
-    ElButton: typeof import('element-plus/es')['ElButton']
-    ElCard: typeof import('element-plus/es')['ElCard']
-    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
+    FlowList: typeof import('./components/FlowList/index.vue')['default']
     IconsFriend: typeof import('./components/iconsFriend.vue')['default']
     LongArList: typeof import('./components/longArList.vue')['default']
     MidCard: typeof import('./components/midCard.vue')['default']
@@ -27,8 +25,5 @@ declare module '@vue/runtime-core' {
     SmallArCard: typeof import('./components/smallArCard.vue')['default']
     SmallCard: typeof import('./components/smallCard.vue')['default']
     Waves: typeof import('./components/waves.vue')['default']
-  }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
