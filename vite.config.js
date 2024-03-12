@@ -37,6 +37,12 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/post/, ""),
       },
+      "/qiniu": {
+        target: "https://www.kecat.top",
+        ws: true,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/qiniu/, ""),
+      },
     },
   },
   resolve: {

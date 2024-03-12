@@ -5,6 +5,8 @@ export interface PostSingle {
   name: string;
   postImg: string;
   isTop?: boolean;
+  cover_url: string;
+  post_url: string;
 }
 export interface TagSingle {
   posts: PostSingle[];

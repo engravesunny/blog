@@ -4,6 +4,8 @@ on:
   push:
     # main分支的时候触发
     branches: [master]
+  pull_request:
+    branches: [master]
 jobs:
   # 定义一个job，名字为CI
   CD:
@@ -25,7 +27,7 @@ jobs:
         id: cache-dependencies
         uses: actions/cache@v3
         with:
-        # 缓存路径
+          # 缓存路径
           path: |
             **/node_modules
           key: ${{runner.OS}}-${{hashFiles('**/yarn.lock')}}
@@ -44,9 +46,9 @@ jobs:
       # html文件上传到服务器
       - name: Upload to Deploy Server
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:  
-          username: 'root'   #ssh user name
-          server: '124.221.213.24' 
-          local_path: 'dist/index.html'  # 对应我们项目build的文件夹路径
-          remote_path: '/serve/blogServe/public'
-          password: 'Binyu1314'
+        with:
+          username: "root" #ssh user name
+          server: "124.221.213.24"
+          local_path: "dist/index.html" # 对应我们项目build的文件夹路径
+          remote_path: "/serve/blogServe/public"
+          password: "Binyu1314"
