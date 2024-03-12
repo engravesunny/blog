@@ -154,7 +154,7 @@ watch(() => route, (val) => {
 
             .title {
                 @media screen and (min-width:300px) and (max-width:600px) {
-                    font-size: 0.5rem;
+                    font-size: 20px;
                 }
 
                 font-size: 30px;
@@ -194,7 +194,7 @@ watch(() => route, (val) => {
 
                 .title {
                     @media screen and (min-width:300px) and (max-width:600px) {
-                        font-size: 0.4rem;
+                        font-size: 20px;
                         width: 300px;
                     }
 

@@ -1,49 +1,53 @@
-import path from 'path'
-import { defineConfig } from 'vite'
-import Vue from '@vitejs/plugin-vue'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import Inspect from 'vite-plugin-inspect'
-import postcssPresetEnv from 'postcss-preset-env';
-import postCssPxToRem from 'postcss-pxtorem';
-import { prismjsPlugin } from 'vite-plugin-prismjs'
-import CompressionPlugin from 'vite-plugin-compression'
-const pathSrc = path.resolve(__dirname, 'src')
+import path from "path";
+import { defineConfig } from "vite";
+import Vue from "@vitejs/plugin-vue";
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import Inspect from "vite-plugin-inspect";
+import { prismjsPlugin } from "vite-plugin-prismjs";
+import CompressionPlugin from "vite-plugin-compression";
+const pathSrc = path.resolve(__dirname, "src");
 
 export default defineConfig({
-  base: './',
+  base: "./",
   server: {
-    port: 4000,
+    port: 3000,
     open: true,
     proxy: {
-      '/api': {
-        target: 'http://kecat.top:5000/',
+      "/api": {
+        target: "http://kecat.top:5000/",
         // target就是你要访问的目标地址，可以是基础地址，这样方便在这个网站的其他api口调用数据
         ws: true,
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ''),
         // 要记得加rewrite这句
       },
-      '/song': {
-        target: 'https://kecat.top:3000/',
+      "/song": {
+        target: "https://kecat.top:3000/",
         // target就是你要访问的目标地址，可以是基础地址，这样方便在这个网站的其他api口调用数据
         ws: true,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/song/, ''),
+        rewrite: (path) => path.replace(/^\/song/, ""),
         // 要记得加rewrite这句
       },
-      '/post': {
-        target: 'https://kecat.top',
+      "/post": {
+        target: "https://kecat.top",
         ws: true,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/post/, ''),
-      }
-    }
+        rewrite: (path) => path.replace(/^\/post/, ""),
+      },
+      "/qiniu": {
+        target: "https://www.kecat.top",
+        ws: true,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/qiniu/, ""),
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': pathSrc,
+      "@": pathSrc,
     },
   },
   build: {
@@ -52,54 +56,49 @@ export default defineConfig({
     },
   },
   plugins: [
-    postcssPresetEnv({
-      stage: 3,
-      features: {
-        'custom-properties': {
-          preserve: false,
-        },
-      },
-    }),
-    postCssPxToRem({
-      propList: ['*'],
-      replace: true,
-      selectorBlackList: ['html'],
-      mediaQuery: true,
-      minPixelValue: 0,
-      rootValue: {
-        mobile: 37.5,
-        desktop: 160,
-      }
-    }),
     CompressionPlugin({
-      algorithm: 'brotliCompress',
-      ext: '.br',
+      algorithm: "brotliCompress",
+      ext: ".br",
       threshold: 10240, // 10KB
       deleteOriginFile: false,
-      include: /\.(js|css|html|json|svg|vue)$/
+      include: /\.(js|css|html|json|svg|vue)$/,
     }),
     prismjsPlugin({
-      languages: ['javascript', 'css', 'less', 'html', 'js', 'typescript', 'ts'],
-      defaultLanguage: 'javascript',
+      languages: [
+        "javascript",
+        "css",
+        "less",
+        "html",
+        "js",
+        "typescript",
+        "ts",
+      ],
+      defaultLanguage: "javascript",
       // 配置行号插件
-      plugins: ['line-numbers', 'show-language', 'inline-color', 'previewers', 'toolbar', 'copy-to-clipboard', 'match-braces'],
+      plugins: [
+        "line-numbers",
+        "show-language",
+        "inline-color",
+        "previewers",
+        "toolbar",
+        "copy-to-clipboard",
+        "match-braces",
+      ],
       // 主题名
-      theme: 'tomorrow',
-      css: true
+      theme: "tomorrow",
+      css: true,
     }),
     Vue(),
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
-      imports: ['vue', 'vue-router'],
+      imports: ["vue", "vue-router"],
 
       // Auto import functions from Element Plus, e.g. ElMessage, ElMessageBox... (with style)
       // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
-      resolvers: [
-        ElementPlusResolver(),
-      ],
+      resolvers: [ElementPlusResolver()],
 
-      dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
+      dts: path.resolve(pathSrc, "auto-imports.d.ts"),
     }),
 
     Components({
@@ -109,8 +108,8 @@ export default defineConfig({
         ElementPlusResolver(),
       ],
 
-      dts: path.resolve(pathSrc, 'components.d.ts'),
+      dts: path.resolve(pathSrc, "components.d.ts"),
     }),
     Inspect(),
   ],
-})
+});

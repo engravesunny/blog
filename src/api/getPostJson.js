@@ -1,14 +1,14 @@
 import axios from "axios";
 const getPostRequest = axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL
-})
-export const getPOSTJSON = () => getPostRequest({
-    method: 'GET',
-    url: '/JSON/POSTINFO.json',
-})
-export const getDATAJSON = () => getPostRequest({
-    method: 'GET',
-    url: '/JSON/DATAINFO.json',
-})
+  baseURL: import.meta.env.VITE_QINIU_URL,
+});
+export const getPOSTJSON = () =>
+  getPostRequest({
+    method: "GET",
+    url: "/postJSON/POSTINFO.json",
+    params: {
+      query: "cdn",
+    },
+  });
 
-export default getPOSTJSON
+export default getPOSTJSON;

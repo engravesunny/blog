@@ -1,35 +1,51 @@
 <template>
-    <div>
-        <el-card style="width:55vw;height:60vh">
-            <div style="float:left">
-                <p style="font-size:40px;font-family:'仓耳渔阳体 W03';font-weight:900">万分抱歉！！！</p>
-                <p style="font-size:40px;font-family:'仓耳渔阳体 W03';font-weight:900">这个模块还在开发ing</p>
-            </div>
-            <img src="" style="float:left;width:25vw" alt=""/>
-        </el-card>
+    <div class="test">
+        <FlowList ref="FlowListRef" :item-width="itemWidth" :list="curRenderList"
+            @handleUpdateItemWidth="handleUpdateItemWidth" @handleLoadMore="handleLoad">
+            <template #item="{ item, listInstance, handleLoad }">
+                <div class="img-container">
+                    <img :src="item.imgUrl" :alt="item.imgUrl" @load="handleLoad">
+                </div>
+            </template>
+        </FlowList>
     </div>
 </template>
 
-<script>
-export default {
-    name: 'friend-blog',
+<script setup lang="ts">
+import FlowList from '../../../components/FlowList/index.vue'
+import { ImgItem, imgs } from '@/constant/imgs';
 
-    data() {
-        return {
-            
-        };
-    },
+const curRenderList = ref<any[]>([])
+const curPage = ref(-1)
+const pageSize = ref(20)
+const FlowListRef = ref()
 
-    mounted() {
-        
-    },
+const itemWidth = ref(19)
+const handleUpdateItemWidth = (newWidth: number) => {
+    itemWidth.value = newWidth
+}
 
-    methods: {
-        
-    },
-};
+let getMore = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(imgs.slice(curPage.value * pageSize.value, curPage.value * pageSize.value + pageSize.value))
+        }, 500);
+    })
+}
+
+const handleLoad = async () => {
+    curPage.value = curPage.value + 1;
+    const res = await getMore() as ImgItem[];
+    if (res.length < pageSize.value) {
+        FlowListRef.value.handleFinished()
+    }
+    FlowListRef.value.handleLoadMore(res)
+}
+
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="less" scoped>
+.img-container {
+    border: 5px solid #fff;
+}
 </style>
