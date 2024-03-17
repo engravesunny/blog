@@ -70,6 +70,13 @@ const routes: Array<RouteRecordRaw> = [
         path: "/photo",
         name: "photo",
         component: () => import("@/view/media/photo/index.vue"),
+        children: [
+          {
+            path: "/photo/:album",
+            name: "album",
+            component: () => import("@/view/media/photo/album/index.vue"),
+          }
+        ]
       },
       {
         path: "/video",
