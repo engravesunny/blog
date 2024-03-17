@@ -134,20 +134,60 @@
           <div v-if="dirName === 'images'" class="image">
             <el-input v-model="albumName" placeholder="相册名"></el-input>
           </div>
+          <div v-if="dirName === 'images'" class="image">
+            <el-upload
+              :show-file-list="true"
+              :multiple="true"
+              :before-upload="handleSelectImage"
+            >
+              <el-button style="width: 100%; margin-bottom: 20px"
+                >选择图片</el-button
+              >
+              <template #tip>
+                <div style="line-height: 22px; color: gray; font-size: 12px">
+                  您已选择了 {{ uploadImgCount }} 张图片
+                </div>
+              </template>
+            </el-upload>
+          </div>
+
           <div class="btn">
-            <el-button type="primary" class="uploadBtn"
-              ><el-upload
+            <el-button
+              v-if="dirName === 'post'"
+              type="primary"
+              class="uploadBtn"
+            >
+              <el-upload
                 :show-file-list="false"
                 :multiple="true"
                 :before-upload="btnOkToUpload"
                 >确定</el-upload
-              ></el-button
+              >
+            </el-button>
+            <el-button
+              v-if="dirName === 'images'"
+              type="primary"
+              class="uploadBtn"
+              @click="btnOkToUploadImages"
             >
+              开始上传
+            </el-button>
             <el-button @click="btnCancleToUpload">取消</el-button>
           </div>
         </div>
       </div>
     </el-scrollbar>
+    <el-card
+      style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      "
+      v-if="uploadFinished === 'uploading'"
+    >
+      正在上传图片（ {{ successCount + " / " + uploadImgCount }} ）
+    </el-card>
   </div>
 </template>
 
@@ -156,6 +196,7 @@ import { getFileIcon } from "../utils/file_icons.js";
 import { getDirNames, getAllFileInfo, del, createDir } from "@/api/postApi.js";
 import { setTopArticle } from "@/utils/setArticleTop";
 import uploadUtils from "../utils/uploadDoc";
+import { uploadFile } from "@/utils/upload";
 
 const route = useRoute();
 const router = useRouter();
@@ -239,13 +280,65 @@ let btnOkToUpload = async (file) => {
   // 上传完成收尾工作
   btnCancleToUpload();
   getDirPath_Doc(dir_path.value);
-  localStorage.removeItem("ABOUT_ME");
   return false;
 };
 let btnCancleToUpload = () => {
   categoryName.value = "";
   tagName.value = "";
   isShowUploadDetailBox.value = false;
+};
+
+// TODO
+// 确定上传图片
+let imgUploadList = reactive([]);
+let uploadImgCount = computed(() => {
+  return imgUploadList.length;
+});
+let successCount = ref(0);
+let uploadFinished = ref("finished");
+let handleSelectImage = (file) => {
+  imgUploadList.push(file);
+  return false;
+};
+let btnOkToUploadImages = () => {
+  // 未输入相册名
+  if (!albumName.value) {
+    ElMessage.error("请输入相册名！！！");
+  }
+  // 没有目标相册
+  if (!docList.includes(albumName.value)) {
+    ElMessage.error("请先新建相册！！");
+  }
+  let dirName = albumName.value;
+  let completeCount = 0;
+  uploadFinished.value = "uploading";
+  imgUploadList.forEach(async (img) => {
+    try {
+      let key = dirName + "/" + img.name;
+      await createDir({
+        dir_path: dir_path.value + key,
+      });
+      await uploadFile(img, "gallery/" + dirName + "/", img.name);
+      successCount.value++;
+    } catch (error) {
+      ElMessage.error(error.message);
+    } finally {
+      completeCount++;
+      if (completeCount >= uploadImgCount.value) {
+        uploadFinished.value = "finished";
+        ElMessage(
+          "上传完毕：上传总数：" +
+            uploadImgCount.value +
+            " 上传成功：" +
+            successCount.value
+        );
+        successCount.value = 0;
+        imgUploadList.length = 0;
+        albumName.value = "";
+        isShowUploadDetailBox.value = false;
+      }
+    }
+  });
 };
 
 // 上传文件

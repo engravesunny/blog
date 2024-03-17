@@ -113,7 +113,7 @@ const listenObserver = () => {
           }
         }
       });
-    }
+    },
   );
   observer.observe(el);
 };
