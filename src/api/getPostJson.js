@@ -5,7 +5,7 @@ const getPostRequest = axios.create({
 export const getPOSTJSON = () =>
   getPostRequest({
     method: "GET",
-    url: "/postJSON/POSTINFO.json",
+    url: "/postJSON/postJSON.json",
     params: {
       query: "cdn",
     },
