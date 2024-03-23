@@ -2,6 +2,14 @@ import { getToken } from "./token";
 import * as qiniu from 'qiniu-js';
 
 const uploadPercentage = ref()
+
+/**
+ * 
+ * @param { File } file 
+ * @param { string } dir 
+ * @param { string } name 
+ * @returns { Promise<any> }
+ */
 const uploadFile = (file: any = null, dir: string = '/test', name: string = 'test.txt') => {
   return new Promise((resolve, reject) => {
     let key = dir + name;

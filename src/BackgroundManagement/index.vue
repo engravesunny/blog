@@ -197,6 +197,7 @@ import { getDirNames, getAllFileInfo, del, createDir } from "@/api/postApi.js";
 import { setTopArticle } from "@/utils/setArticleTop";
 import uploadUtils from "../utils/uploadDoc";
 import { uploadFile } from "@/utils/upload";
+import { getCurrentInstance } from "vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -290,6 +291,11 @@ let btnCancleToUpload = () => {
 
 // TODO
 // 确定上传图片
+const { proxy } = getCurrentInstance();
+/**
+ * @type { import("@/plugins/promises").PromiseControl } promiseControl
+ */
+let promiseControl = proxy.$promiseControl;
 let imgUploadList = reactive([]);
 let uploadImgCount = computed(() => {
   return imgUploadList.length;
@@ -310,35 +316,40 @@ let btnOkToUploadImages = () => {
     ElMessage.error("请先新建相册！！");
   }
   let dirName = albumName.value;
-  let completeCount = 0;
   uploadFinished.value = "uploading";
-  imgUploadList.forEach(async (img) => {
-    try {
-      let key = dirName + "/" + img.name;
-      await createDir({
-        dir_path: dir_path.value + key,
-      });
-      await uploadFile(img, "gallery/" + dirName + "/", img.name);
-      successCount.value++;
-    } catch (error) {
-      ElMessage.error(error.message);
-    } finally {
-      completeCount++;
-      if (completeCount >= uploadImgCount.value) {
-        uploadFinished.value = "finished";
-        ElMessage(
-          "上传完毕：上传总数：" +
-            uploadImgCount.value +
-            " 上传成功：" +
-            successCount.value
-        );
-        successCount.value = 0;
-        imgUploadList.length = 0;
-        albumName.value = "";
-        isShowUploadDetailBox.value = false;
+  imgUploadList.forEach((img) => {
+    let key = dirName + "/" + img.name;
+    // 并发限制
+    promiseControl.finallyCallback = () => {
+      uploadFinished.value = "finished";
+      ElMessage(
+        "上传完毕：上传总数：" +
+          uploadImgCount.value +
+          " 上传成功：" +
+          successCount.value
+      );
+      successCount.value = 0;
+      imgUploadList.length = 0;
+      isShowUploadDetailBox.value = false;
+    };
+    promiseControl.addTask(
+      () =>
+        Promise.all([
+          createDir({
+            dir_path: dir_path.value + key,
+          }),
+          uploadFile(img, "gallery/" + dirName + "/", img.name),
+        ]),
+      () => {
+        successCount.value++;
+      },
+      (error) => {
+        ElMessage.error(error.message);
       }
-    }
+    );
   });
+  albumName.value = "";
+  btnCancleToUpload();
 };
 
 // 上传文件
@@ -515,7 +526,7 @@ watch(
   height: 50px;
   font-size: 18px;
 }
-/deep/ .el-upload {
+:deep(.el-upload) {
   width: 70%;
   height: 40px;
 }
