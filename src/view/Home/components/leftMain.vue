@@ -1,20 +1,21 @@
 <template>
   <div class="leftMain">
     <!-- 置顶文章 -->
-    <big-card
-      v-if="curPage === 0"
-      v-for="(post, index) in topList"
-      :post-img="post.postImg"
-      :right="!!(index % 2) || !!(topList.length % 2)"
-      :key="post.name"
-      :isTop="true"
-      :category="post.category"
-      :tags="post.tag"
-      :date="post.date"
-      :title="post.name"
-      :cover-key="post.cover_url"
-      :post-url="post.post_url"
-    ></big-card>
+    <template v-if="curPage === 0">
+      <big-card
+        v-for="(post, index) in topList"
+        :post-img="post.postImg"
+        :right="!!(index % 2) || !!(topList.length % 2)"
+        :key="post.name"
+        :isTop="true"
+        :category="post.category"
+        :tags="post.tag"
+        :date="post.date"
+        :title="post.name"
+        :cover-key="post.cover_url"
+        :post-url="post.post_url"
+      ></big-card>
+    </template>
     <!-- 置顶文章 -->
     <big-card
       v-for="(post, index) in curList"
@@ -28,7 +29,6 @@
       :cover-key="post.cover_url"
       :post-url="post.post_url"
     ></big-card>
-
     <div class="page-table">
       <page-table
         @to-page="toPage"
