@@ -7,7 +7,7 @@ export const getPOSTJSON = () =>
     method: "GET",
     url: "/postJSON/postJSON.json",
     params: {
-      query: "cdn",
+      query: "cdn" + new Date(),
     },
   });
 
